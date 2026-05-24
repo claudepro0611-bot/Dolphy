@@ -28,11 +28,11 @@ export default function TgHomePage() {
   return (
     <motion.div
       variants={stagger} initial="hidden" animate="show"
-      className="px-4 py-5 space-y-5"
+      className="min-h-screen w-full max-w-[430px] mx-auto px-4 py-4 space-y-5"
     >
       {/* Salom */}
       <motion.div variants={fade}>
-        <p className="text-white/40 text-sm">Xush kelibsiz</p>
+        <p className="text-gray-500 dark:text-white/40 text-sm">Xush kelibsiz</p>
         <h1 className="text-2xl font-bold mt-0.5">Salom, {firstName}!</h1>
       </motion.div>
 
@@ -54,9 +54,9 @@ export default function TgHomePage() {
       <motion.div variants={fade} className="grid grid-cols-3 gap-3">
         {STATS.map(s => (
           <div key={s.label}
-            className="bg-white/[0.04] border border-white/8 rounded-2xl p-3.5 text-center">
+            className="bg-gray-100 dark:bg-white/[0.04] border border-gray-200 dark:border-white/8 rounded-2xl p-3.5 text-center">
             <p className="text-[#F5C518] font-bold text-xl leading-none">{s.value}</p>
-            <p className="text-white/35 text-[10px] mt-1.5 leading-tight">{s.label}</p>
+            <p className="text-gray-500 dark:text-white/35 text-[10px] mt-1.5 leading-tight">{s.label}</p>
           </div>
         ))}
       </motion.div>
@@ -64,12 +64,12 @@ export default function TgHomePage() {
       {/* Oxirgi buyurtma */}
       <motion.div variants={fade}>
         <div className="flex items-center justify-between mb-3">
-          <p className="text-white/50 text-xs font-bold uppercase tracking-widest">Oxirgi buyurtma</p>
+          <p className="text-gray-400 dark:text-white/50 text-xs font-bold uppercase tracking-widest">Oxirgi buyurtma</p>
           <Link href="/tg/history" className="text-[#F5C518] text-xs font-bold">Barchasi</Link>
         </div>
 
         <Link href={`/tg/order/${LAST_ORDER.id}`}
-          className="flex items-center gap-3 bg-white/[0.04] border border-white/8 rounded-2xl p-4 active:bg-white/[0.07] transition-colors">
+          className="flex items-center gap-3 bg-gray-100 dark:bg-white/[0.04] border border-gray-200 dark:border-white/8 rounded-2xl p-4 active:bg-gray-200 dark:active:bg-white/[0.07] transition-colors">
 
           {/* Status dot */}
           <div className="w-10 h-10 rounded-xl bg-green-500/10 border border-green-500/15 flex items-center justify-center flex-shrink-0">
@@ -81,13 +81,13 @@ export default function TgHomePage() {
           {/* Info */}
           <div className="flex-1 min-w-0">
             <p className="text-sm font-semibold truncate">{LAST_ORDER.from}</p>
-            <p className="text-white/35 text-xs mt-0.5 truncate">→ {LAST_ORDER.to}</p>
+            <p className="text-gray-400 dark:text-white/35 text-xs mt-0.5 truncate">→ {LAST_ORDER.to}</p>
           </div>
 
           {/* Narx */}
           <div className="text-right flex-shrink-0">
             <p className="text-[#F5C518] font-bold text-sm">{LAST_ORDER.price.toLocaleString()}</p>
-            <p className="text-white/25 text-[10px] mt-0.5">{LAST_ORDER.date}</p>
+            <p className="text-gray-400 dark:text-white/25 text-[10px] mt-0.5">{LAST_ORDER.date}</p>
           </div>
         </Link>
       </motion.div>
@@ -119,11 +119,11 @@ export default function TgHomePage() {
           },
         ].map(item => (
           <Link key={item.href} href={item.href}
-            className="bg-white/[0.04] border border-white/8 rounded-2xl p-4 flex items-center gap-3 active:bg-white/[0.07] transition-colors">
+            className="bg-gray-100 dark:bg-white/[0.04] border border-gray-200 dark:border-white/8 rounded-2xl p-4 flex items-center gap-3 active:bg-gray-200 dark:active:bg-white/[0.07] transition-colors">
             <span className="text-[#F5C518] flex-shrink-0">{item.icon}</span>
             <div>
               <p className="text-sm font-semibold">{item.label}</p>
-              <p className="text-white/30 text-xs mt-0.5">{item.sub}</p>
+              <p className="text-gray-400 dark:text-white/30 text-xs mt-0.5">{item.sub}</p>
             </div>
           </Link>
         ))}

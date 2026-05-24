@@ -54,12 +54,12 @@ export default function TgOrderPage({ params }: { params: Promise<{ id: string }
   return (
     <motion.div
       variants={stagger} initial="hidden" animate="show"
-      className="px-4 py-5 space-y-5"
+      className="min-h-screen w-full max-w-[430px] mx-auto px-4 py-4 space-y-5"
     >
       {/* ID */}
       <motion.div variants={fade} className="flex items-center justify-between">
         <div>
-          <p className="text-white/35 text-xs font-bold uppercase tracking-widest">Buyurtma</p>
+          <p className="text-gray-500 dark:text-white/35 text-xs font-bold uppercase tracking-widest">Buyurtma</p>
           <h1 className="text-lg font-bold mt-0.5">{order.id}</h1>
         </div>
         {isActive && (
@@ -72,17 +72,16 @@ export default function TgOrderPage({ params }: { params: Promise<{ id: string }
 
       {/* Progress */}
       <motion.div variants={fade}
-        className="bg-white/[0.04] border border-white/8 rounded-2xl p-4 space-y-3">
+        className="bg-gray-100 dark:bg-white/[0.04] border border-gray-200 dark:border-white/8 rounded-2xl p-4 space-y-3">
         {STATUSES.map((s, i) => {
           const done   = i < currentIdx;
           const active = i === currentIdx;
-          const pending = i > currentIdx;
           return (
             <div key={s.key} className="flex items-center gap-3">
               <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
                 done   ? "bg-green-500/15 border border-green-500/20" :
                 active ? "bg-[#F5C518]/15 border border-[#F5C518]/20" :
-                         "bg-white/5 border border-white/8"
+                         "bg-gray-200 dark:bg-white/5 border border-gray-300 dark:border-white/8"
               }`}>
                 {done ? (
                   <svg width="10" height="9" viewBox="0 0 10 9" fill="none">
@@ -91,13 +90,13 @@ export default function TgOrderPage({ params }: { params: Promise<{ id: string }
                 ) : active ? (
                   <div className="w-2 h-2 rounded-full bg-[#F5C518] animate-pulse" />
                 ) : (
-                  <div className="w-1.5 h-1.5 rounded-full bg-white/15" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-white/15" />
                 )}
               </div>
               <span className={`text-sm font-medium ${
-                done    ? "text-green-400" :
+                done    ? "text-green-500 dark:text-green-400" :
                 active  ? "text-[#F5C518]" :
-                          "text-white/25"
+                          "text-gray-400 dark:text-white/25"
               }`}>{s.label}</span>
               {active && (
                 <span className="ml-auto text-[#F5C518] text-xs font-bold">{order.eta}</span>
@@ -109,14 +108,14 @@ export default function TgOrderPage({ params }: { params: Promise<{ id: string }
 
       {/* Marshrut */}
       <motion.div variants={fade}
-        className="bg-white/[0.04] border border-white/8 rounded-2xl overflow-hidden">
-        <div className="flex items-center gap-3 px-4 py-3.5 border-b border-white/8">
+        className="bg-gray-100 dark:bg-white/[0.04] border border-gray-200 dark:border-white/8 rounded-2xl overflow-hidden">
+        <div className="flex items-center gap-3 px-4 py-3.5 border-b border-gray-200 dark:border-white/8">
           <div className="w-2 h-2 rounded-full bg-green-400 flex-shrink-0" />
           <p className="text-sm font-medium">{order.from}</p>
         </div>
         <div className="flex items-center gap-3 px-4 py-0.5">
           <div className="w-2 flex-shrink-0 flex justify-center">
-            <div className="w-px h-4 bg-white/10" />
+            <div className="w-px h-4 bg-gray-200 dark:bg-white/10" />
           </div>
         </div>
         <div className="flex items-center gap-3 px-4 py-3.5">
@@ -127,13 +126,13 @@ export default function TgOrderPage({ params }: { params: Promise<{ id: string }
 
       {/* Haydovchi */}
       <motion.div variants={fade}
-        className="bg-white/[0.04] border border-white/8 rounded-2xl p-4">
-        <p className="text-white/35 text-[10px] font-bold uppercase tracking-widest mb-3">Haydovchi</p>
+        className="bg-gray-100 dark:bg-white/[0.04] border border-gray-200 dark:border-white/8 rounded-2xl p-4">
+        <p className="text-gray-500 dark:text-white/35 text-[10px] font-bold uppercase tracking-widest mb-3">Haydovchi</p>
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-white/8 flex items-center justify-center flex-shrink-0">
+          <div className="w-12 h-12 rounded-2xl bg-gray-200 dark:bg-white/8 flex items-center justify-center flex-shrink-0">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <circle cx="11" cy="8" r="4" stroke="currentColor" strokeWidth="1.5" className="text-white/40"/>
-              <path d="M3 20c0-4.418 3.582-7 8-7s8 2.582 8 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="text-white/40"/>
+              <circle cx="11" cy="8" r="4" stroke="currentColor" strokeWidth="1.5" className="text-gray-400 dark:text-white/40"/>
+              <path d="M3 20c0-4.418 3.582-7 8-7s8 2.582 8 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="text-gray-400 dark:text-white/40"/>
             </svg>
           </div>
           <div className="flex-1">
@@ -145,7 +144,7 @@ export default function TgOrderPage({ params }: { params: Promise<{ id: string }
                 </svg>
                 <span className="text-[#F5C518] text-xs font-bold">{order.driver.rating}</span>
               </div>
-              <span className="text-white/25 text-xs">{order.driver.trips} ta safar</span>
+              <span className="text-gray-400 dark:text-white/25 text-xs">{order.driver.trips} ta safar</span>
             </div>
           </div>
         </div>
@@ -153,16 +152,16 @@ export default function TgOrderPage({ params }: { params: Promise<{ id: string }
 
       {/* Narx */}
       <motion.div variants={fade}
-        className="bg-white/[0.04] border border-white/8 rounded-2xl overflow-hidden">
+        className="bg-gray-100 dark:bg-white/[0.04] border border-gray-200 dark:border-white/8 rounded-2xl overflow-hidden">
         {[
           { label: "Mashina",  value: order.vehicle },
           { label: "Masofa",   value: order.distance },
           { label: "Narx",     value: `${order.price.toLocaleString()} so'm`, accent: true },
         ].map((row, i, arr) => (
           <div key={row.label}
-            className={`flex items-center justify-between px-4 py-3.5 ${i < arr.length - 1 ? "border-b border-white/8" : ""}`}>
-            <p className="text-white/40 text-sm">{row.label}</p>
-            <p className={`text-sm font-bold ${row.accent ? "text-[#F5C518]" : "text-white"}`}>{row.value}</p>
+            className={`flex items-center justify-between px-4 py-3.5 ${i < arr.length - 1 ? "border-b border-gray-200 dark:border-white/8" : ""}`}>
+            <p className="text-gray-500 dark:text-white/40 text-sm">{row.label}</p>
+            <p className={`text-sm font-bold ${row.accent ? "text-[#F5C518]" : ""}`}>{row.value}</p>
           </div>
         ))}
       </motion.div>

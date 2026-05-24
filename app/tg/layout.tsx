@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTelegram } from "@/hooks/useTelegram";
+import { TgThemeCtx } from "./tg-theme-ctx";
 
 const NAV = [
   {
@@ -59,10 +60,28 @@ const NAV = [
 ];
 
 export default function TgLayout({ children }: { children: React.ReactNode }) {
-  const { tg } = useTelegram();
+  const { tg, colorScheme } = useTelegram();
   const path = usePathname();
 
-  // Sahifa o'zgarganida BackButton boshqarish
+  // TG-local dark mode state (independent of next-themes)
+  const [isDark, setIsDark] = useState(true);
+
+  // Sync Telegram colorScheme → isDark
+  useEffect(() => {
+    if (!tg) return;
+    setIsDark(colorScheme !== "light");
+  }, [tg, colorScheme]);
+
+  // Sync isDark → <html class="dark"> (Telegram yoki settings toggle orqali)
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [isDark]);
+
+  // BackButton boshqarish
   useEffect(() => {
     if (!tg) return;
     if (path === "/tg") {
@@ -73,49 +92,65 @@ export default function TgLayout({ children }: { children: React.ReactNode }) {
   }, [tg, path]);
 
   return (
-    <div
-      className="flex flex-col min-h-screen bg-[#0f0f0f] text-white"
-      style={{ maxWidth: 430, margin: "0 auto" }}
-    >
-      {/* Header */}
-      <header className="sticky top-0 z-40 h-14 flex items-center px-4 bg-[#0f0f0f]/95 backdrop-blur-md border-b border-white/8">
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-xl bg-[#F5C518] flex items-center justify-center text-black font-black text-xs">
-            Y
+    <TgThemeCtx.Provider value={{ isDark, setIsDark }}>
+      {/*
+        tg-dark class conditionally applied here.
+        When present, all children's tg-dark: variant classes activate.
+        This is completely independent of next-themes / <html class="dark">.
+      */}
+      <div className={`flex flex-col min-h-screen w-full ${
+        isDark
+          ? "tg-dark dark bg-[#0f0f0f] text-white"
+          : "bg-[#f5f5f5] text-gray-900"
+      }`}>
+
+        {/* Header */}
+        <header className="sticky top-0 z-40 h-14 flex items-center px-4
+          bg-white/95 tg-dark:bg-[#0f0f0f]/95
+          backdrop-blur-md
+          border-b border-gray-200 tg-dark:border-white/8">
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-xl bg-[#F5C518] flex items-center justify-center text-black font-black text-xs">
+              Y
+            </div>
+            <span className="font-bold text-sm tracking-tight">Yotoq</span>
+            <span className="text-gray-400 tg-dark:text-white/25 text-xs font-medium">Mini App</span>
           </div>
-          <span className="font-bold text-sm tracking-tight">Yotoq</span>
-          <span className="text-white/25 text-xs font-medium">Mini App</span>
-        </div>
-      </header>
+        </header>
 
-      {/* Content */}
-      <main className="flex-1 overflow-y-auto pb-20">
-        {children}
-      </main>
+        {/* Content */}
+        <main className="flex-1 overflow-y-auto pb-20">
+          {children}
+        </main>
 
-      {/* Bottom nav */}
-      <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full z-50 bg-[#0f0f0f]/95 backdrop-blur-md border-t border-white/8"
-        style={{ maxWidth: 430 }}>
-        <div className="flex items-center justify-around h-16 px-2">
-          {NAV.map(item => {
-            const active = path === item.href || (item.href !== "/tg" && path.startsWith(item.href));
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl transition-all ${
-                  active ? "text-[#F5C518]" : "text-white/30 hover:text-white/60"
-                }`}
-              >
-                {item.icon}
-                <span className={`text-[9px] font-bold leading-none ${active ? "text-[#F5C518]" : ""}`}>
-                  {item.label}
-                </span>
-              </Link>
-            );
-          })}
-        </div>
-      </nav>
-    </div>
+        {/* Bottom nav */}
+        <nav className="fixed bottom-0 left-0 w-full z-50
+          bg-white/95 tg-dark:bg-[#0f0f0f]/95
+          backdrop-blur-md
+          border-t border-gray-200 tg-dark:border-white/8">
+          <div className="flex items-center justify-around h-16 px-2">
+            {NAV.map(item => {
+              const active = path === item.href || (item.href !== "/tg" && path.startsWith(item.href));
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl transition-all ${
+                    active
+                      ? "text-[#F5C518]"
+                      : "text-gray-400 tg-dark:text-white/30"
+                  }`}
+                >
+                  {item.icon}
+                  <span className={`text-[9px] font-bold leading-none ${active ? "text-[#F5C518]" : ""}`}>
+                    {item.label}
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+        </nav>
+      </div>
+    </TgThemeCtx.Provider>
   );
 }

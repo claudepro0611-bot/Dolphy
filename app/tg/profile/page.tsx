@@ -27,7 +27,7 @@ export default function TgProfilePage() {
   return (
     <motion.div
       variants={stagger} initial="hidden" animate="show"
-      className="px-4 py-5 space-y-5"
+      className="min-h-screen w-full max-w-[430px] mx-auto px-4 py-4 space-y-5"
     >
 
       {/* Avatar + ism */}
@@ -40,29 +40,29 @@ export default function TgProfilePage() {
         </div>
         <div>
           <h1 className="text-xl font-bold">{firstName}</h1>
-          <p className="text-white/40 text-sm mt-0.5">{MOCK_USER.phone}</p>
-          <p className="text-white/25 text-xs mt-0.5">A&apos;zo: {MOCK_USER.joined}</p>
+          <p className="text-gray-500 dark:text-white/40 text-sm mt-0.5">{MOCK_USER.phone}</p>
+          <p className="text-gray-400 dark:text-white/25 text-xs mt-0.5">A&apos;zo: {MOCK_USER.joined}</p>
         </div>
       </motion.div>
 
       {/* Statistika */}
       <motion.div variants={fade} className="grid grid-cols-3 gap-3">
         {STATS.map(s => (
-          <div key={s.label} className="bg-white/[0.04] border border-white/8 rounded-2xl p-4 text-center">
+          <div key={s.label} className="bg-gray-100 dark:bg-white/[0.04] border border-gray-200 dark:border-white/8 rounded-2xl p-4 text-center">
             <p className="text-[#F5C518] font-bold text-2xl leading-none">{s.value}</p>
-            <p className="text-white/35 text-[10px] mt-2">{s.label}</p>
+            <p className="text-gray-500 dark:text-white/35 text-[10px] mt-2">{s.label}</p>
           </div>
         ))}
       </motion.div>
 
       {/* Sarflangan */}
       <motion.div variants={fade}
-        className="bg-white/[0.04] border border-white/8 rounded-2xl p-4 flex items-center justify-between">
+        className="bg-gray-100 dark:bg-white/[0.04] border border-gray-200 dark:border-white/8 rounded-2xl p-4 flex items-center justify-between">
         <div>
-          <p className="text-white/35 text-xs uppercase tracking-wider mb-1">Jami sarflangan</p>
+          <p className="text-gray-500 dark:text-white/35 text-xs uppercase tracking-wider mb-1">Jami sarflangan</p>
           <p className="text-[#F5C518] font-bold text-2xl">
             {(MOCK_USER.spent / 1000).toFixed(0)}K
-            <span className="text-sm font-normal text-white/40 ml-1">so'm</span>
+            <span className="text-sm font-normal text-gray-500 dark:text-white/40 ml-1">so&apos;m</span>
           </p>
         </div>
         <div className="w-12 h-12 rounded-2xl bg-[#F5C518]/10 flex items-center justify-center">
@@ -74,7 +74,7 @@ export default function TgProfilePage() {
 
       {/* Info qatorlar */}
       <motion.div variants={fade}
-        className="bg-white/[0.04] border border-white/8 rounded-2xl overflow-hidden">
+        className="bg-gray-100 dark:bg-white/[0.04] border border-gray-200 dark:border-white/8 rounded-2xl overflow-hidden">
         {[
           {
             icon: (
@@ -97,10 +97,10 @@ export default function TgProfilePage() {
           },
         ].map((row, i, arr) => (
           <div key={row.label}
-            className={`flex items-center gap-3 px-4 py-3.5 ${i < arr.length - 1 ? "border-b border-white/8" : ""}`}>
-            <span className="text-white/30 flex-shrink-0">{row.icon}</span>
+            className={`flex items-center gap-3 px-4 py-3.5 ${i < arr.length - 1 ? "border-b border-gray-200 dark:border-white/8" : ""}`}>
+            <span className="text-gray-400 dark:text-white/30 flex-shrink-0">{row.icon}</span>
             <div className="flex-1">
-              <p className="text-white/35 text-[10px] uppercase tracking-wider">{row.label}</p>
+              <p className="text-gray-500 dark:text-white/35 text-[10px] uppercase tracking-wider">{row.label}</p>
               <p className="text-sm font-medium mt-0.5">{row.value}</p>
             </div>
           </div>

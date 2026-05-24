@@ -42,22 +42,22 @@ export default function TgHistoryPage() {
   const deliveredCnt = orders.filter(o => o.status === "delivered").length;
 
   return (
-    <div className="px-4 py-5 space-y-5">
+    <div className="min-h-screen w-full max-w-[430px] mx-auto px-4 py-4 space-y-5">
 
       {/* Sarlavha */}
       <div>
-        <p className="text-white/35 text-xs font-bold uppercase tracking-widest mb-1">Tarix</p>
+        <p className="text-gray-500 dark:text-white/35 text-xs font-bold uppercase tracking-widest mb-1">Tarix</p>
         <h1 className="text-xl font-bold">Buyurtmalar tarixi</h1>
       </div>
 
       {/* Filter */}
-      <div className="flex gap-1.5 bg-white/[0.04] p-1 rounded-xl">
+      <div className="flex gap-1.5 bg-gray-100 dark:bg-white/[0.04] p-1 rounded-xl">
         {FILTERS.map(f => (
           <button key={f.key} onClick={() => setFilter(f.key)}
             className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${
               filter === f.key
                 ? "bg-[#F5C518] text-black shadow-[0_2px_8px_rgba(245,197,24,0.3)]"
-                : "text-white/35 hover:text-white/60"
+                : "text-gray-500 dark:text-white/35 hover:text-gray-700 dark:hover:text-white/60"
             }`}>
             {f.label}
           </button>
@@ -70,9 +70,9 @@ export default function TgHistoryPage() {
           { label: "Yetkazildi", value: deliveredCnt },
           { label: "Sarflangan", value: `${(totalSpent / 1000).toFixed(0)}K` },
         ].map(s => (
-          <div key={s.label} className="bg-white/[0.04] border border-white/8 rounded-2xl p-4 text-center">
+          <div key={s.label} className="bg-gray-100 dark:bg-white/[0.04] border border-gray-200 dark:border-white/8 rounded-2xl p-4 text-center">
             <p className="text-[#F5C518] font-bold text-2xl">{s.value}</p>
-            <p className="text-white/35 text-xs mt-1">{s.label}</p>
+            <p className="text-gray-500 dark:text-white/35 text-xs mt-1">{s.label}</p>
           </div>
         ))}
       </div>
@@ -85,21 +85,21 @@ export default function TgHistoryPage() {
           className="space-y-2.5"
         >
           {orders.length === 0 ? (
-            <div className="bg-white/[0.03] border border-white/8 rounded-2xl py-16 flex flex-col items-center gap-3">
-              <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center">
+            <div className="bg-gray-50 dark:bg-white/[0.03] border border-gray-200 dark:border-white/8 rounded-2xl py-16 flex flex-col items-center gap-3">
+              <div className="w-14 h-14 rounded-2xl bg-gray-100 dark:bg-white/5 flex items-center justify-center">
                 <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-                  <rect x="3" y="4" width="20" height="18" rx="2.5" stroke="currentColor" strokeWidth="1.6" className="text-white/20"/>
-                  <path d="M8 11h10M8 15h7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="text-white/20"/>
+                  <rect x="3" y="4" width="20" height="18" rx="2.5" stroke="currentColor" strokeWidth="1.6" className="text-gray-300 dark:text-white/20"/>
+                  <path d="M8 11h10M8 15h7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="text-gray-300 dark:text-white/20"/>
                 </svg>
               </div>
-              <p className="text-white/35 text-sm font-semibold">Buyurtma topilmadi</p>
+              <p className="text-gray-400 dark:text-white/35 text-sm font-semibold">Buyurtma topilmadi</p>
             </div>
           ) : (
             orders.map(o => {
               const s = STATUS_CFG[o.status];
               return (
                 <Link key={o.id} href={`/tg/order/${o.id}`}
-                  className="flex items-center gap-3 bg-white/[0.04] border border-white/8 rounded-2xl p-4 active:bg-white/[0.07] transition-colors">
+                  className="flex items-center gap-3 bg-gray-100 dark:bg-white/[0.04] border border-gray-200 dark:border-white/8 rounded-2xl p-4 active:bg-gray-200 dark:active:bg-white/[0.07] transition-colors">
 
                   {/* Status icon */}
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 border"
@@ -118,8 +118,8 @@ export default function TgHistoryPage() {
                   {/* Info */}
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-semibold truncate">{o.from}</p>
-                    <p className="text-white/30 text-xs mt-0.5 truncate">→ {o.to}</p>
-                    <p className="text-white/20 text-[10px] mt-1">{o.date}</p>
+                    <p className="text-gray-400 dark:text-white/30 text-xs mt-0.5 truncate">→ {o.to}</p>
+                    <p className="text-gray-300 dark:text-white/20 text-[10px] mt-1">{o.date}</p>
                   </div>
 
                   {/* Narx */}

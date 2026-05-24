@@ -1,24 +1,23 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { useTheme } from "next-themes";
 import { useLang } from "@/components/Providers";
 import { LANGS, type Lang } from "@/lib/i18n";
 import { useTelegram } from "@/hooks/useTelegram";
+import { useTgTheme } from "../tg-theme-ctx";
 
 const fade    = { hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } };
 const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.06 } } };
 
-const row  = "flex items-center justify-between px-4 py-3.5 hover:bg-white/[0.03] transition-colors";
-const sep  = "border-b border-white/6";
-const card = "bg-white/[0.04] border border-white/8 rounded-2xl overflow-hidden";
-const muted = "text-white/35";
+const row  = "flex items-center justify-between px-4 py-3.5 hover:bg-gray-50 dark:hover:bg-white/[0.03] transition-colors";
+const sep  = "border-b border-gray-200 dark:border-white/6";
+const card = "bg-gray-100 dark:bg-white/[0.04] border border-gray-200 dark:border-white/8 rounded-2xl overflow-hidden";
 
 function RowIcon({ children }: { children: React.ReactNode }) {
   return (
-    <span className="w-8 h-8 rounded-lg bg-white/6 flex items-center justify-center text-white/40 flex-shrink-0">
+    <span className="w-8 h-8 rounded-lg bg-gray-200 dark:bg-white/6 flex items-center justify-center text-gray-500 dark:text-white/40 flex-shrink-0">
       {children}
     </span>
   );
@@ -26,7 +25,7 @@ function RowIcon({ children }: { children: React.ReactNode }) {
 
 function Arrow() {
   return (
-    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" className={muted}>
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" className="text-gray-400 dark:text-white/35">
       <path d="M5 3l4 3.5-4 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   );
@@ -35,7 +34,7 @@ function Arrow() {
 function Toggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
   return (
     <button onClick={onToggle}
-      className={`relative w-11 h-6 rounded-full transition-all duration-300 flex-shrink-0 ${on ? "bg-[#F5C518]" : "bg-white/15"}`}>
+      className={`relative w-11 h-6 rounded-full transition-all duration-300 flex-shrink-0 ${on ? "bg-[#F5C518]" : "bg-gray-300 dark:bg-white/15"}`}>
       <motion.div
         animate={{ x: on ? 20 : 2 }}
         transition={{ type: "spring", stiffness: 500, damping: 30 }}
@@ -59,14 +58,10 @@ const Icons = {
 export default function TgSettingsPage() {
   const router = useRouter();
   const { tg } = useTelegram();
-  const { theme, setTheme } = useTheme();
+  const { isDark, setIsDark } = useTgTheme();
   const { lang, setLang } = useLang();
-  const [mounted, setMounted] = useState(false);
 
   const [notifs, setNotifs] = useState({ orders: true, payment: true, push: true, sms: false });
-
-  useEffect(() => setMounted(true), []);
-  const isDark = mounted ? theme === "dark" : true;
 
   function logout() {
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -75,16 +70,16 @@ export default function TgSettingsPage() {
   }
 
   function GroupLabel({ text }: { text: string }) {
-    return <p className={`px-1 mb-2 text-[10px] font-bold uppercase tracking-widest ${muted}`}>{text}</p>;
+    return <p className="px-1 mb-2 text-[10px] font-bold uppercase tracking-widest text-gray-500 dark:text-white/35">{text}</p>;
   }
 
   return (
     <motion.div
       variants={stagger} initial="hidden" animate="show"
-      className="px-4 py-5 space-y-5"
+      className="min-h-screen w-full max-w-[430px] mx-auto px-4 py-4 space-y-5"
     >
       <motion.div variants={fade}>
-        <p className={`${muted} text-[10px] font-bold uppercase tracking-widest mb-1`}>Sozlamalar</p>
+        <p className="text-gray-500 dark:text-white/35 text-[10px] font-bold uppercase tracking-widest mb-1">Sozlamalar</p>
         <h1 className="text-xl font-bold">Sozlamalar</h1>
       </motion.div>
 
@@ -97,7 +92,7 @@ export default function TgSettingsPage() {
               <RowIcon>{Icons.phone}</RowIcon>
               <div className="text-left">
                 <p className="text-sm font-semibold">Telefon</p>
-                <p className={`text-xs ${muted}`}>+998 90 123 45 67</p>
+                <p className="text-xs text-gray-500 dark:text-white/35">+998 90 123 45 67</p>
               </div>
             </div>
             <Arrow />
@@ -105,7 +100,7 @@ export default function TgSettingsPage() {
           <button className={`${row} w-full`}>
             <div className="flex items-center gap-3">
               <RowIcon>{Icons.lock}</RowIcon>
-              <p className="text-sm font-semibold">PIN o'zgartirish</p>
+              <p className="text-sm font-semibold">PIN o&apos;zgartirish</p>
             </div>
             <Arrow />
           </button>
@@ -121,7 +116,7 @@ export default function TgSettingsPage() {
               <RowIcon>{Icons.card}</RowIcon>
               <div className="text-left">
                 <p className="text-sm font-semibold">Kartalarim</p>
-                <p className={`text-xs ${muted}`}>2 ta karta</p>
+                <p className="text-xs text-gray-500 dark:text-white/35">2 ta karta</p>
               </div>
             </div>
             <Arrow />
@@ -144,7 +139,7 @@ export default function TgSettingsPage() {
                 <RowIcon>{Icons.bell}</RowIcon>
                 <div>
                   <p className="text-sm font-semibold">{item.label}</p>
-                  <p className={`text-xs ${muted}`}>{item.sub}</p>
+                  <p className="text-xs text-gray-500 dark:text-white/35">{item.sub}</p>
                 </div>
               </div>
               <Toggle on={notifs[item.key]} onToggle={() => setNotifs(p => ({ ...p, [item.key]: !p[item.key] }))} />
@@ -160,12 +155,12 @@ export default function TgSettingsPage() {
           {/* Mavzu */}
           <div className={`${row} ${sep}`}>
             <div className="flex items-center gap-3">
-              <RowIcon>{mounted ? (isDark ? Icons.moon : Icons.sun) : Icons.sun}</RowIcon>
+              <RowIcon>{isDark ? Icons.moon : Icons.sun}</RowIcon>
               <p className="text-sm font-semibold">
-                {mounted ? (isDark ? "Qorong'u" : "Kunduzgi") : "Rejim"}
+                {isDark ? "Qorong'u" : "Kunduzgi"}
               </p>
             </div>
-            <Toggle on={isDark} onToggle={() => setTheme(isDark ? "light" : "dark")} />
+            <Toggle on={isDark} onToggle={() => setIsDark(!isDark)} />
           </div>
 
           {/* Til */}
@@ -180,7 +175,7 @@ export default function TgSettingsPage() {
                   className={`py-2 rounded-xl border-2 text-xs font-bold transition-all ${
                     lang === l.code
                       ? "border-[#F5C518] bg-[#F5C518]/8 text-[#F5C518]"
-                      : `border-white/10 ${muted} hover:border-white/20`
+                      : "border-gray-200 dark:border-white/10 text-gray-500 dark:text-white/35 hover:border-gray-300 dark:hover:border-white/20"
                   }`}>
                   {l.code.toUpperCase()}
                 </button>
@@ -193,12 +188,12 @@ export default function TgSettingsPage() {
       {/* Chiqish */}
       <motion.div variants={fade}>
         <button onClick={logout}
-          className="w-full py-3.5 rounded-2xl border border-red-500/20 text-red-400 text-sm font-semibold hover:bg-red-500/5 hover:border-red-500/35 transition-all">
+          className="w-full py-3.5 rounded-2xl border border-red-500/20 text-red-500 dark:text-red-400 text-sm font-semibold hover:bg-red-50 dark:hover:bg-red-500/5 hover:border-red-500/35 transition-all">
           Chiqish
         </button>
       </motion.div>
 
-      <motion.div variants={fade} className={`${muted} text-[10px] text-center pb-2`}>
+      <motion.div variants={fade} className="text-gray-400 dark:text-white/35 text-[10px] text-center pb-2">
         Yotoq Mini App v1.0.0
       </motion.div>
     </motion.div>

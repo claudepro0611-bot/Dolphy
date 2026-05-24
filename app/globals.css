@@ -3,6 +3,7 @@
 @import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
+@custom-variant tg-dark (&:is(.tg-dark *));
 
 @layer base {
   body {

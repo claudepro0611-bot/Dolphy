@@ -1,0 +1,225 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import { useTelegram } from "@/hooks/useTelegram";
+
+type VehicleId = "damas" | "labo" | "isuzu" | "fura";
+
+const VEHICLES: { id: VehicleId; name: string; cap: string; base: number; perKm: number }[] = [
+  { id: "damas", name: "Damas",  cap: "1.5 t",  base: 15_000, perKm: 800  },
+  { id: "labo",  name: "Labo",   cap: "2 t",    base: 20_000, perKm: 1000 },
+  { id: "isuzu", name: "Isuzu",  cap: "5 t",    base: 40_000, perKm: 2200 },
+  { id: "fura",  name: "Fura",   cap: "20 t",   base: 80_000, perKm: 4500 },
+];
+
+const TruckIcon = () => (
+  <svg width="18" height="14" viewBox="0 0 22 16" fill="none">
+    <rect x="1" y="2" width="13" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
+    <path d="M14 4.5h5l2 4v3.5h-7V4.5z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/>
+    <circle cx="4.5" cy="13.5" r="1.5" stroke="currentColor" strokeWidth="1.3"/>
+    <circle cx="17.5" cy="13.5" r="1.5" stroke="currentColor" strokeWidth="1.3"/>
+  </svg>
+);
+
+const MOCK_KM = 8.4;
+
+export default function TgOrderNewPage() {
+  const router = useRouter();
+  const { tg } = useTelegram();
+
+  const [from,    setFrom]    = useState("");
+  const [to,      setTo]      = useState("");
+  const [vehicle, setVehicle] = useState<VehicleId>("damas");
+  const [step,    setStep]    = useState<"form" | "confirm">("form");
+
+  const selected = VEHICLES.find(v => v.id === vehicle)!;
+  const price    = Math.round(selected.base + MOCK_KM * selected.perKm);
+  const isValid  = from.trim().length > 2 && to.trim().length > 2;
+
+  // Telegram MainButton
+  useEffect(() => {
+    if (!tg) return;
+    let cleanup: (() => void) | undefined;
+    if (step === "form") {
+      if (isValid) {
+        tg.MainButton.setText("Narxni ko'rish");
+        tg.MainButton.show();
+        tg.MainButton.enable();
+        const handler = () => setStep("confirm");
+        tg.MainButton.onClick(handler);
+        cleanup = () => { tg.MainButton.offClick(handler); };
+      } else {
+        tg.MainButton.hide();
+      }
+    } else if (step === "confirm") {
+      tg.MainButton.setText(`Tasdiqlash — ${price.toLocaleString()} so'm`);
+      tg.MainButton.setParams({ color: "#F5C518", text_color: "#000000" });
+      tg.MainButton.show();
+      const handler = () => {
+        tg.MainButton.hide();
+        router.push("/tg/order/ORD-9999");
+      };
+      tg.MainButton.onClick(handler);
+      cleanup = () => { tg.MainButton.offClick(handler); };
+    }
+    return () => { cleanup?.(); };
+  }, [tg, step, isValid, price, router]);
+
+  // BackButton
+  useEffect(() => {
+    if (!tg) return;
+    if (step === "confirm") {
+      const handler = () => setStep("form");
+      tg.BackButton.onClick(handler);
+      return () => { tg.BackButton.offClick(handler); };
+    }
+  }, [tg, step]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => { tg?.MainButton.hide(); };
+  }, [tg]);
+
+  return (
+    <div className="px-4 py-5 space-y-5">
+
+      <AnimatePresence mode="wait">
+        {step === "form" ? (
+          <motion.div key="form"
+            initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}
+            className="space-y-5"
+          >
+            <div>
+              <p className="text-white/40 text-xs font-bold uppercase tracking-widest mb-1">Yangi buyurtma</p>
+              <h1 className="text-xl font-bold">Manzilni kiriting</h1>
+            </div>
+
+            {/* Manzillar */}
+            <div className="bg-white/[0.04] border border-white/8 rounded-2xl overflow-hidden">
+              {/* Qayerdan */}
+              <div className="flex items-center gap-3 px-4 py-3.5 border-b border-white/8">
+                <div className="w-2 h-2 rounded-full bg-green-400 flex-shrink-0" />
+                <input
+                  value={from}
+                  onChange={e => setFrom(e.target.value)}
+                  placeholder="Qayerdan?"
+                  className="flex-1 bg-transparent text-sm font-medium placeholder:text-white/25 outline-none"
+                />
+              </div>
+              {/* Connector */}
+              <div className="flex items-center gap-3 px-4 py-0.5">
+                <div className="w-2 flex-shrink-0 flex justify-center">
+                  <div className="w-px h-4 bg-white/10" />
+                </div>
+              </div>
+              {/* Qayerga */}
+              <div className="flex items-center gap-3 px-4 py-3.5">
+                <div className="w-2 h-2 rounded-full bg-red-400 flex-shrink-0" />
+                <input
+                  value={to}
+                  onChange={e => setTo(e.target.value)}
+                  placeholder="Qayerga?"
+                  className="flex-1 bg-transparent text-sm font-medium placeholder:text-white/25 outline-none"
+                />
+              </div>
+            </div>
+
+            {/* Tafsilot */}
+            {from && to && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                className="flex items-center gap-2 text-xs text-white/30">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <circle cx="6" cy="6" r="4.5" stroke="currentColor" strokeWidth="1.2"/>
+                  <path d="M6 4v3.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+                </svg>
+                Taxminiy masofa: ~{MOCK_KM} km
+              </motion.div>
+            )}
+
+            {/* Mashina turi */}
+            <div>
+              <p className="text-white/40 text-xs font-bold uppercase tracking-widest mb-3">Mashina turi</p>
+              <div className="grid grid-cols-2 gap-2.5">
+                {VEHICLES.map(v => (
+                  <button key={v.id} onClick={() => setVehicle(v.id)}
+                    className={`flex items-center gap-3 p-3.5 rounded-2xl border transition-all text-left ${
+                      vehicle === v.id
+                        ? "border-[#F5C518]/50 bg-[#F5C518]/8"
+                        : "border-white/8 bg-white/[0.03] hover:bg-white/[0.06]"
+                    }`}>
+                    <span className={vehicle === v.id ? "text-[#F5C518]" : "text-white/30"}>
+                      <TruckIcon />
+                    </span>
+                    <div>
+                      <p className={`text-sm font-bold ${vehicle === v.id ? "text-[#F5C518]" : "text-white"}`}>
+                        {v.name}
+                      </p>
+                      <p className="text-white/30 text-[10px]">{v.cap}</p>
+                    </div>
+                    {vehicle === v.id && (
+                      <div className="ml-auto w-4 h-4 rounded-full bg-[#F5C518] flex items-center justify-center flex-shrink-0">
+                        <svg width="8" height="7" viewBox="0 0 8 7" fill="none">
+                          <path d="M1 3.5l2 2 4-4" stroke="#000" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+
+        ) : (
+          <motion.div key="confirm"
+            initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}
+            className="space-y-5"
+          >
+            <div>
+              <p className="text-white/40 text-xs font-bold uppercase tracking-widest mb-1">Tasdiqlash</p>
+              <h1 className="text-xl font-bold">Buyurtma ma'lumotlari</h1>
+            </div>
+
+            {/* Marshrut */}
+            <div className="bg-white/[0.04] border border-white/8 rounded-2xl overflow-hidden">
+              <div className="flex items-center gap-3 px-4 py-3.5 border-b border-white/8">
+                <div className="w-2 h-2 rounded-full bg-green-400 flex-shrink-0" />
+                <p className="text-sm font-medium">{from}</p>
+              </div>
+              <div className="flex items-center gap-3 px-4 py-0.5">
+                <div className="w-2 flex-shrink-0 flex justify-center">
+                  <div className="w-px h-4 bg-white/10" />
+                </div>
+              </div>
+              <div className="flex items-center gap-3 px-4 py-3.5">
+                <div className="w-2 h-2 rounded-full bg-red-400 flex-shrink-0" />
+                <p className="text-sm font-medium">{to}</p>
+              </div>
+            </div>
+
+            {/* Tafsilot */}
+            <div className="bg-white/[0.04] border border-white/8 rounded-2xl overflow-hidden">
+              {[
+                { label: "Mashina",  value: selected.name },
+                { label: "Sig'im",   value: selected.cap  },
+                { label: "Masofa",   value: `~${MOCK_KM} km` },
+                { label: "Narx",     value: `${price.toLocaleString()} so'm`, accent: true },
+              ].map((row, i, arr) => (
+                <div key={row.label}
+                  className={`flex items-center justify-between px-4 py-3.5 ${i < arr.length - 1 ? "border-b border-white/8" : ""}`}>
+                  <p className="text-white/40 text-sm">{row.label}</p>
+                  <p className={`text-sm font-bold ${row.accent ? "text-[#F5C518]" : "text-white"}`}>{row.value}</p>
+                </div>
+              ))}
+            </div>
+
+            <p className="text-white/25 text-xs text-center">
+              Tasdiqlash tugmasini bosing — haydovchi topiladi
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}

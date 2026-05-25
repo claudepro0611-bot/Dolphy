@@ -59,7 +59,9 @@ export default function TgOrderNewPage() {
       tg.MainButton.show();
       const handler = () => {
         tg.MainButton.hide();
-        router.push("/tg/order/ORD-9999");
+        router.push(
+          `/tg/order/confirm?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&vehicle=${vehicle}&price=${price}`
+        );
       };
       tg.MainButton.onClick(handler);
       cleanup = () => { tg.MainButton.offClick(handler); };

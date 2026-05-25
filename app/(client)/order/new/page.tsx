@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { useLang } from "@/components/Providers";
 import type { LatLng } from "@/components/MapOrderClient";
+import { supabase } from "@/lib/supabase/client";
 
 const MapOrderClient = dynamic(() => import("@/components/MapOrderClient"), {
   ssr: false,
@@ -207,11 +208,13 @@ export default function NewOrderPage() {
   const [toAddr,    setToAddr]    = useState("");
   const [fromQuery, setFromQuery] = useState("");
   const [toQuery,   setToQuery]   = useState("");
-  const [truck,     setTruck]     = useState<Truck>("gazelle");
-  const [activePin, setActivePin] = useState<ActivePin>(null);
-  const [loading,   setLoading]   = useState(false);
-  const [locating,  setLocating]  = useState(true);
-  const [panelOpen, setPanelOpen] = useState(true);
+  const [truck,       setTruck]       = useState<Truck>("gazelle");
+  const [activePin,   setActivePin]   = useState<ActivePin>(null);
+  const [loading,     setLoading]     = useState(false);
+  const [locating,    setLocating]    = useState(true);
+  const [panelOpen,   setPanelOpen]   = useState(true);
+  const [cargoType,   setCargoType]   = useState("");
+  const [cargoWeight, setCargoWeight] = useState("");
 
   // GPS auto-detect
   useEffect(() => {
@@ -271,9 +274,29 @@ export default function NewOrderPage() {
   async function submit() {
     if (!canSubmit) return;
     setLoading(true);
-    await new Promise(r => setTimeout(r, 800));
+
+    const { data: { user } } = await supabase.auth.getUser();
+
+    const { error } = await supabase.from("orders").insert({
+      client_id:     user?.id ?? null,
+      from_address:  fromAddr,
+      to_address:    toAddr,
+      cargo_type:    cargoType || "Belgilanmagan",
+      cargo_weight:  parseFloat(cargoWeight) || 0,
+      vehicle_type:  truck,
+      price:         price ?? 0,
+      status:        "pending",
+      driver_id:     null,
+    });
+
     setLoading(false);
-    router.push(`/order/ORD-${Math.floor(1000 + Math.random() * 9000)}`);
+
+    if (error) {
+      console.error("Order insert error:", error);
+      return;
+    }
+
+    router.push("/order-success");
   }
 
   return (
@@ -397,6 +420,32 @@ export default function NewOrderPage() {
                 )}
               </button>
             ))}
+          </div>
+        </div>
+
+        {/* --- Yuk ma'lumotlari --- */}
+        <div className="bg-black/85 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl">
+          <p className="text-white/30 text-xs font-bold uppercase tracking-widest mb-3">Yuk</p>
+          <div className="space-y-2">
+            <select
+              value={cargoType}
+              onChange={e => setCargoType(e.target.value)}
+              className="w-full bg-white/5 border border-white/8 rounded-xl px-3 py-2.5 text-white text-sm outline-none focus:border-white/25 appearance-none"
+            >
+              <option value="" className="bg-black">Yuk turi</option>
+              <option value="Mebel" className="bg-black">Mebel</option>
+              <option value="Qurilish" className="bg-black">Qurilish materiallari</option>
+              <option value="Oziq-ovqat" className="bg-black">Oziq-ovqat</option>
+              <option value="Texnika" className="bg-black">Texnika</option>
+              <option value="Boshqa" className="bg-black">Boshqa</option>
+            </select>
+            <input
+              type="number"
+              placeholder="Og'irlik (kg)"
+              value={cargoWeight}
+              onChange={e => setCargoWeight(e.target.value)}
+              className="w-full bg-white/5 border border-white/8 rounded-xl px-3 py-2.5 text-white text-sm placeholder:text-white/25 outline-none focus:border-white/25"
+            />
           </div>
         </div>
 

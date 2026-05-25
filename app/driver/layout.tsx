@@ -7,6 +7,17 @@ import { useEffect, useState } from "react";
 
 const NAV = [
   {
+    href: "/driver/dashboard",
+    label: "Buyurtmalar",
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <rect x="1" y="3" width="14" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M4 7h8M4 10h5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+        <circle cx="13" cy="4" r="2.5" fill="#4ade80"/>
+      </svg>
+    ),
+  },
+  {
     href: "/driver/earnings",
     label: "Daromad",
     icon: (

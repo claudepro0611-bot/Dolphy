@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTelegram } from "@/hooks/useTelegram";
+import { supabase } from "@/lib/supabase/client";
 
 type VehicleId = "damas" | "labo" | "isuzu" | "fura";
 
@@ -57,11 +58,30 @@ export default function TgOrderNewPage() {
       tg.MainButton.setText(`Tasdiqlash — ${price.toLocaleString()} so'm`);
       tg.MainButton.setParams({ color: "#F5C518", text_color: "#000000" });
       tg.MainButton.show();
-      const handler = () => {
-        tg.MainButton.hide();
-        router.push(
-          `/tg/order/confirm?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&vehicle=${vehicle}&price=${price}`
-        );
+      tg.MainButton.enable();
+      const handler = async () => {
+        tg.MainButton.disable();
+        const { data: { user } } = await supabase.auth.getUser();
+        const { data, error } = await supabase
+          .from("orders")
+          .insert({
+            client_id:    user?.id ?? null,
+            from_address: from,
+            to_address:   to,
+            vehicle_type: vehicle,
+            price,
+            cargo_type:   "Belgilanmagan",
+            cargo_weight: 0,
+            status:       "pending",
+            driver_id:    null,
+          })
+          .select();
+        if (error || !data?.[0]) {
+          console.error("Order insert error:", error);
+          tg.MainButton.enable();
+          return;
+        }
+        router.push(`/tg/order/searching?id=${data[0].id}`);
       };
       tg.MainButton.onClick(handler);
       cleanup = () => { tg.MainButton.offClick(handler); };

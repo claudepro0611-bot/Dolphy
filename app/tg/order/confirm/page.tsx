@@ -1,10 +1,11 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import { useEffect, Suspense } from "react";
+import { useEffect, useState, useCallback, Suspense } from "react";
 import { motion } from "framer-motion";
 import { useTelegram } from "@/hooks/useTelegram";
 import { supabase } from "@/lib/supabase/client";
+import type { User } from "@supabase/supabase-js";
 
 const fade    = { hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0 } };
 const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.08 } } };
@@ -21,64 +22,82 @@ function ConfirmContent() {
 
   const vehicleName = vehicle.charAt(0).toUpperCase() + vehicle.slice(1);
 
-  // MainButton — tasdiqlash + Supabase insert
+  const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser]           = useState<User | null>(null);
+
+  // Foydalanuvchini bir marta yuklash
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => setUser(data.user));
+  }, []);
+
+  // Tasdiqlash funksiyasi — useCallback bilan to'g'ri dep tracking
+  const handleConfirm = useCallback(async () => {
+    setIsLoading(true);
+
+    const { data, error } = await supabase
+      .from("orders")
+      .insert({
+        client_id:    user?.id ?? null,
+        from_address: from,
+        to_address:   to,
+        vehicle_type: vehicle,
+        price,
+        cargo_type:   "Belgilanmagan",
+        cargo_weight: 0,
+        status:       "pending",
+        driver_id:    null,
+      })
+      .select();
+
+    setIsLoading(false);
+
+    if (error || !data?.[0]) {
+      alert(error?.message ?? "Xatolik yuz berdi");
+      return;
+    }
+
+    router.push(`/tg/order/searching?id=${data[0].id}`);
+  }, [user, from, to, vehicle, price, router]);
+
+  // MainButton ulash
   useEffect(() => {
     if (!tg) return;
-    tg.MainButton.setText(`Tasdiqlash — ${price.toLocaleString()} so'm`);
+    tg.MainButton.setText("Tasdiqlash");
     tg.MainButton.setParams({ color: "#F5C518", text_color: "#000000" });
     tg.MainButton.show();
     tg.MainButton.enable();
-
-    const handler = async () => {
-      tg.MainButton.disable();
-
-      const { data: { user } } = await supabase.auth.getUser();
-      const { data, error } = await supabase
-        .from("orders")
-        .insert({
-          client_id:    user?.id ?? null,
-          from_address: from,
-          to_address:   to,
-          vehicle_type: vehicle,
-          price,
-          cargo_type:   "Belgilanmagan",
-          cargo_weight: 0,
-          status:       "pending",
-          driver_id:    null,
-        })
-        .select();
-
-      if (error || !data?.[0]) {
-        console.error("Order insert error:", error);
-        tg.MainButton.enable();
-        return;
-      }
-
-      router.push(`/tg/order/searching?id=${data[0].id}`);
-    };
-
-    tg.MainButton.onClick(handler);
+    tg.MainButton.onClick(handleConfirm);
     return () => {
-      tg.MainButton.offClick(handler);
+      tg.MainButton.offClick(handleConfirm);
       tg.MainButton.hide();
     };
-  }, [tg, price, from, to, vehicle, router]);
+  }, [tg, handleConfirm]);
+
+  // isLoading o'zgarganda MainButton holati
+  useEffect(() => {
+    if (!tg) return;
+    if (isLoading) {
+      tg.MainButton.disable();
+      tg.MainButton.setText("Yuborilmoqda...");
+    } else {
+      tg.MainButton.enable();
+      tg.MainButton.setText("Tasdiqlash");
+    }
+  }, [tg, isLoading]);
 
   // BackButton
   useEffect(() => {
     if (!tg) return;
     const handler = () => router.back();
     tg.BackButton.onClick(handler);
-    return () => {
-      tg.BackButton.offClick(handler);
-    };
+    return () => { tg.BackButton.offClick(handler); };
   }, [tg, router]);
 
   const rows = [
-    { label: "Qayerdan",  value: from },
-    { label: "Qayerga",   value: to },
-    { label: "Mashina",   value: vehicleName },
-    { label: "Narx",      value: `${price.toLocaleString()} so'm`, accent: true },
+    { label: "Qayerdan", value: from },
+    { label: "Qayerga",  value: to },
+    { label: "Mashina",  value: vehicleName },
+    { label: "Narx",     value: `${price.toLocaleString()} so'm`, accent: true },
   ];
 
   return (
@@ -135,7 +154,11 @@ function ConfirmContent() {
 
 export default function ConfirmPage() {
   return (
-    <Suspense fallback={<div>Yuklanmoqda...</div>}>
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="w-8 h-8 rounded-full border-2 border-[#F5C518]/20 border-t-[#F5C518] animate-spin" />
+      </div>
+    }>
       <ConfirmContent />
     </Suspense>
   );

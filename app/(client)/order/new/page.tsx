@@ -277,7 +277,7 @@ export default function NewOrderPage() {
 
     const { data: { user } } = await supabase.auth.getUser();
 
-    const { error } = await supabase.from("orders").insert({
+    const { data, error } = await supabase.from("orders").insert({
       client_id:     user?.id ?? null,
       from_address:  fromAddr,
       to_address:    toAddr,
@@ -287,16 +287,16 @@ export default function NewOrderPage() {
       price:         price ?? 0,
       status:        "pending",
       driver_id:     null,
-    });
+    }).select();
 
     setLoading(false);
 
-    if (error) {
+    if (error || !data?.[0]) {
       console.error("Order insert error:", error);
       return;
     }
 
-    router.push("/order-success");
+    router.push(`/order-success?id=${data[0].id}`);
   }
 
   return (

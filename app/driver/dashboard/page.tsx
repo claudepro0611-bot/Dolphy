@@ -14,6 +14,7 @@ interface Order {
   price: number;
   status: string;
   created_at: string;
+  users?: { full_name?: string; email?: string } | null;
 }
 
 const fade    = { hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } };
@@ -28,14 +29,13 @@ export default function DriverDashboardPage() {
   useEffect(() => {
     supabase
       .from("orders")
-      .select("*")
+      .select("*, users(*)")
       .eq("status", "pending")
       .is("driver_id", null)
       .order("created_at", { ascending: false })
       .then(({ data, error }) => {
-        console.log("orders:", data);
-        console.log("error:", error);
-        setOrders((data as Order[]) ?? []);
+        console.log("orders:", data, "error:", error);
+        setOrders((data as Order[]) || []);
         setLoading(false);
       });
   }, []);
@@ -83,8 +83,9 @@ export default function DriverDashboardPage() {
     if (error) {
       console.error("Accept error:", error);
       setActions(prev => ({ ...prev, [orderId]: false }));
+    } else {
+      setOrders(prev => prev.filter(o => o.id !== orderId));
     }
-    // Real-time UPDATE eventi ro'yxatdan olib tashlaydi
   }
 
   // Rad etish

@@ -20,15 +20,15 @@ export default function LoginPage() {
     setLoading(true);
     setError("");
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    console.log("login data:", data);
-    console.log("login error:", error);
+    console.log("data:", data);
+    console.log("error:", error);
     setLoading(false);
     if (error) {
-      setError(error.message === "Invalid login credentials"
-        ? "Email yoki parol noto'g'ri"
-        : error.message);
-    } else {
-      router.push("/dashboard");
+      setError("Email yoki parol noto'g'ri");
+      return;
+    }
+    if (data.user) {
+      window.location.href = "/dashboard";
     }
   }
 

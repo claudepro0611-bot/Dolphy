@@ -1,25 +1,57 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { useTelegram } from "@/hooks/useTelegram";
+import { supabase } from "@/lib/supabase/client";
 
-export default function TgOrderSearchingPage() {
+function SearchingContent() {
   const router = useRouter();
   const { tg } = useTelegram();
-
-  // 3 soniyadan keyin found sahifasiga o'tish
-  useEffect(() => {
-    const timer = setTimeout(() => router.push("/tg/order/found"), 3000);
-    return () => clearTimeout(timer);
-  }, [router]);
+  const params = useSearchParams();
+  const orderId = params.get("orderId");
 
   // MainButton yashirish
   useEffect(() => {
     if (!tg) return;
     tg.MainButton.hide();
   }, [tg]);
+
+  // Supabase real-time — driver qabul qilganini kutish
+  useEffect(() => {
+    if (!orderId) return;
+
+    const channel = supabase
+      .channel("order-status")
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "orders",
+          filter: `id=eq.${orderId}`,
+        },
+        (payload) => {
+          if (payload.new.status === "accepted") {
+            router.push(`/tg/order/found?id=${orderId}`);
+          }
+        }
+      )
+      .subscribe();
+
+    return () => { supabase.removeChannel(channel); };
+  }, [orderId, router]);
+
+  async function cancel() {
+    if (orderId) {
+      await supabase
+        .from("orders")
+        .update({ status: "cancelled" })
+        .eq("id", orderId);
+    }
+    router.push("/tg/order/new");
+  }
 
   return (
     <div className="min-h-screen w-full max-w-[430px] mx-auto px-4 py-4 flex flex-col items-center justify-center gap-10">
@@ -65,10 +97,22 @@ export default function TgOrderSearchingPage() {
 
       {/* Bekor qilish */}
       <button
-        onClick={() => router.push("/tg/order/new")}
+        onClick={cancel}
         className="px-8 py-3 rounded-2xl border border-gray-200 dark:border-white/10 text-gray-500 dark:text-white/40 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-white/5 active:scale-[0.97] transition-all">
         Bekor qilish
       </button>
     </div>
+  );
+}
+
+export default function TgOrderSearchingPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="w-8 h-8 rounded-full border-2 border-[#F5C518]/20 border-t-[#F5C518] animate-spin" />
+      </div>
+    }>
+      <SearchingContent />
+    </Suspense>
   );
 }

@@ -10,7 +10,7 @@ function SearchingContent() {
   const router = useRouter();
   const { tg } = useTelegram();
   const params = useSearchParams();
-  const orderId = params.get("orderId");
+  const orderId = params.get("id");
 
   // MainButton yashirish
   useEffect(() => {

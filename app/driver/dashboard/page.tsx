@@ -32,7 +32,9 @@ export default function DriverDashboardPage() {
       .eq("status", "pending")
       .is("driver_id", null)
       .order("created_at", { ascending: false })
-      .then(({ data }) => {
+      .then(({ data, error }) => {
+        console.log("orders:", data);
+        console.log("error:", error);
         setOrders((data as Order[]) ?? []);
         setLoading(false);
       });

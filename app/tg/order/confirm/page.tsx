@@ -5,7 +5,6 @@ import { useEffect, useState, useCallback, Suspense } from "react";
 import { motion } from "framer-motion";
 import { useTelegram } from "@/hooks/useTelegram";
 import { supabase } from "@/lib/supabase/client";
-import type { User } from "@supabase/supabase-js";
 
 const fade    = { hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0 } };
 const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.08 } } };
@@ -23,21 +22,19 @@ function ConfirmContent() {
   const vehicleName = vehicle.charAt(0).toUpperCase() + vehicle.slice(1);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [user, setUser]           = useState<User | null>(null);
 
-  // Foydalanuvchini bir marta yuklash
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => setUser(data.user));
-  }, []);
-
-  // Tasdiqlash funksiyasi — useCallback bilan to'g'ri dep tracking
+  // Tasdiqlash funksiyasi
   const handleConfirm = useCallback(async () => {
     setIsLoading(true);
+
+    // Debug: Supabase session tekshirish
+    const { data: { user } } = await supabase.auth.getUser();
+    console.log("user:", user);
 
     const { data, error } = await supabase
       .from("orders")
       .insert({
-        client_id:    user?.id ?? null,
+        client_id:    null, // Telegram'da Supabase auth yo'q — vaqtincha null
         from_address: from,
         to_address:   to,
         vehicle_type: vehicle,
@@ -49,6 +46,9 @@ function ConfirmContent() {
       })
       .select();
 
+    console.log("data:", data);
+    console.log("error:", error);
+
     setIsLoading(false);
 
     if (error || !data?.[0]) {
@@ -57,7 +57,7 @@ function ConfirmContent() {
     }
 
     router.push(`/tg/order/searching?id=${data[0].id}`);
-  }, [user, from, to, vehicle, price, router]);
+  }, [from, to, vehicle, price, router]);
 
   // MainButton ulash
   useEffect(() => {

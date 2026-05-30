@@ -100,12 +100,14 @@ export default function DriverDashboardPage() {
     setActions(prev => ({ ...prev, [orderId]: true }));
     const { error } = await supabase
       .from("orders")
-      .update({ status: "rejected" })
+      .update({ status: "cancelled" })
       .eq("id", orderId);
 
     if (error) {
       console.error("Reject error:", error);
       setActions(prev => ({ ...prev, [orderId]: false }));
+    } else {
+      setOrders(prev => prev.filter(o => o.id !== orderId));
     }
   }
 

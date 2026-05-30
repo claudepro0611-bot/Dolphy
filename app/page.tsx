@@ -30,7 +30,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-[#FFD100] flex items-center justify-center text-black font-black text-sm">Y</div>
-            <span className="font-bold text-lg tracking-tight">Yotoq</span>
+            <span className="font-bold text-lg tracking-tight text-foreground dark:text-white">Yotoq</span>
             <span className="text-white/30 text-sm ml-1">Logistics</span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm text-white/60">
@@ -61,7 +61,7 @@ export default function LandingPage() {
           <span className="w-1.5 h-1.5 rounded-full bg-[#FFD100] animate-pulse" />
           Toshkentda ishlamoqda
         </div>
-        <h1 className="text-5xl md:text-7xl font-bold leading-[1.05] tracking-tight max-w-3xl mb-6">
+        <h1 className="text-5xl md:text-7xl font-bold leading-[1.05] tracking-tight max-w-3xl mb-6 text-foreground dark:text-white">
           Yukingizni{" "}
           <span className="text-[#FFD100]">tez</span> va{" "}
           <span className="text-[#FFD100]">ishonchli</span>{" "}
@@ -109,7 +109,7 @@ export default function LandingPage() {
       <section id="how" className="max-w-6xl mx-auto px-6 py-24">
         <div className="mb-14">
           <p className="text-[#FFD100] text-xs font-bold tracking-[3px] uppercase mb-3">Qanday ishlaydi</p>
-          <h2 className="text-4xl md:text-5xl font-bold">To&apos;rt qadam, xolos</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground dark:text-white">To&apos;rt qadam, xolos</h2>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
           {STEPS.map((s) => (
@@ -120,7 +120,7 @@ export default function LandingPage() {
               <div className="text-[#FFD100] font-black text-5xl mb-5 opacity-20 group-hover:opacity-50 transition-opacity leading-none">
                 {s.n}
               </div>
-              <h3 className="font-bold text-base mb-2">{s.title}</h3>
+              <h3 className="font-bold text-base mb-2 text-foreground dark:text-white">{s.title}</h3>
               <p className="text-white/35 text-sm leading-relaxed">{s.desc}</p>
             </div>
           ))}
@@ -132,7 +132,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto px-6 py-24">
           <div className="mb-14">
             <p className="text-[#FFD100] text-xs font-bold tracking-[3px] uppercase mb-3">Mashinalar</p>
-            <h2 className="text-4xl md:text-5xl font-bold">Yukingizdek mashina</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground dark:text-white">Yukingizdek mashina</h2>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {TRUCKS.map((t, i) => (
@@ -152,7 +152,7 @@ export default function LandingPage() {
                 <div className={`text-4xl font-bold mb-5 ${i === 1 ? "text-[#FFD100]" : "text-white/15"}`}>
                   {t.cap}
                 </div>
-                <h3 className="text-2xl font-bold mb-1">{t.name}</h3>
+                <h3 className="text-2xl font-bold mb-1 text-foreground dark:text-white">{t.name}</h3>
                 <p className="text-white/35 text-sm mb-6">Yuk hajmi: {t.cap}</p>
                 <div className="flex items-end gap-1">
                   <span className="text-3xl font-bold text-[#FFD100]">{t.price}</span>
@@ -166,7 +166,7 @@ export default function LandingPage() {
 
       {/* CTA */}
       <section className="max-w-6xl mx-auto px-6 py-28 text-center">
-        <h2 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+        <h2 className="text-4xl md:text-6xl font-bold mb-6 leading-tight text-foreground dark:text-white">
           Hoziroq boshlang
         </h2>
         <p className="text-white/35 text-lg mb-10 max-w-md mx-auto leading-relaxed">

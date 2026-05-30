@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 
 interface Suggestion {
   title: string
@@ -68,11 +69,14 @@ async function yandexSearch(q: string, apiKey: string): Promise<Suggestion[]> {
 
 // ── Asosiy komponent ──────────────────────────────────────────────────────────
 export function AddressInput({ placeholder, value, onChange, onSelect, pinColor }: AddressInputProps) {
-  const [suggestions, setSuggestions] = useState<Suggestion[]>([])
-  const [loading, setLoading]         = useState(false)
-  const [open, setOpen]               = useState(false)
-  const [source, setSource]           = useState<'yandex' | 'nominatim' | null>(null)
-  const timer                         = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [suggestions, setSuggestions]   = useState<Suggestion[]>([])
+  const [loading, setLoading]           = useState(false)
+  const [open, setOpen]                 = useState(false)
+  const [source, setSource]             = useState<'yandex' | 'nominatim' | null>(null)
+  const [selected, setSelected]         = useState(false)
+  const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({})
+  const inputRef                        = useRef<HTMLDivElement>(null)
+  const timer                           = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     if (value.length < 2) {
@@ -117,6 +121,19 @@ export function AddressInput({ placeholder, value, onChange, onSelect, pinColor 
     return () => { if (timer.current) clearTimeout(timer.current) }
   }, [value])
 
+  useEffect(() => {
+    if (inputRef.current && open) {
+      const rect = inputRef.current.getBoundingClientRect()
+      setDropdownStyle({
+        position: 'fixed',
+        top: rect.bottom + 4,
+        left: rect.left,
+        width: rect.width,
+        zIndex: 99999,
+      })
+    }
+  }, [open, value])
+
   const dot =
     pinColor === 'green'
       ? 'bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.5)]'
@@ -125,64 +142,91 @@ export function AddressInput({ placeholder, value, onChange, onSelect, pinColor 
       : 'bg-white/30'
 
   return (
-    <div className="relative">
-      {/* Input */}
-      <div className="flex items-center gap-3 rounded-xl px-3 py-3 border border-white/8 bg-white/5 hover:border-white/15 focus-within:border-white/25 focus-within:bg-white/8 transition-all">
-        {pinColor && <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${dot}`} />}
-        <input
-          className="flex-1 bg-transparent text-white text-sm placeholder:text-white/30 outline-none min-w-0"
-          placeholder={placeholder}
-          value={value}
-          onChange={(e) => { onChange(e.target.value); setOpen(true) }}
-          onBlur={() => setTimeout(() => setOpen(false), 200)}
-        />
-        {loading && (
-          <div className="w-3.5 h-3.5 border-2 border-white/20 border-t-white/60 rounded-full animate-spin flex-shrink-0" />
-        )}
-        {value && !loading && (
+    <div ref={inputRef} className="relative">
+      {/* Tanlangan manzil chip */}
+      {selected ? (
+        <div className="flex items-center gap-3 rounded-xl px-3 py-3 border border-white/15 bg-white/8">
+          {pinColor && <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${dot}`} />}
+          <p className="flex-1 text-white text-sm truncate min-w-0">{value}</p>
           <button
             type="button"
-            onMouseDown={(e) => { e.preventDefault(); onChange(''); setSuggestions([]); setOpen(false) }}
+            onMouseDown={(e) => {
+              e.preventDefault()
+              setSelected(false)
+              onChange('')
+              setSuggestions([])
+            }}
             className="text-white/25 hover:text-white/60 transition-colors flex-shrink-0 text-base leading-none"
           >
             ✕
           </button>
-        )}
-      </div>
-
-      {/* Dropdown */}
-      {open && suggestions.length > 0 && (
-        <div className="absolute top-full left-0 right-0 mt-1.5 bg-[#111] border border-white/12 rounded-xl overflow-hidden shadow-2xl z-[99999]">
-          {suggestions.map((s, i) => (
+        </div>
+      ) : (
+        /* Input */
+        <div className="flex items-center gap-3 rounded-xl px-3 py-3 border border-white/8 bg-white/5 hover:border-white/15 focus-within:border-white/25 focus-within:bg-white/8 transition-all">
+          {pinColor && <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${dot}`} />}
+          <input
+            className="flex-1 bg-transparent text-white text-sm placeholder:text-white/30 outline-none min-w-0"
+            placeholder={placeholder}
+            value={value}
+            onChange={(e) => { onChange(e.target.value); setOpen(true) }}
+            onBlur={() => setTimeout(() => setOpen(false), 200)}
+          />
+          {loading && (
+            <div className="w-3.5 h-3.5 border-2 border-white/20 border-t-white/60 rounded-full animate-spin flex-shrink-0" />
+          )}
+          {value && !loading && (
             <button
-              key={i}
               type="button"
-              onMouseDown={() => {
-                onSelect(s.title + (s.subtitle ? ', ' + s.subtitle : ''), s.lat, s.lng)
-                setSuggestions([])
-                setOpen(false)
-              }}
-              className="w-full text-left px-4 py-2.5 hover:bg-white/8 transition-colors border-b border-white/5 last:border-0 flex items-start gap-3 group"
+              onMouseDown={(e) => { e.preventDefault(); onChange(''); setSuggestions([]); setOpen(false) }}
+              className="text-white/25 hover:text-white/60 transition-colors flex-shrink-0 text-base leading-none"
             >
-              <svg className="w-3 h-3 mt-0.5 text-white/20 group-hover:text-[#FFD100] transition-colors flex-shrink-0" viewBox="0 0 12 16" fill="currentColor">
-                <path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 11 5 11s5-7.25 5-11C11 2.24 8.76 0 6 0zm0 7.5A2.5 2.5 0 1 1 6 2.5a2.5 2.5 0 0 1 0 5z"/>
-              </svg>
-              <div className="min-w-0">
-                <p className="text-white/80 text-xs font-medium group-hover:text-white transition-colors truncate">{s.title}</p>
-                {s.subtitle && (
-                  <p className="text-white/35 text-[10px] mt-0.5 truncate">{s.subtitle}</p>
-                )}
-              </div>
+              ✕
             </button>
-          ))}
-          {/* Manba ko'rsatish (dev uchun) */}
-          {process.env.NODE_ENV === 'development' && source && (
-            <div className="px-4 py-1.5 border-t border-white/5">
-              <p className="text-white/20 text-[10px]">via {source}</p>
-            </div>
           )}
         </div>
       )}
+
+      {/* Dropdown — Portal orqali document.body ga render */}
+      {open && suggestions.length > 0 && typeof window !== 'undefined' &&
+        createPortal(
+          <div style={{ ...dropdownStyle, background: '#1a1a1a', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 8px 24px rgba(0,0,0,0.5)', overflow: 'hidden' }}>
+            {suggestions.map((s, i) => (
+              <button
+                key={i}
+                type="button"
+                onMouseDown={() => {
+                  const fullAddress = s.title + (s.subtitle ? ', ' + s.subtitle : '')
+                  onSelect(fullAddress, s.lat, s.lng)
+                  onChange(fullAddress)
+                  setSuggestions([])
+                  setOpen(false)
+                  setSelected(true)
+                }}
+                style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', width: '100%', textAlign: 'left', padding: '10px 14px', background: 'none', border: 'none', borderBottom: i < suggestions.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none', cursor: 'pointer', color: '#fff' }}
+                onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.05)')}
+                onMouseLeave={e => (e.currentTarget.style.background = 'none')}
+              >
+                <svg style={{ width: 12, height: 12, marginTop: 2, flexShrink: 0, color: 'rgba(255,255,255,0.25)' }} viewBox="0 0 12 16" fill="currentColor">
+                  <path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 11 5 11s5-7.25 5-11C11 2.24 8.76 0 6 0zm0 7.5A2.5 2.5 0 1 1 6 2.5a2.5 2.5 0 0 1 0 5z"/>
+                </svg>
+                <div style={{ minWidth: 0 }}>
+                  <p style={{ fontSize: 13, fontWeight: 500, margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.title}</p>
+                  {s.subtitle && (
+                    <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', margin: '2px 0 0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.subtitle}</p>
+                  )}
+                </div>
+              </button>
+            ))}
+            {process.env.NODE_ENV === 'development' && source && (
+              <div style={{ padding: '6px 14px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.2)', margin: 0 }}>via {source}</p>
+              </div>
+            )}
+          </div>,
+          document.body
+        )
+      }
     </div>
   )
 }

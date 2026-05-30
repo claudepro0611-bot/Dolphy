@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/lib/supabase/client";
 
@@ -14,27 +15,32 @@ interface Order {
   price: number;
   status: string;
   created_at: string;
-  users?: { full_name?: string; email?: string } | null;
+  client_id?: string | null;
+  driver_id?: string | null;
 }
 
 const fade    = { hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } };
 const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.06 } } };
 
 export default function DriverDashboardPage() {
-  const [orders,   setOrders]   = useState<Order[]>([]);
-  const [loading,  setLoading]  = useState(true);
-  const [actions,  setActions]  = useState<Record<string, boolean>>({});
+  const router = useRouter();
+  const [orders,  setOrders]  = useState<Order[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [actions, setActions] = useState<Record<string, boolean>>({});
 
   // Mavjud pending buyurtmalarni yuklash
   useEffect(() => {
     supabase
       .from("orders")
-      .select("*, users(*)")
+      .select("id, from_address, to_address, cargo_type, cargo_weight, vehicle_type, price, status, created_at, driver_id, client_id")
       .eq("status", "pending")
       .is("driver_id", null)
       .order("created_at", { ascending: false })
       .then(({ data, error }) => {
-        console.log("orders:", data, "error:", error);
+        if (error) {
+          console.error("orders fetch error:", error.message);
+        }
+        console.log("orders loaded:", data?.length ?? 0, "ta | error:", error?.message ?? "yo'q");
         setOrders((data as Order[]) || []);
         setLoading(false);
       });
@@ -85,6 +91,7 @@ export default function DriverDashboardPage() {
       setActions(prev => ({ ...prev, [orderId]: false }));
     } else {
       setOrders(prev => prev.filter(o => o.id !== orderId));
+      router.push(`/driver/orders/${orderId}`);
     }
   }
 

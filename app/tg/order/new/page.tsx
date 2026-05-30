@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTelegram } from "@/hooks/useTelegram";
 import { supabase } from "@/lib/supabase/client";
+import { AddressInput } from "@/components/AddressInput";
 
 type VehicleId = "damas" | "labo" | "isuzu" | "fura";
 
@@ -27,75 +28,117 @@ const TruckIcon = () => (
 const MOCK_KM = 8.4;
 
 export default function TgOrderNewPage() {
-  const router = useRouter();
-  const { tg } = useTelegram();
+  const router  = useRouter();
+  const { tg }  = useTelegram();
 
   const [from,    setFrom]    = useState("");
+  const [fromLat, setFromLat] = useState<number | null>(null);
+  const [fromLng, setFromLng] = useState<number | null>(null);
   const [to,      setTo]      = useState("");
-  const [vehicle, setVehicle] = useState<VehicleId>("damas");
-  const [step,    setStep]    = useState<"form" | "confirm">("form");
+  const [toLat,   setToLat]   = useState<number | null>(null);
+  const [toLng,   setToLng]   = useState<number | null>(null);
+  const [vehicle,  setVehicle]  = useState<VehicleId>("damas");
+  const [step,     setStep]     = useState<"form" | "confirm">("form");
+  const [loading,  setLoading]  = useState(false);
 
   const selected = VEHICLES.find(v => v.id === vehicle)!;
   const price    = Math.round(selected.base + MOCK_KM * selected.perKm);
   const isValid  = from.trim().length > 2 && to.trim().length > 2;
 
-  // Telegram MainButton
+  // Ref — har doim eng yangi qiymatlarni saqlaydi (stale closure yo'q)
+  const latestRef = useRef({ from, fromLat, fromLng, to, toLat, toLng, vehicle, price });
   useEffect(() => {
-    if (!tg) return;
-    let cleanup: (() => void) | undefined;
-    if (step === "form") {
-      if (isValid) {
-        tg.MainButton.setText("Narxni ko'rish");
-        tg.MainButton.show();
-        tg.MainButton.enable();
-        const handler = () => setStep("confirm");
-        tg.MainButton.onClick(handler);
-        cleanup = () => { tg.MainButton.offClick(handler); };
-      } else {
-        tg.MainButton.hide();
-      }
-    } else if (step === "confirm") {
-      tg.MainButton.setText(`Tasdiqlash — ${price.toLocaleString()} so'm`);
-      tg.MainButton.setParams({ color: "#F5C518", text_color: "#000000" });
-      tg.MainButton.show();
-      tg.MainButton.enable();
-      const handler = async () => {
-        tg.MainButton.disable();
-        const { data: { user } } = await supabase.auth.getUser();
-        const { data, error } = await supabase
-          .from("orders")
-          .insert({
-            client_id:    user?.id ?? null,
-            from_address: from,
-            to_address:   to,
-            vehicle_type: vehicle,
-            price,
-            cargo_type:   "Belgilanmagan",
-            cargo_weight: 0,
-            status:       "pending",
-            driver_id:    null,
-          })
-          .select();
-        if (error || !data?.[0]) {
-          console.error("Order insert error:", error);
-          tg.MainButton.enable();
-          return;
-        }
-        router.push(`/tg/order/searching?id=${data[0].id}`);
-      };
-      tg.MainButton.onClick(handler);
-      cleanup = () => { tg.MainButton.offClick(handler); };
+    latestRef.current = { from, fromLat, fromLng, to, toLat, toLng, vehicle, price };
+  });
+
+  // ── 1-tugma: form step ──────────────────────────────────────────────────
+  useEffect(() => {
+    if (!tg || step !== "form") return;
+
+    if (!isValid) {
+      tg.MainButton.hide();
+      return;
     }
-    return () => { cleanup?.(); };
-  }, [tg, step, isValid, price, router]);
+
+    tg.MainButton.setText("Narxni ko'rish");
+    tg.MainButton.setParams({ color: "#F5C518", text_color: "#000000" });
+    tg.MainButton.show();
+    tg.MainButton.enable();
+
+    const handler = () => {
+      console.log("1-tasdiqlash bosildi");
+      setStep("confirm");
+    };
+    tg.MainButton.onClick(handler);
+    return () => { tg.MainButton.offClick(handler); };
+  }, [tg, step, isValid]);
+
+  // ── 2-tugma: confirm step ───────────────────────────────────────────────
+  useEffect(() => {
+    if (!tg || step !== "confirm") return;
+
+    tg.MainButton.setText(`Tasdiqlash — ${price.toLocaleString()} so'm`);
+    tg.MainButton.setParams({ color: "#F5C518", text_color: "#000000" });
+    tg.MainButton.show();
+    tg.MainButton.enable();
+
+    // Stable wrapper — latestRef orqali hamma vaqt so'ngi qiymatlar
+    const handler = async () => {
+      console.log("2-tasdiqlash bosildi");
+      const { from, fromLat, fromLng, to, toLat, toLng, vehicle, price } = latestRef.current;
+      console.log("Ma'lumotlar:", { from, to, vehicle, price });
+
+      tg.MainButton.disable();
+      tg.MainButton.setText("Yuborilmoqda...");
+
+      const { data, error } = await supabase
+        .from("orders")
+        .insert({
+          client_id:    null,
+          from_address: from,
+          from_lat:     fromLat,
+          from_lng:     fromLng,
+          to_address:   to,
+          to_lat:       toLat,
+          to_lng:       toLng,
+          vehicle_type: vehicle,
+          price,
+          cargo_type:   "Belgilanmagan",
+          cargo_weight: 0,
+          status:       "pending",
+          driver_id:    null,
+        })
+        .select();
+
+      console.log("insert data:", data);
+      console.log("insert error:", error);
+
+      if (error || !data?.[0]) {
+        alert(error?.message ?? "Insert xatoligi");
+        tg.MainButton.enable();
+        tg.MainButton.setText(`Tasdiqlash — ${price.toLocaleString()} so'm`);
+        return;
+      }
+
+      router.push(`/tg/order/${data[0].id}/tracking`);
+    };
+
+    tg.MainButton.onClick(handler);
+    return () => {
+      tg.MainButton.offClick(handler);
+      tg.MainButton.hide();
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tg, step]); // price faqat matn uchun — latestRef ichida yangilanadi
 
   // BackButton
   useEffect(() => {
     if (!tg) return;
     if (step === "confirm") {
       const handler = () => setStep("form");
+      tg.BackButton.show();
       tg.BackButton.onClick(handler);
-      return () => { tg.BackButton.offClick(handler); };
+      return () => { tg.BackButton.offClick(handler); tg.BackButton.hide(); };
     }
   }, [tg, step]);
 
@@ -104,6 +147,7 @@ export default function TgOrderNewPage() {
     return () => { tg?.MainButton.hide(); };
   }, [tg]);
 
+  // ── UI ──────────────────────────────────────────────────────────────────
   return (
     <div className="min-h-screen w-full max-w-[430px] mx-auto px-4 py-4 space-y-5">
 
@@ -119,36 +163,31 @@ export default function TgOrderNewPage() {
             </div>
 
             {/* Manzillar */}
-            <div className="bg-gray-100 dark:bg-white/[0.04] border border-gray-200 dark:border-white/8 rounded-2xl overflow-hidden">
-              {/* Qayerdan */}
-              <div className="flex items-center gap-3 px-4 py-3.5 border-b border-gray-200 dark:border-white/8">
-                <div className="w-2 h-2 rounded-full bg-green-400 flex-shrink-0" />
-                <input
-                  value={from}
-                  onChange={e => setFrom(e.target.value)}
-                  placeholder="Qayerdan?"
-                  className="flex-1 bg-transparent text-sm font-medium placeholder:text-gray-400 dark:placeholder:text-white/25 outline-none"
-                />
-              </div>
-              {/* Connector */}
-              <div className="flex items-center gap-3 px-4 py-0.5">
-                <div className="w-2 flex-shrink-0 flex justify-center">
-                  <div className="w-px h-4 bg-gray-200 dark:bg-white/10" />
-                </div>
-              </div>
-              {/* Qayerga */}
-              <div className="flex items-center gap-3 px-4 py-3.5">
-                <div className="w-2 h-2 rounded-full bg-red-400 flex-shrink-0" />
-                <input
-                  value={to}
-                  onChange={e => setTo(e.target.value)}
-                  placeholder="Qayerga?"
-                  className="flex-1 bg-transparent text-sm font-medium placeholder:text-gray-400 dark:placeholder:text-white/25 outline-none"
-                />
-              </div>
+            <div className="space-y-2">
+              <AddressInput
+                placeholder="Qayerdan?"
+                value={from}
+                pinColor="green"
+                onChange={(v) => { setFrom(v); if (!v) { setFromLat(null); setFromLng(null); } }}
+                onSelect={(addr, lat, lng) => {
+                  setFrom(addr);
+                  setFromLat(lat);
+                  setFromLng(lng);
+                }}
+              />
+              <AddressInput
+                placeholder="Qayerga?"
+                value={to}
+                pinColor="red"
+                onChange={(v) => { setTo(v); if (!v) { setToLat(null); setToLng(null); } }}
+                onSelect={(addr, lat, lng) => {
+                  setTo(addr);
+                  setToLat(lat);
+                  setToLng(lng);
+                }}
+              />
             </div>
 
-            {/* Tafsilot */}
             {from && to && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                 className="flex items-center gap-2 text-xs text-gray-400 dark:text-white/30">
@@ -169,15 +208,13 @@ export default function TgOrderNewPage() {
                     className={`flex items-center gap-3 p-3.5 rounded-2xl border transition-all text-left ${
                       vehicle === v.id
                         ? "border-[#F5C518]/50 bg-[#F5C518]/8"
-                        : "border-gray-200 dark:border-white/8 bg-gray-50 dark:bg-white/[0.03] hover:bg-gray-100 dark:hover:bg-white/[0.06]"
+                        : "border-gray-200 dark:border-white/8 bg-gray-50 dark:bg-white/[0.03]"
                     }`}>
                     <span className={vehicle === v.id ? "text-[#F5C518]" : "text-gray-400 dark:text-white/30"}>
                       <TruckIcon />
                     </span>
                     <div>
-                      <p className={`text-sm font-bold ${vehicle === v.id ? "text-[#F5C518]" : ""}`}>
-                        {v.name}
-                      </p>
+                      <p className={`text-sm font-bold ${vehicle === v.id ? "text-[#F5C518]" : ""}`}>{v.name}</p>
                       <p className="text-gray-400 dark:text-white/30 text-[10px]">{v.cap}</p>
                     </div>
                     {vehicle === v.id && (
@@ -223,10 +260,10 @@ export default function TgOrderNewPage() {
             {/* Tafsilot */}
             <div className="bg-gray-100 dark:bg-white/[0.04] border border-gray-200 dark:border-white/8 rounded-2xl overflow-hidden">
               {[
-                { label: "Mashina",  value: selected.name },
-                { label: "Sig'im",   value: selected.cap  },
-                { label: "Masofa",   value: `~${MOCK_KM} km` },
-                { label: "Narx",     value: `${price.toLocaleString()} so'm`, accent: true },
+                { label: "Mashina", value: selected.name },
+                { label: "Sig'im",  value: selected.cap  },
+                { label: "Masofa",  value: `~${MOCK_KM} km` },
+                { label: "Narx",    value: `${price.toLocaleString()} so'm`, accent: true },
               ].map((row, i, arr) => (
                 <div key={row.label}
                   className={`flex items-center justify-between px-4 py-3.5 ${i < arr.length - 1 ? "border-b border-gray-200 dark:border-white/8" : ""}`}>
@@ -235,6 +272,49 @@ export default function TgOrderNewPage() {
                 </div>
               ))}
             </div>
+
+            {/* Fallback button — Telegram MainButton ishlamasa */}
+            <button
+              onClick={async () => {
+                console.log("2-tasdiqlash bosildi (fallback button)");
+                const { from, fromLat, fromLng, to, toLat, toLng, vehicle, price } = latestRef.current;
+                console.log("Ma'lumotlar:", { from, to, vehicle, price });
+                setLoading(true);
+
+                const { data, error } = await supabase
+                  .from("orders")
+                  .insert({
+                    client_id:    null,
+                    from_address: from,
+                    from_lat:     fromLat,
+                    from_lng:     fromLng,
+                    to_address:   to,
+                    to_lat:       toLat,
+                    to_lng:       toLng,
+                    vehicle_type: vehicle,
+                    price,
+                    cargo_type:   "Belgilanmagan",
+                    cargo_weight: 0,
+                    status:       "pending",
+                    driver_id:    null,
+                  })
+                  .select();
+
+                console.log("insert data:", data);
+                console.log("insert error:", error);
+                setLoading(false);
+
+                if (error || !data?.[0]) {
+                  alert(error?.message ?? "Insert xatoligi");
+                  return;
+                }
+                router.push(`/tg/order/${data[0].id}/tracking`);
+              }}
+              disabled={loading}
+              className="w-full py-4 rounded-2xl bg-[#F5C518] text-black font-bold text-sm active:scale-[0.98] transition-all disabled:opacity-60"
+            >
+              {loading ? "Yuborilmoqda..." : `Tasdiqlash — ${price.toLocaleString()} so'm`}
+            </button>
 
             <p className="text-gray-400 dark:text-white/25 text-xs text-center">
               Tasdiqlash tugmasini bosing — haydovchi topiladi

@@ -34,7 +34,7 @@ function SearchingContent() {
         },
         (payload) => {
           if (payload.new.status === "accepted") {
-            router.push(`/tg/order/found?id=${orderId}`);
+            router.push(`/tg/order/${orderId}/tracking`);
           }
         }
       )

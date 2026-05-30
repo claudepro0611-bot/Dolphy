@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
-import { createPortal } from "react-dom";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { useLang } from "@/components/Providers";
 import type { LatLng } from "@/components/MapOrderClient";
 import { supabase } from "@/lib/supabase/client";
+import { AddressInput } from "@/components/AddressInput";
 
 const MapOrderClient = dynamic(() => import("@/components/MapOrderClient"), {
   ssr: false,
@@ -57,20 +57,6 @@ const TRUCKS = [
 type Truck = "gazelle" | "medium" | "kamaz";
 type ActivePin = "from" | "to" | null;
 
-interface NResult {
-  place_id: number;
-  lat: string;
-  lon: string;
-  display_name: string;
-  address?: Record<string, string>;
-}
-
-function shortName(r: NResult) {
-  const a = r.address ?? {};
-  const parts = [a.road, a.suburb, a.city_district, a.city].filter(Boolean);
-  return parts.slice(0, 2).join(", ") || r.display_name.split(",")[0];
-}
-
 function haversineKm(a: LatLng, b: LatLng) {
   const R = 6371;
   const dLat = ((b[0] - a[0]) * Math.PI) / 180;
@@ -80,134 +66,17 @@ function haversineKm(a: LatLng, b: LatLng) {
   return R * 2 * Math.asin(Math.sqrt(sin2));
 }
 
-// Nominatim search (debounced via ref)
-async function nominatimSearch(q: string): Promise<NResult[]> {
-  if (q.trim().length < 2) return [];
-  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}&countrycodes=uz&limit=6&addressdetails=1`;
-  const res = await fetch(url, { headers: { "Accept-Language": "uz,ru" } });
-  return res.json();
-}
-
-// --- Address search box component ---
-function SearchBox({
-  value, onChange, onSelect, onClear, placeholder, pinColor,
-}: {
-  value: string;
-  onChange: (v: string) => void;
-  onSelect: (pos: LatLng, addr: string) => void;
-  onClear: () => void;
-  placeholder: string;
-  pinColor: "green" | "red";
-}) {
-  const [results, setResults] = useState<NResult[]>([]);
-  const [focused, setFocused] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [dropStyle, setDropStyle] = useState<React.CSSProperties>({});
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const timerRef   = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  function calcDropStyle() {
-    if (!wrapperRef.current) return;
-    const r = wrapperRef.current.getBoundingClientRect();
-    setDropStyle({
-      position: "fixed",
-      top: r.bottom + 6,
-      left: r.left,
-      width: r.width,
-      zIndex: 99999,
-    });
-  }
-
-  function handleChange(v: string) {
-    onChange(v);
-    if (timerRef.current) clearTimeout(timerRef.current);
-    if (v.trim().length < 2) { setResults([]); return; }
-    setLoading(true);
-    timerRef.current = setTimeout(async () => {
-      const res = await nominatimSearch(v).catch(() => []);
-      setResults(res);
-      setLoading(false);
-    }, 380);
-  }
-
-  function select(r: NResult) {
-    const pos: LatLng = [parseFloat(r.lat), parseFloat(r.lon)];
-    const name = shortName(r);
-    onSelect(pos, name);
-    onChange(name);
-    setResults([]);
-    setFocused(false);
-  }
-
-  const dot = pinColor === "green"
-    ? "bg-green-400 shadow-[0_0_8px_#4ade80]"
-    : "bg-red-400 shadow-[0_0_8px_#f87171]";
-
-  const showDropdown = focused && (results.length > 0 || loading);
-
-  return (
-    <div ref={wrapperRef} className="relative">
-      <div className={`flex items-center gap-3 rounded-xl px-3 py-3 border transition-all ${
-        focused ? "border-white/25 bg-white/8" : "border-white/8 bg-white/5 hover:border-white/15"
-      }`}>
-        <div className={`w-3 h-3 rounded-full flex-shrink-0 ${dot}`} />
-        <input
-          value={value}
-          onChange={e => handleChange(e.target.value)}
-          onFocus={() => { calcDropStyle(); setFocused(true); }}
-          onBlur={() => setTimeout(() => setFocused(false), 200)}
-          placeholder={placeholder}
-          className="flex-1 bg-transparent text-white text-sm placeholder:text-white/30 outline-none min-w-0"
-        />
-        {value ? (
-          <button onClick={() => { onClear(); onChange(""); setResults([]); }}
-            className="text-white/30 hover:text-white/70 transition-colors flex-shrink-0 text-lg leading-none">
-            ✕
-          </button>
-        ) : loading ? (
-          <div className="w-3.5 h-3.5 border-2 border-white/20 border-t-white/60 rounded-full animate-spin flex-shrink-0" />
-        ) : null}
-      </div>
-
-      {/* Portal: document.body ga render — backdrop-blur containing block'dan chiqadi */}
-      {showDropdown && createPortal(
-        <div style={dropStyle} className="bg-[#111] border border-white/15 rounded-xl overflow-hidden shadow-2xl">
-          {loading && results.length === 0 ? (
-            <div className="px-4 py-3 flex items-center gap-2 text-white/30 text-xs">
-              <div className="w-3 h-3 border border-white/20 border-t-white/50 rounded-full animate-spin" />
-              Qidirilmoqda...
-            </div>
-          ) : results.map(r => (
-            <button key={r.place_id} onMouseDown={() => select(r)}
-              className="w-full text-left px-4 py-2.5 hover:bg-white/8 transition-colors border-b border-white/5 last:border-0 flex items-start gap-3 group">
-              <svg className="w-3 h-3 mt-0.5 text-white/25 group-hover:text-[#FFD100] transition-colors flex-shrink-0" viewBox="0 0 12 16" fill="currentColor">
-                <path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 11 5 11s5-7.25 5-11C11 2.24 8.76 0 6 0zm0 7.5A2.5 2.5 0 1 1 6 2.5a2.5 2.5 0 0 1 0 5z"/>
-              </svg>
-              <span className="text-white/70 text-xs leading-relaxed group-hover:text-white transition-colors line-clamp-1">
-                {shortName(r)}
-              </span>
-            </button>
-          ))}
-        </div>,
-        document.body
-      )}
-    </div>
-  );
-}
-
 // ---
 
 export default function NewOrderPage() {
   const router = useRouter();
   const { tr } = useLang();
 
-  const [userPos,   setUserPos]   = useState<LatLng | null>(null);
-  const [fromPos,   setFromPos]   = useState<LatLng | null>(null);
-  const [toPos,     setToPos]     = useState<LatLng | null>(null);
-  const [fromAddr,  setFromAddr]  = useState("");
-  const [toAddr,    setToAddr]    = useState("");
-  const [fromQuery, setFromQuery] = useState("");
-  const [toQuery,   setToQuery]   = useState("");
+  const [userPos,  setUserPos]  = useState<LatLng | null>(null);
+  const [fromPos,  setFromPos]  = useState<LatLng | null>(null);
+  const [toPos,    setToPos]    = useState<LatLng | null>(null);
+  const [fromAddr, setFromAddr] = useState("");
+  const [toAddr,   setToAddr]   = useState("");
   const [truck,       setTruck]       = useState<Truck>("gazelle");
   const [activePin,   setActivePin]   = useState<ActivePin>(null);
   const [loading,     setLoading]     = useState(false);
@@ -235,10 +104,8 @@ export default function NewOrderPage() {
           const parts = [a.road, a.suburb, a.city_district].filter(Boolean);
           const name = parts.slice(0, 2).join(", ") || "Joriy manzil";
           setFromAddr(name);
-          setFromQuery(name);
         } catch {
           setFromAddr("Joriy manzil");
-          setFromQuery("Joriy manzil");
         }
       },
       () => {
@@ -246,23 +113,21 @@ export default function NewOrderPage() {
         const tashkent: LatLng = [41.2995, 69.2401];
         setFromPos(tashkent);
         setFromAddr("Toshkent markazi");
-        setFromQuery("Toshkent markazi");
       },
       { enableHighAccuracy: true, timeout: 8000 }
     );
   }, []);
 
+  // Xaritada marker sürüklanganda chaqiriladi
   const handleFromChange = useCallback((pos: LatLng, addr: string) => {
     setFromPos(pos);
     setFromAddr(addr);
-    setFromQuery(addr);
     setActivePin(null);
   }, []);
 
   const handleToChange = useCallback((pos: LatLng, addr: string) => {
     setToPos(pos);
     setToAddr(addr);
-    setToQuery(addr);
     setActivePin(null);
   }, []);
 
@@ -278,15 +143,19 @@ export default function NewOrderPage() {
     const { data: { user } } = await supabase.auth.getUser();
 
     const { data, error } = await supabase.from("orders").insert({
-      client_id:     user?.id ?? null,
-      from_address:  fromAddr,
-      to_address:    toAddr,
-      cargo_type:    cargoType || "Belgilanmagan",
-      cargo_weight:  parseFloat(cargoWeight) || 0,
-      vehicle_type:  truck,
-      price:         price ?? 0,
-      status:        "pending",
-      driver_id:     null,
+      client_id:    user?.id ?? null,
+      from_address: fromAddr,
+      from_lat:     fromPos?.[0] ?? null,
+      from_lng:     fromPos?.[1] ?? null,
+      to_address:   toAddr,
+      to_lat:       toPos?.[0] ?? null,
+      to_lng:       toPos?.[1] ?? null,
+      cargo_type:   cargoType || "Belgilanmagan",
+      cargo_weight: parseFloat(cargoWeight) || 0,
+      vehicle_type: truck,
+      price:        price ?? 0,
+      status:       "pending",
+      driver_id:    null,
     }).select();
 
     setLoading(false);
@@ -296,7 +165,7 @@ export default function NewOrderPage() {
       return;
     }
 
-    router.push(`/order-success?id=${data[0].id}`);
+    router.push(`/order/${data[0].id}/tracking`);
   }
 
   return (
@@ -337,13 +206,16 @@ export default function NewOrderPage() {
         <div className="bg-black/85 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl">
           <p className="text-white/30 text-xs font-bold uppercase tracking-widest mb-3">Marshrut</p>
 
-          <SearchBox
-            value={fromQuery}
-            onChange={setFromQuery}
-            onSelect={handleFromChange}
-            onClear={() => { setFromPos(null); setFromAddr(""); }}
+          <AddressInput
             placeholder="Ketish manzili..."
+            value={fromAddr}
             pinColor="green"
+            onChange={(v) => { setFromAddr(v); if (!v) setFromPos(null); }}
+            onSelect={(addr, lat, lng) => {
+              setFromAddr(addr);
+              setFromPos([lat, lng]);
+              setActivePin(null);
+            }}
           />
 
           {/* Swap button */}
@@ -351,9 +223,9 @@ export default function NewOrderPage() {
             <div className="flex-1 border-t border-dashed border-white/8" />
             <button
               onClick={() => {
-                const pp = fromPos; const aa = fromAddr; const qq = fromQuery;
-                setFromPos(toPos); setFromAddr(toAddr); setFromQuery(toQuery);
-                setToPos(pp); setToAddr(aa); setToQuery(qq);
+                const pp = fromPos; const aa = fromAddr;
+                setFromPos(toPos);  setFromAddr(toAddr);
+                setToPos(pp);       setToAddr(aa);
               }}
               className="w-6 h-6 rounded-lg bg-white/8 hover:bg-white/15 border border-white/10 flex items-center justify-center transition-colors"
               title="Almashtirish"
@@ -365,16 +237,19 @@ export default function NewOrderPage() {
             <div className="flex-1 border-t border-dashed border-white/8" />
           </div>
 
-          <SearchBox
-            value={toQuery}
-            onChange={setToQuery}
-            onSelect={handleToChange}
-            onClear={() => { setToPos(null); setToAddr(""); }}
+          <AddressInput
             placeholder="Borish manzili..."
+            value={toAddr}
             pinColor="red"
+            onChange={(v) => { setToAddr(v); if (!v) setToPos(null); }}
+            onSelect={(addr, lat, lng) => {
+              setToAddr(addr);
+              setToPos([lat, lng]);
+              setActivePin(null);
+            }}
           />
 
-          {/* Yoki xaritada bosing hint */}
+          {/* Hint */}
           <p className="text-white/20 text-[10px] text-center mt-2.5">
             yoki xaritada markerni sudrang
           </p>

@@ -14,9 +14,9 @@ interface AddressInputProps {
   onChange: (value: string) => void
   onSelect: (address: string, lat: number, lng: number) => void
   pinColor?: 'green' | 'red'
+  wrapperZIndex?: number
 }
 
-// ── Nominatim (OpenStreetMap) — fallback, API key shart emas ──────────────────
 async function nominatimSearch(q: string): Promise<Suggestion[]> {
   const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q + ' Uzbekistan')}&countrycodes=uz&limit=5&addressdetails=1`
   const res  = await fetch(url, { headers: { 'Accept-Language': 'uz,ru' } })
@@ -26,139 +26,73 @@ async function nominatimSearch(q: string): Promise<Suggestion[]> {
     const parts = [a.road, a.suburb, a.city_district, a.city].filter(Boolean)
     const title = parts.slice(0, 2).join(', ') || item.display_name.split(',')[0]
     const sub   = [a.city, a.state].filter(Boolean).join(', ')
-    return {
-      title,
-      subtitle: sub,
-      lat: parseFloat(item.lat),
-      lng: parseFloat(item.lon),
-    }
+    return { title, subtitle: sub, lat: parseFloat(item.lat), lng: parseFloat(item.lon) }
   })
 }
 
-// ── Yandex Geocoder — agar key to'g'ri bo'lsa ishlatiladi ────────────────────
 async function yandexSearch(q: string, apiKey: string): Promise<Suggestion[]> {
-  const url  = `https://geocode-maps.yandex.ru/1.x/?apikey=${apiKey}&geocode=${encodeURIComponent(q + ' Uzbekistan')}&format=json&results=5&lang=uz_UZ`
-  const res  = await fetch(url)
-
-  if (res.status === 403) {
-    console.warn('[AddressInput] Yandex 403 — kalitni tekshiring. Nominatim ga o\'tilmoqda.')
-    return []
-  }
-  if (!res.ok) {
-    console.warn('[AddressInput] Yandex', res.status, '— Nominatim ga o\'tilmoqda.')
-    return []
-  }
-
+  const url = `https://geocode-maps.yandex.ru/1.x/?apikey=${apiKey}&geocode=${encodeURIComponent(q + ' Uzbekistan')}&format=json&results=5&lang=uz_UZ`
+  const res = await fetch(url)
+  if (res.status === 403 || !res.ok) return []
   const data  = await res.json()
   const items = data?.response?.GeoObjectCollection?.featureMember ?? []
-
-  if (items.length === 0) return []
-
   return items.map((item: any) => {
     const obj = item.GeoObject
     const pos = obj.Point.pos.split(' ')
-    return {
-      title:    obj.name,
-      subtitle: obj.description || '',
-      lat:      parseFloat(pos[1]),
-      lng:      parseFloat(pos[0]),
-    }
+    return { title: obj.name, subtitle: obj.description || '', lat: parseFloat(pos[1]), lng: parseFloat(pos[0]) }
   })
 }
 
-// ── Asosiy komponent ──────────────────────────────────────────────────────────
-export function AddressInput({ placeholder, value, onChange, onSelect, pinColor }: AddressInputProps) {
-  const [suggestions, setSuggestions]   = useState<Suggestion[]>([])
-  const [loading, setLoading]           = useState(false)
-  const [open, setOpen]                 = useState(false)
-  const [source, setSource]             = useState<'yandex' | 'nominatim' | null>(null)
-  const [selected, setSelected]         = useState(false)
-  const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({})
-  const inputRef                        = useRef<HTMLDivElement>(null)
-  const timer                           = useRef<ReturnType<typeof setTimeout> | null>(null)
+export function AddressInput({ placeholder, value, onChange, onSelect, pinColor, wrapperZIndex = 50 }: AddressInputProps) {
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([])
+  const [loading, setLoading]         = useState(false)
+  const [open, setOpen]               = useState(false)
+  const [selected, setSelected]       = useState(false)
+  const timer                         = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
-    if (value.length < 2) {
-      setSuggestions([])
-      setOpen(false)
-      return
-    }
-
+    if (value.length < 2) { setSuggestions([]); setOpen(false); return }
     if (timer.current) clearTimeout(timer.current)
     timer.current = setTimeout(async () => {
       setLoading(true)
       setSuggestions([])
-
       const apiKey = process.env.NEXT_PUBLIC_YANDEX_API_KEY
-
       try {
-        // 1. Yandex urinib ko'rish (agar key bor bo'lsa)
         if (apiKey) {
           const results = await yandexSearch(value, apiKey)
-          if (results.length > 0) {
-            setSuggestions(results)
-            setSource('yandex')
-            setOpen(true)
-            setLoading(false)
-            return
-          }
+          if (results.length > 0) { setSuggestions(results); setOpen(true); setLoading(false); return }
         }
-
-        // 2. Nominatim fallback
         const results = await nominatimSearch(value)
         setSuggestions(results)
-        setSource('nominatim')
         if (results.length > 0) setOpen(true)
-
       } catch (e) {
-        console.error('[AddressInput] Qidiruv xatosi:', e)
+        console.error('[AddressInput]', e)
       }
-
       setLoading(false)
     }, 400)
-
     return () => { if (timer.current) clearTimeout(timer.current) }
   }, [value])
 
-  useEffect(() => {
-    if (inputRef.current && open) {
-      const rect = inputRef.current.getBoundingClientRect()
-      setDropdownStyle({
-        position: 'fixed',
-        top: rect.bottom + 4,
-        left: rect.left,
-        width: rect.width,
-        zIndex: 99999,
-      })
-    }
-  }, [open, value])
-
   const dot =
-    pinColor === 'green'
-      ? 'bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.5)]'
-      : pinColor === 'red'
-      ? 'bg-red-400 shadow-[0_0_8px_rgba(248,113,113,0.5)]'
-      : 'bg-white/30'
+    pinColor === 'green' ? 'bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.5)]' :
+    pinColor === 'red'   ? 'bg-red-400 shadow-[0_0_8px_rgba(248,113,113,0.5)]' :
+    'bg-white/30'
 
   return (
-    <div ref={inputRef} className="relative">
+    <div style={{ position: 'relative', zIndex: wrapperZIndex }}>
+
       {/* Tanlangan manzil chip */}
       {selected ? (
-        <div className="flex items-center gap-3 rounded-xl px-3 py-3 border border-white/15 bg-white/8">
-          {pinColor && <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${dot}`} />}
-          <p className="flex-1 text-white text-sm truncate min-w-0">{value}</p>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: '#1E1E1E', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.12)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
+            {pinColor && <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${dot}`} />}
+            <span style={{ color: '#fff', fontSize: 14, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{value}</span>
+          </div>
           <button
             type="button"
-            onMouseDown={(e) => {
-              e.preventDefault()
-              setSelected(false)
-              onChange('')
-              setSuggestions([])
-            }}
-            className="text-white/25 hover:text-white/60 transition-colors flex-shrink-0 text-base leading-none"
-          >
-            ✕
-          </button>
+            onMouseDown={(e) => { e.preventDefault(); setSelected(false); onChange(''); setSuggestions([]) }}
+            style={{ color: 'rgba(255,255,255,0.4)', background: 'none', border: 'none', cursor: 'pointer', fontSize: 16, flexShrink: 0, paddingLeft: 8 }}
+          >✕</button>
         </div>
       ) : (
         /* Input */
@@ -179,29 +113,27 @@ export function AddressInput({ placeholder, value, onChange, onSelect, pinColor 
               type="button"
               onMouseDown={(e) => { e.preventDefault(); onChange(''); setSuggestions([]); setOpen(false) }}
               className="text-white/25 hover:text-white/60 transition-colors flex-shrink-0 text-base leading-none"
-            >
-              ✕
-            </button>
+            >✕</button>
           )}
         </div>
       )}
 
-      {/* Dropdown — position: fixed, viewport-ga nisbatan */}
+      {/* Dropdown */}
       {open && suggestions.length > 0 && (
-        <div style={{ ...dropdownStyle, background: '#1a1a1a', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 8px 24px rgba(0,0,0,0.5)', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, marginTop: 4, zIndex: 9999, background: '#1E1E1E', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 8px 24px rgba(0,0,0,0.5)', overflow: 'hidden' }}>
           {suggestions.map((s, i) => (
             <button
               key={i}
               type="button"
               onMouseDown={() => {
-                const fullAddress = s.title + (s.subtitle ? ', ' + s.subtitle : '')
-                onSelect(fullAddress, s.lat, s.lng)
-                onChange(fullAddress)
+                const full = s.title + (s.subtitle ? ', ' + s.subtitle : '')
+                onSelect(full, s.lat, s.lng)
+                onChange(full)
                 setSuggestions([])
                 setOpen(false)
                 setSelected(true)
               }}
-              style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', width: '100%', textAlign: 'left', padding: '10px 14px', background: 'none', border: 'none', borderBottom: i < suggestions.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none', cursor: 'pointer', color: '#fff' }}
+              style={{ display: 'flex', alignItems: 'flex-start', gap: 10, width: '100%', textAlign: 'left', padding: '10px 14px', background: 'none', border: 'none', borderBottom: i < suggestions.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none', cursor: 'pointer', color: '#fff' }}
               onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.05)')}
               onMouseLeave={e => (e.currentTarget.style.background = 'none')}
             >
@@ -216,11 +148,6 @@ export function AddressInput({ placeholder, value, onChange, onSelect, pinColor 
               </div>
             </button>
           ))}
-          {process.env.NODE_ENV === 'development' && source && (
-            <div style={{ padding: '6px 14px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-              <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.2)', margin: 0 }}>via {source}</p>
-            </div>
-          )}
         </div>
       )}
     </div>

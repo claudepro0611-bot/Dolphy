@@ -200,16 +200,17 @@ export default function NewOrderPage() {
       </button>
 
       {/* Floating panel */}
-      <div className={`absolute top-4 bottom-4 z-[1000] w-[340px] flex flex-col gap-3 overflow-y-auto scrollbar-none transition-[left] duration-300 ${panelOpen ? "left-4" : "left-[-360px]"}`}>
+      <div className={`absolute top-4 bottom-4 z-[1000] w-[340px] flex flex-col gap-3 transition-[left] duration-300 ${panelOpen ? "left-4" : "left-[-360px]"}`}>
 
         {/* --- Marshrut (search inputs) --- */}
-        <div className="bg-black/85 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl">
+        <div className="bg-black/85 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl" style={{ position: 'relative', zIndex: 50 }}>
           <p className="text-white/30 text-xs font-bold uppercase tracking-widest mb-3">Marshrut</p>
 
           <AddressInput
             placeholder="Ketish manzili..."
             value={fromAddr}
             pinColor="green"
+            wrapperZIndex={20}
             onChange={(v) => { setFromAddr(v); if (!v) setFromPos(null); }}
             onSelect={(addr, lat, lng) => {
               setFromAddr(addr);
@@ -241,6 +242,7 @@ export default function NewOrderPage() {
             placeholder="Borish manzili..."
             value={toAddr}
             pinColor="red"
+            wrapperZIndex={10}
             onChange={(v) => { setToAddr(v); if (!v) setToPos(null); }}
             onSelect={(addr, lat, lng) => {
               setToAddr(addr);
@@ -264,7 +266,7 @@ export default function NewOrderPage() {
         </div>
 
         {/* --- Mashina --- */}
-        <div className="bg-black/85 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl">
+        <div className="bg-black/85 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl" style={{ position: 'relative', zIndex: 1 }}>
           <p className="text-white/30 text-xs font-bold uppercase tracking-widest mb-3">Mashina</p>
           <div className="flex flex-col gap-2">
             {TRUCKS.map(t => (

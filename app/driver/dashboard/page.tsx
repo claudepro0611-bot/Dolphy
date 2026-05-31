@@ -27,6 +27,7 @@ export default function DriverDashboardPage() {
   const [orders,  setOrders]  = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [actions, setActions] = useState<Record<string, boolean>>({});
+  const [error,   setError]   = useState<string | null>(null);
 
   // Mavjud pending buyurtmalarni yuklash
   useEffect(() => {
@@ -76,18 +77,22 @@ export default function DriverDashboardPage() {
     return () => { supabase.removeChannel(channel); };
   }, []);
 
-  // Qabul qilish
+  // Qabul qilish — API route orqali (RLS bypass)
   async function accept(orderId: string) {
+    setError(null);
     setActions(prev => ({ ...prev, [orderId]: true }));
-    const { data: { user } } = await supabase.auth.getUser();
 
-    const { error } = await supabase
-      .from("orders")
-      .update({ status: "accepted", driver_id: user?.id })
-      .eq("id", orderId);
+    const res = await fetch('/api/v1/orders/accept', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ orderId }),
+    });
 
-    if (error) {
-      console.error("Accept error:", error);
+    const json = await res.json();
+
+    if (!res.ok) {
+      console.error("Accept error:", json.error);
+      setError(json.error ?? "Qabul qilib bo'lmadi");
       setActions(prev => ({ ...prev, [orderId]: false }));
     } else {
       setOrders(prev => prev.filter(o => o.id !== orderId));
@@ -126,6 +131,18 @@ export default function DriverDashboardPage() {
           </span>
         </div>
       </div>
+
+      {/* Error xabar */}
+      {error && (
+        <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="flex-shrink-0">
+            <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.4"/>
+            <path d="M8 5v4M8 11v.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+          </svg>
+          {error}
+          <button onClick={() => setError(null)} className="ml-auto text-red-400/60 hover:text-red-400">✕</button>
+        </div>
+      )}
 
       {/* Ro'yxat */}
       {loading ? (

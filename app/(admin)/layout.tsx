@@ -6,6 +6,9 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { useLang } from "@/components/Providers";
 import { LANGS, type Lang } from "@/lib/i18n";
+import { supabase } from "@/lib/supabase/client";
+
+const ADMIN_EMAILS = ["claudepro0611@gmail.com", "admin@dolphy.cc", "admin@yotoq.uz"];
 
 const NAV_ITEMS = [
   { href: "/admin",         label: "Dashboard",        icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.4"/><rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.4"/><rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.4"/><rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.4"/></svg> },
@@ -19,15 +22,37 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const path   = usePathname();
   const router = useRouter();
   const { theme, setTheme } = useTheme();
+  const { lang, setLang } = useLang();
+  const [mounted, setMounted]     = useState(false);
+  const [adminEmail, setAdminEmail] = useState<string | null>(null);
+  const [checking, setChecking]   = useState(true);
+
+  useEffect(() => { setMounted(true) }, []);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (!user || !ADMIN_EMAILS.includes(user.email ?? "")) {
+        router.push("/login");
+      } else {
+        setAdminEmail(user.email ?? null);
+      }
+      setChecking(false);
+    });
+  }, [router]);
 
   function logout() {
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    router.push("/login");
+    supabase.auth.signOut().then(() => router.push("/login"));
   }
-  const { lang, setLang } = useLang();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+
   const isDark = theme === "dark";
+
+  if (checking) {
+    return (
+      <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
+        <div className="w-6 h-6 border-2 border-[#C8F135]/30 border-t-[#C8F135] rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen dark:bg-black bg-gray-50 flex transition-colors">
@@ -105,8 +130,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           )}
 
           {/* Chiqish */}
-          <button
-            onClick={logout}
+          <button onClick={logout}
             className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-semibold
               dark:text-white/40 text-gray-500
               hover:dark:text-white hover:text-gray-900
@@ -138,7 +162,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               dark:bg-white/[0.03] bg-gray-50
               px-3 py-1.5 rounded-full">
               <div className="w-5 h-5 rounded-full bg-[#C8F135] flex items-center justify-center text-black font-black text-[10px]">A</div>
-              <span className="dark:text-white/60 text-gray-600 text-xs font-semibold">Admin</span>
+              <span className="dark:text-white/60 text-gray-600 text-xs font-semibold truncate max-w-[140px]">
+                {adminEmail ?? "Admin"}
+              </span>
             </div>
           </div>
         </div>

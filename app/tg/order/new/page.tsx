@@ -61,7 +61,7 @@ export default function TgOrderNewPage() {
     }
 
     tg.MainButton.setText("Narxni ko'rish");
-    tg.MainButton.setParams({ color: "#F5C518", text_color: "#000000" });
+    tg.MainButton.setParams({ color: "#C8F135", text_color: "#000000" });
     tg.MainButton.show();
     tg.MainButton.enable();
 
@@ -78,7 +78,7 @@ export default function TgOrderNewPage() {
     if (!tg || step !== "confirm") return;
 
     tg.MainButton.setText(`Tasdiqlash — ${price.toLocaleString()} so'm`);
-    tg.MainButton.setParams({ color: "#F5C518", text_color: "#000000" });
+    tg.MainButton.setParams({ color: "#C8F135", text_color: "#000000" });
     tg.MainButton.show();
     tg.MainButton.enable();
 
@@ -207,18 +207,18 @@ export default function TgOrderNewPage() {
                   <button key={v.id} onClick={() => setVehicle(v.id)}
                     className={`flex items-center gap-3 p-3.5 rounded-2xl border transition-all text-left ${
                       vehicle === v.id
-                        ? "border-[#F5C518]/50 bg-[#F5C518]/8"
+                        ? "border-[#C8F135]/50 bg-[#C8F135]/8"
                         : "border-gray-200 dark:border-white/8 bg-gray-50 dark:bg-white/[0.03]"
                     }`}>
-                    <span className={vehicle === v.id ? "text-[#F5C518]" : "text-gray-400 dark:text-white/30"}>
+                    <span className={vehicle === v.id ? "text-[#C8F135]" : "text-gray-400 dark:text-white/30"}>
                       <TruckIcon />
                     </span>
                     <div>
-                      <p className={`text-sm font-bold ${vehicle === v.id ? "text-[#F5C518]" : ""}`}>{v.name}</p>
+                      <p className={`text-sm font-bold ${vehicle === v.id ? "text-[#C8F135]" : ""}`}>{v.name}</p>
                       <p className="text-gray-400 dark:text-white/30 text-[10px]">{v.cap}</p>
                     </div>
                     {vehicle === v.id && (
-                      <div className="ml-auto w-4 h-4 rounded-full bg-[#F5C518] flex items-center justify-center flex-shrink-0">
+                      <div className="ml-auto w-4 h-4 rounded-full bg-[#C8F135] flex items-center justify-center flex-shrink-0">
                         <svg width="8" height="7" viewBox="0 0 8 7" fill="none">
                           <path d="M1 3.5l2 2 4-4" stroke="#000" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
@@ -268,7 +268,7 @@ export default function TgOrderNewPage() {
                 <div key={row.label}
                   className={`flex items-center justify-between px-4 py-3.5 ${i < arr.length - 1 ? "border-b border-gray-200 dark:border-white/8" : ""}`}>
                   <p className="text-gray-500 dark:text-white/40 text-sm">{row.label}</p>
-                  <p className={`text-sm font-bold ${row.accent ? "text-[#F5C518]" : ""}`}>{row.value}</p>
+                  <p className={`text-sm font-bold ${row.accent ? "text-[#C8F135]" : ""}`}>{row.value}</p>
                 </div>
               ))}
             </div>
@@ -311,7 +311,7 @@ export default function TgOrderNewPage() {
                 router.push(`/tg/order/${data[0].id}/tracking`);
               }}
               disabled={loading}
-              className="w-full py-4 rounded-2xl bg-[#F5C518] text-black font-bold text-sm active:scale-[0.98] transition-all disabled:opacity-60"
+              className="w-full py-4 rounded-2xl bg-[#C8F135] text-black font-bold text-sm active:scale-[0.98] transition-all disabled:opacity-60"
             >
               {loading ? "Yuborilmoqda..." : `Tasdiqlash — ${price.toLocaleString()} so'm`}
             </button>

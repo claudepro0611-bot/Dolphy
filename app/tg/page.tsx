@@ -40,8 +40,8 @@ export default function TgHomePage() {
       <motion.div variants={fade}>
         <Link
           href="/tg/order/new"
-          className="flex items-center justify-between w-full px-5 py-4 rounded-2xl font-bold text-base text-black shadow-[0_4px_24px_rgba(245,197,24,0.3)] active:scale-[0.98] transition-transform"
-          style={{ background: "linear-gradient(135deg, #F5C518 0%, #E6B600 100%)" }}
+          className="flex items-center justify-between w-full px-5 py-4 rounded-2xl font-bold text-base text-black shadow-[0_4px_24px_rgba(200,241,53,0.3)] active:scale-[0.98] transition-transform"
+          style={{ background: "linear-gradient(135deg, #C8F135 0%, #E6B600 100%)" }}
         >
           <span>Buyurtma berish</span>
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -55,7 +55,7 @@ export default function TgHomePage() {
         {STATS.map(s => (
           <div key={s.label}
             className="bg-gray-100 dark:bg-white/[0.04] border border-gray-200 dark:border-white/8 rounded-2xl p-3.5 text-center">
-            <p className="text-[#F5C518] font-bold text-xl leading-none">{s.value}</p>
+            <p className="text-[#C8F135] font-bold text-xl leading-none">{s.value}</p>
             <p className="text-gray-500 dark:text-white/35 text-[10px] mt-1.5 leading-tight">{s.label}</p>
           </div>
         ))}
@@ -65,7 +65,7 @@ export default function TgHomePage() {
       <motion.div variants={fade}>
         <div className="flex items-center justify-between mb-3">
           <p className="text-gray-400 dark:text-white/50 text-xs font-bold uppercase tracking-widest">Oxirgi buyurtma</p>
-          <Link href="/tg/history" className="text-[#F5C518] text-xs font-bold">Barchasi</Link>
+          <Link href="/tg/history" className="text-[#C8F135] text-xs font-bold">Barchasi</Link>
         </div>
 
         <Link href={`/tg/order/${LAST_ORDER.id}`}
@@ -86,7 +86,7 @@ export default function TgHomePage() {
 
           {/* Narx */}
           <div className="text-right flex-shrink-0">
-            <p className="text-[#F5C518] font-bold text-sm">{LAST_ORDER.price.toLocaleString()}</p>
+            <p className="text-[#C8F135] font-bold text-sm">{LAST_ORDER.price.toLocaleString()}</p>
             <p className="text-gray-400 dark:text-white/25 text-[10px] mt-0.5">{LAST_ORDER.date}</p>
           </div>
         </Link>
@@ -120,7 +120,7 @@ export default function TgHomePage() {
         ].map(item => (
           <Link key={item.href} href={item.href}
             className="bg-gray-100 dark:bg-white/[0.04] border border-gray-200 dark:border-white/8 rounded-2xl p-4 flex items-center gap-3 active:bg-gray-200 dark:active:bg-white/[0.07] transition-colors">
-            <span className="text-[#F5C518] flex-shrink-0">{item.icon}</span>
+            <span className="text-[#C8F135] flex-shrink-0">{item.icon}</span>
             <div>
               <p className="text-sm font-semibold">{item.label}</p>
               <p className="text-gray-400 dark:text-white/30 text-xs mt-0.5">{item.sub}</p>

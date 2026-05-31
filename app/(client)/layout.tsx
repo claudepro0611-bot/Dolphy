@@ -27,7 +27,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         <div className="max-w-6xl mx-auto px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-xl bg-[#FFD100] flex items-center justify-center text-black font-black text-sm">Y</div>
+              <div className="w-8 h-8 rounded-xl bg-[#C8F135] flex items-center justify-center text-black font-black text-sm">Y</div>
               <span className="font-bold dark:text-white text-gray-900">Yotoq</span>
             </div>
             <div className="flex items-center gap-0.5">
@@ -67,7 +67,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
               </button>
             )}
             <Link href="/order/new"
-              className="bg-[#FFD100] text-black font-bold text-sm px-5 py-2.5 rounded-full hover:bg-[#E6BC00] transition-colors">
+              className="bg-[#C8F135] text-black font-bold text-sm px-5 py-2.5 rounded-full hover:bg-[#b3d92f] transition-colors">
               + {tr("newOrder")}
             </Link>
           </div>

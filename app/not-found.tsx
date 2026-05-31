@@ -11,7 +11,7 @@ export default function NotFound() {
         </p>
         <div className="flex gap-3 justify-center">
           <Link href="/"
-            className="bg-[#FFD100] text-black font-bold px-6 py-3 rounded-xl hover:bg-[#E6BC00] transition-colors">
+            className="bg-[#C8F135] text-black font-bold px-6 py-3 rounded-xl hover:bg-[#b3d92f] transition-colors">
             Bosh sahifa →
           </Link>
           <Link href="/dashboard"

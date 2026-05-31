@@ -110,7 +110,7 @@ export default function TgLayout({ children }: { children: React.ReactNode }) {
           backdrop-blur-md
           border-b border-gray-200 tg-dark:border-white/8">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-xl bg-[#F5C518] flex items-center justify-center text-black font-black text-xs">
+            <div className="w-7 h-7 rounded-xl bg-[#C8F135] flex items-center justify-center text-black font-black text-xs">
               Y
             </div>
             <span className="font-bold text-sm tracking-tight">Yotoq</span>
@@ -137,12 +137,12 @@ export default function TgLayout({ children }: { children: React.ReactNode }) {
                   href={item.href}
                   className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl transition-all ${
                     active
-                      ? "text-[#F5C518]"
+                      ? "text-[#C8F135]"
                       : "text-gray-400 tg-dark:text-white/30"
                   }`}
                 >
                   {item.icon}
-                  <span className={`text-[9px] font-bold leading-none ${active ? "text-[#F5C518]" : ""}`}>
+                  <span className={`text-[9px] font-bold leading-none ${active ? "text-[#C8F135]" : ""}`}>
                     {item.label}
                   </span>
                 </Link>

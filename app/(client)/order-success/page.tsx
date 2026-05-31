@@ -36,7 +36,7 @@ export default function OrderSuccessPage() {
         className="flex flex-col gap-3 w-full max-w-xs"
       >
         <Link href="/order/new"
-          className="w-full py-3.5 rounded-2xl bg-[#FFD100] text-black font-bold text-sm text-center hover:bg-[#E6BC00] transition-colors">
+          className="w-full py-3.5 rounded-2xl bg-[#C8F135] text-black font-bold text-sm text-center hover:bg-[#b3d92f] transition-colors">
           Yangi buyurtma
         </Link>
         <Link href="/orders"

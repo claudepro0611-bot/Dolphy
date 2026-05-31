@@ -32,7 +32,7 @@ function PinDots({ value, shake }: { value: string; shake: boolean }) {
           transition={{ duration: 0.15 }}
           className={`w-5 h-5 rounded-full border-2 transition-all duration-200 ${
             i < value.length
-              ? "bg-[#FFD100] border-[#FFD100]"
+              ? "bg-[#C8F135] border-[#C8F135]"
               : "dark:border-white/25 border-gray-300 dark:bg-transparent bg-transparent"
           }`}
         />
@@ -52,7 +52,7 @@ function NumPad({ onKey }: { onKey: (k: string) => void }) {
           className={`h-16 rounded-2xl font-bold text-xl transition-all active:scale-95 ${
             k === "⌫"
               ? `dark:bg-white/5 bg-gray-100 dark:border-white/10 border border-gray-200 ${muted} hover:dark:bg-white/10 hover:bg-gray-200`
-              : `dark:bg-white/[0.06] bg-gray-100 dark:border-white/10 border border-gray-200 ${main} hover:dark:bg-white/12 hover:bg-gray-200 hover:border-[#FFD100]/40`
+              : `dark:bg-white/[0.06] bg-gray-100 dark:border-white/10 border border-gray-200 ${main} hover:dark:bg-white/12 hover:bg-gray-200 hover:border-[#C8F135]/40`
           }`}>
           {k}
         </button>
@@ -160,7 +160,7 @@ export default function PinChangePage() {
 
             {/* Header */}
             <div className="text-center mb-2">
-              <p className="text-[#FFD100] text-xs font-bold tracking-[3px] uppercase mb-1">{info.step}</p>
+              <p className="text-[#C8F135] text-xs font-bold tracking-[3px] uppercase mb-1">{info.step}</p>
               <h1 className={`text-2xl font-bold ${main} mb-1`}>{info.title}</h1>
               <p className={`text-sm ${muted}`}>{info.sub}</p>
             </div>
@@ -186,7 +186,7 @@ export default function PinChangePage() {
             {/* Test hint */}
             {step === "current" && (
               <p className={`text-xs text-center mt-5 ${muted}`}>
-                Test PIN: <span className="font-bold text-[#FFD100]">{MOCK_PIN}</span>
+                Test PIN: <span className="font-bold text-[#C8F135]">{MOCK_PIN}</span>
               </p>
             )}
           </motion.div>

@@ -53,7 +53,7 @@ function inputCls(hasError?: boolean) {
     'placeholder:text-gray-300 dark:placeholder:text-gray-600',
     hasError
       ? 'border-red-400 focus:border-red-400'
-      : 'border-gray-200 dark:border-gray-700 focus:border-[#F5C518]',
+      : 'border-gray-200 dark:border-gray-700 focus:border-[#C8F135]',
   ].join(' ')
 }
 
@@ -115,7 +115,7 @@ export default function VehicleInfoPage() {
                   className={[
                     'flex items-center gap-1.5 px-3.5 py-2 rounded-xl border-2 text-sm font-semibold transition-all duration-200',
                     active
-                      ? 'border-[#F5C518] bg-[#F5C518]/10 text-gray-900 dark:text-white'
+                      ? 'border-[#C8F135] bg-[#C8F135]/10 text-gray-900 dark:text-white'
                       : 'border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-600',
                   ].join(' ')}
                 >

@@ -27,13 +27,13 @@ const MONTHLY_DATA = [
 ];
 
 const TRUCK_DATA = [
-  { name: "Gazelle", value: 58, color: "#FFD100" },
+  { name: "Gazelle", value: 58, color: "#C8F135" },
   { name: "O'rta",   value: 28, color: "#4F8EF7" },
   { name: "Kamaz",   value: 14, color: "#22C55E" },
 ];
 
 const SUMMARY = [
-  { label: "Jami zakaz",    value: "235",    sub: "bu hafta",  color: "#FFD100" },
+  { label: "Jami zakaz",    value: "235",    sub: "bu hafta",  color: "#C8F135" },
   { label: "Jami daromad",  value: "8.6M",   sub: "so'm",      color: "#22C55E" },
   { label: "O'rtacha narx", value: "36 600", sub: "so'm/zakaz",color: "#4F8EF7" },
   { label: "Eng faol kun",  value: "Shanba", sub: "52 zakaz",  color: "#A78BFA" },
@@ -47,7 +47,7 @@ function CustomTooltip({ active, payload, label }: any) {
     <div className="bg-[#111] border border-white/15 rounded-xl px-3 py-2 text-xs">
       <p className="text-white/40 mb-1">{label}</p>
       {payload.map((p: any) => (
-        <p key={p.name} className="font-bold" style={{ color: p.color ?? "#FFD100" }}>
+        <p key={p.name} className="font-bold" style={{ color: p.color ?? "#C8F135" }}>
           {typeof p.value === "number" && p.value > 1000
             ? `${(p.value / 1000).toFixed(0)}K so'm`
             : p.value}
@@ -95,7 +95,7 @@ export default function AdminStatsPage() {
             {RANGES.map(r => (
               <button key={r} onClick={() => setRange(r)}
                 className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
-                  range === r ? "bg-[#FFD100] text-black" : "dark:text-white/40 text-gray-500 hover:dark:text-white hover:text-gray-900"
+                  range === r ? "bg-[#C8F135] text-black" : "dark:text-white/40 text-gray-500 hover:dark:text-white hover:text-gray-900"
                 }`}>
                 {r}
               </button>
@@ -132,7 +132,7 @@ export default function AdminStatsPage() {
             <XAxis dataKey="day" tick={{ fill: axisColor, fontSize: 12 }} axisLine={false} tickLine={false} />
             <YAxis tick={{ fill: axisColor, fontSize: 11 }} axisLine={false} tickLine={false} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: cursorColor }} />
-            <Bar dataKey="count" fill="#FFD100" radius={[6, 6, 0, 0]} />
+            <Bar dataKey="count" fill="#C8F135" radius={[6, 6, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -206,7 +206,7 @@ export default function AdminStatsPage() {
                   <p className="text-white text-xs font-semibold truncate">{d.name}</p>
                   <p className="dark:text-white/25 text-gray-400 text-xs">{d.orders} zakaz</p>
                 </div>
-                <span className="text-[#FFD100] font-black text-sm flex-shrink-0">{d.earned}</span>
+                <span className="text-[#C8F135] font-black text-sm flex-shrink-0">{d.earned}</span>
               </div>
             ))}
           </div>

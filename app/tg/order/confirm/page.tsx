@@ -63,7 +63,7 @@ function ConfirmContent() {
   useEffect(() => {
     if (!tg) return;
     tg.MainButton.setText("Tasdiqlash");
-    tg.MainButton.setParams({ color: "#F5C518", text_color: "#000000" });
+    tg.MainButton.setParams({ color: "#C8F135", text_color: "#000000" });
     tg.MainButton.show();
     tg.MainButton.enable();
     tg.MainButton.onClick(handleConfirm);
@@ -139,7 +139,7 @@ function ConfirmContent() {
               i < rows.length - 1 ? "border-b border-gray-200 dark:border-white/8" : ""
             }`}>
             <p className="text-gray-500 dark:text-white/40 text-sm">{row.label}</p>
-            <p className={`text-sm font-bold ${row.accent ? "text-[#F5C518]" : ""}`}>{row.value}</p>
+            <p className={`text-sm font-bold ${row.accent ? "text-[#C8F135]" : ""}`}>{row.value}</p>
           </div>
         ))}
       </motion.div>
@@ -156,7 +156,7 @@ export default function ConfirmPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center">
-        <div className="w-8 h-8 rounded-full border-2 border-[#F5C518]/20 border-t-[#F5C518] animate-spin" />
+        <div className="w-8 h-8 rounded-full border-2 border-[#C8F135]/20 border-t-[#C8F135] animate-spin" />
       </div>
     }>
       <ConfirmContent />

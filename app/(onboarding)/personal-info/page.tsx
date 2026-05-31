@@ -49,7 +49,7 @@ function Input({
         'placeholder:text-gray-300 dark:placeholder:text-gray-600',
         error
           ? 'border-red-400 focus:border-red-400'
-          : 'border-gray-200 dark:border-gray-700 focus:border-[#F5C518]',
+          : 'border-gray-200 dark:border-gray-700 focus:border-[#C8F135]',
         props.disabled ? 'opacity-50 cursor-not-allowed' : '',
       ].join(' ')}
     />

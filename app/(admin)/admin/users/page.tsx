@@ -57,7 +57,7 @@ export default function AdminUsersPage() {
           <button key={t.key} onClick={() => setTab(t.key as typeof tab)}
             className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${
               tab === t.key
-                ? "bg-[#FFD100] text-black"
+                ? "bg-[#C8F135] text-black"
                 : `dark:bg-white/5 bg-gray-100 dark:border-white/10 border border-gray-200 ${muted} hover:dark:text-white hover:text-gray-900`
             }`}>
             {t.label}

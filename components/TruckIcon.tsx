@@ -1,7 +1,7 @@
 type Props = { size?: number; color?: string; className?: string };
 
 // Gazelle — kichik yuk mashinasi (van)
-export function GazelleIcon({ size = 48, color = "#FFD100", className = "" }: Props) {
+export function GazelleIcon({ size = 48, color = "#C8F135", className = "" }: Props) {
   return (
     <svg width={size} height={size * 0.6} viewBox="0 0 80 48" fill="none" className={className}>
       {/* Kuzov */}
@@ -25,7 +25,7 @@ export function GazelleIcon({ size = 48, color = "#FFD100", className = "" }: Pr
 }
 
 // O'rta truck — o'rta yuk mashinasi
-export function MediumTruckIcon({ size = 48, color = "#FFD100", className = "" }: Props) {
+export function MediumTruckIcon({ size = 48, color = "#C8F135", className = "" }: Props) {
   return (
     <svg width={size} height={size * 0.6} viewBox="0 0 88 48" fill="none" className={className}>
       {/* Kuzov */}
@@ -52,7 +52,7 @@ export function MediumTruckIcon({ size = 48, color = "#FFD100", className = "" }
 }
 
 // Kamaz — og'ir yuk mashinasi
-export function KamazIcon({ size = 48, color = "#FFD100", className = "" }: Props) {
+export function KamazIcon({ size = 48, color = "#C8F135", className = "" }: Props) {
   return (
     <svg width={size} height={size * 0.6} viewBox="0 0 100 48" fill="none" className={className}>
       {/* Kuzov */}

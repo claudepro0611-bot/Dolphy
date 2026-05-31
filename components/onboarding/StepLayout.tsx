@@ -81,9 +81,9 @@ export function StepLayout({
             disabled:opacity-40 disabled:cursor-not-allowed
           "
           style={{
-            backgroundColor: nextDisabled || isLoading ? undefined : '#F5C518',
+            backgroundColor: nextDisabled || isLoading ? undefined : '#C8F135',
             color: nextDisabled || isLoading ? undefined : '#000000',
-            background: nextDisabled || isLoading ? 'rgb(229 231 235)' : '#F5C518',
+            background: nextDisabled || isLoading ? 'rgb(229 231 235)' : '#C8F135',
           }}
         >
           {isLoading ? (

@@ -136,13 +136,13 @@ export default function PhoneChangePage() {
             transition={{ duration: 0.25 }} className="space-y-6">
 
             <div>
-              <p className="text-[#FFD100] text-xs font-bold tracking-[3px] uppercase mb-1">1 / 2</p>
+              <p className="text-[#C8F135] text-xs font-bold tracking-[3px] uppercase mb-1">1 / 2</p>
               <h1 className={`text-2xl font-bold ${main} mb-1`}>Yangi raqam</h1>
               <p className={`text-sm ${muted}`}>Yangi telefon raqamingizni kiriting</p>
             </div>
 
             <div className={`flex items-center border-2 rounded-2xl h-14 transition-all duration-200 ${
-              raw.length > 0 ? "border-[#FFD100]" : "dark:border-white/15 border-gray-200"
+              raw.length > 0 ? "border-[#C8F135]" : "dark:border-white/15 border-gray-200"
             } dark:bg-white/5 bg-gray-50`}>
               <div className="flex items-center gap-2 pl-4 pr-3 border-r dark:border-white/10 border-gray-200 h-full flex-shrink-0">
                 <span className={`font-bold text-sm ${main} tracking-wide`}>+998</span>
@@ -157,7 +157,7 @@ export default function PhoneChangePage() {
                 className={`flex-1 bg-transparent px-3 font-semibold text-base ${main} placeholder:dark:text-white/20 placeholder:text-gray-300 outline-none`}
               />
               {raw.length === 9 && (
-                <div className="w-6 h-6 rounded-full bg-[#FFD100] flex items-center justify-center mr-3 flex-shrink-0">
+                <div className="w-6 h-6 rounded-full bg-[#C8F135] flex items-center justify-center mr-3 flex-shrink-0">
                   <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
                     <path d="M1 4l2.5 2.5L9 1" stroke="#000" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
@@ -170,7 +170,7 @@ export default function PhoneChangePage() {
               disabled={raw.length !== 9 || loading}
               className={`w-full h-14 rounded-2xl font-bold text-base transition-all flex items-center justify-center gap-2 ${
                 raw.length === 9 && !loading
-                  ? "bg-[#FFD100] text-black hover:bg-[#E6BC00] shadow-[0_0_30px_rgba(255,209,0,0.2)]"
+                  ? "bg-[#C8F135] text-black hover:bg-[#b3d92f] shadow-[0_0_30px_rgba(200,241,53,0.2)]"
                   : "dark:bg-white/8 bg-gray-100 dark:text-white/25 text-gray-400 cursor-not-allowed"
               }`}
             >
@@ -188,7 +188,7 @@ export default function PhoneChangePage() {
             transition={{ duration: 0.25 }} className="space-y-6">
 
             <div>
-              <p className="text-[#FFD100] text-xs font-bold tracking-[3px] uppercase mb-1">2 / 2</p>
+              <p className="text-[#C8F135] text-xs font-bold tracking-[3px] uppercase mb-1">2 / 2</p>
               <h1 className={`text-2xl font-bold ${main} mb-1`}>SMS kod</h1>
               <p className={`text-sm ${muted}`}>
                 <span className={`font-semibold ${main}`}>+998 {raw.slice(0,2)} {raw.slice(2,5)}-{raw.slice(5,7)}-{raw.slice(7)}</span> ga yuborildi
@@ -209,22 +209,22 @@ export default function PhoneChangePage() {
                   disabled={loading}
                   className={`w-11 h-14 rounded-xl text-center text-xl font-bold border-2 outline-none transition-all ${
                     d
-                      ? "border-[#FFD100] bg-[#FFD100]/10 dark:text-white text-gray-900"
+                      ? "border-[#C8F135] bg-[#C8F135]/10 dark:text-white text-gray-900"
                       : "dark:border-white/15 border-gray-200 dark:bg-white/5 bg-gray-50 dark:text-white text-gray-900"
-                  } focus:border-[#FFD100] disabled:opacity-50`}
+                  } focus:border-[#C8F135] disabled:opacity-50`}
                 />
               ))}
             </motion.div>
 
             {loading && (
               <div className="flex items-center justify-center gap-2 text-sm text-gray-400">
-                <div className="w-4 h-4 border-2 border-gray-300 border-t-[#FFD100] rounded-full animate-spin" />
+                <div className="w-4 h-4 border-2 border-gray-300 border-t-[#C8F135] rounded-full animate-spin" />
                 Tekshirilmoqda...
               </div>
             )}
 
             <p className={`text-xs text-center ${muted}`}>
-              Test uchun kod: <span className="font-bold text-[#FFD100]">{MOCK_OTP}</span>
+              Test uchun kod: <span className="font-bold text-[#C8F135]">{MOCK_OTP}</span>
             </p>
           </motion.div>
         )}

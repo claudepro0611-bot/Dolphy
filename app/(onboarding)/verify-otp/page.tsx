@@ -134,8 +134,8 @@ export default function VerifyOtpPage() {
 
         {/* Icon */}
         <div className="text-center">
-          <div className="w-16 h-16 rounded-2xl bg-[#F5C518]/15 border-2 border-[#F5C518]/30 flex items-center justify-center mx-auto mb-4">
-            <svg width="26" height="26" viewBox="0 0 26 26" fill="none" className="text-[#F5C518]">
+          <div className="w-16 h-16 rounded-2xl bg-[#C8F135]/15 border-2 border-[#C8F135]/30 flex items-center justify-center mx-auto mb-4">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none" className="text-[#C8F135]">
               <rect x="6" y="2" width="14" height="22" rx="2.5" stroke="currentColor" strokeWidth="1.6"/>
               <path d="M10 19h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
@@ -173,9 +173,9 @@ export default function VerifyOtpPage() {
                 'w-11 h-14 rounded-xl text-center text-xl font-bold transition-all duration-200 outline-none',
                 'border-2',
                 d
-                  ? 'border-[#F5C518] bg-[#F5C518]/10 text-gray-900 dark:text-white'
+                  ? 'border-[#C8F135] bg-[#C8F135]/10 text-gray-900 dark:text-white'
                   : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white',
-                'focus:border-[#F5C518] focus:bg-[#F5C518]/10',
+                'focus:border-[#C8F135] focus:bg-[#C8F135]/10',
                 'disabled:opacity-50',
               ].join(' ')}
             />
@@ -199,7 +199,7 @@ export default function VerifyOtpPage() {
         {/* Loading */}
         {loading && (
           <div className="flex items-center justify-center gap-2 text-sm text-gray-400 -mt-2">
-            <div className="w-4 h-4 border-2 border-gray-300 border-t-[#F5C518] rounded-full animate-spin" />
+            <div className="w-4 h-4 border-2 border-gray-300 border-t-[#C8F135] rounded-full animate-spin" />
             Tekshirilmoqda...
           </div>
         )}
@@ -216,7 +216,7 @@ export default function VerifyOtpPage() {
           ) : (
             <button
               onClick={resend}
-              className="text-sm font-semibold text-[#F5C518] hover:text-[#E6B800] transition-colors underline underline-offset-2"
+              className="text-sm font-semibold text-[#C8F135] hover:text-[#b3d92f] transition-colors underline underline-offset-2"
             >
               Qayta SMS yuborish
             </button>

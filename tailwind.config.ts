@@ -7,15 +7,15 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#F5C518',
-          hover: '#E6B800',
-          dark: '#CC9F00',
-          foreground: '#000000',
+          DEFAULT: '#C8F135',
+          hover: '#b3d92f',
+          dark: '#9bbf28',
+          foreground: '#0A0A0A',
         },
       },
       boxShadow: {
-        'primary': '0 4px 14px 0 rgba(245, 197, 24, 0.3)',
-        'primary-lg': '0 8px 25px 0 rgba(245, 197, 24, 0.4)',
+        'primary': '0 4px 14px 0 rgba(200, 241, 53, 0.3)',
+        'primary-lg': '0 8px 25px 0 rgba(200, 241, 53, 0.4)',
       }
     },
   },

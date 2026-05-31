@@ -1,5 +1,5 @@
 const KPI = [
-  { label: "Bugungi zakazlar", value: "34",    sub: "+8 kechadan", color: "#FFD100" },
+  { label: "Bugungi zakazlar", value: "34",    sub: "+8 kechadan", color: "#C8F135" },
   { label: "Bugungi daromad",  value: "1.24M", sub: "so'm",        color: "#22C55E" },
   { label: "Faol haydovchi",   value: "18",    sub: "12 ta online", color: "#4F8EF7" },
   { label: "Kutilayotgan",     value: "5",     sub: "zakaz",        color: "#F59E0B" },
@@ -14,7 +14,7 @@ const RECENT = [
 ];
 
 const STATUS: Record<string, { label: string; color: string }> = {
-  active:    { label: "Faol",       color: "#FFD100" },
+  active:    { label: "Faol",       color: "#C8F135" },
   delivered: { label: "Yetkazildi", color: "#22C55E" },
   pending:   { label: "Kutilmoqda", color: "#F59E0B" },
   cancelled: { label: "Bekor",      color: "#EF4444" },
@@ -49,7 +49,7 @@ export default function AdminDashboard() {
       <div className={`${card} overflow-hidden shadow-sm`}>
         <div className={`flex items-center justify-between px-5 py-4 dark:border-b dark:border-white/8 border-b border-gray-100`}>
           <h2 className={`${main} font-semibold text-sm`}>So&apos;nggi zakazlar</h2>
-          <a href="/admin/orders" className="text-[#FFD100] text-xs font-bold hover:underline">Barchasi →</a>
+          <a href="/admin/orders" className="text-[#C8F135] text-xs font-bold hover:underline">Barchasi →</a>
         </div>
         <table className="w-full">
           <thead>
@@ -70,7 +70,7 @@ export default function AdminDashboard() {
                     <p className={`${muted} text-xs`}>→ {o.to}</p>
                   </td>
                   <td className={`px-5 py-3.5 ${muted} text-sm`}>{o.driver}</td>
-                  <td className="px-5 py-3.5 text-[#FFD100] font-bold text-sm">{o.price.toLocaleString()}</td>
+                  <td className="px-5 py-3.5 text-[#C8F135] font-bold text-sm">{o.price.toLocaleString()}</td>
                   <td className="px-5 py-3.5">
                     <span className="text-xs font-semibold px-2.5 py-1 rounded-full" style={{ color: s.color, backgroundColor: s.color + "18" }}>
                       {s.label}

@@ -105,7 +105,7 @@ export default function DriverProfilePage() {
           <div key={s.label}
             className="dark:bg-white/[0.03] bg-white dark:border-white/8 border border-gray-200 rounded-2xl p-4"
           >
-            <p className="text-xl font-bold text-[#FFD100] tabular-nums leading-none">{s.value}</p>
+            <p className="text-xl font-bold text-[#C8F135] tabular-nums leading-none">{s.value}</p>
             <p className="text-xs dark:text-white/30 text-gray-400 mt-1">{s.unit}</p>
             <p className="text-xs dark:text-white/50 text-gray-600 font-medium mt-0.5">{s.label}</p>
           </div>

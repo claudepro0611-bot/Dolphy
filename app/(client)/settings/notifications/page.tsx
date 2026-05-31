@@ -62,7 +62,7 @@ function Toggle({ enabled, onToggle }: { enabled: boolean; onToggle: () => void 
   return (
     <button onClick={onToggle}
       className={`relative w-11 h-6 rounded-full transition-all duration-300 flex-shrink-0 ${
-        enabled ? "bg-[#FFD100]" : "dark:bg-white/15 bg-gray-300"
+        enabled ? "bg-[#C8F135]" : "dark:bg-white/15 bg-gray-300"
       }`}>
       <motion.div
         animate={{ x: enabled ? 20 : 2 }}
@@ -122,7 +122,7 @@ export default function NotificationsPage() {
 
       {/* Sarlavha */}
       <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}>
-        <p className="text-[#FFD100] text-xs font-bold tracking-[3px] uppercase mb-1">Bildirishnomalar</p>
+        <p className="text-[#C8F135] text-xs font-bold tracking-[3px] uppercase mb-1">Bildirishnomalar</p>
         <h1 className={`text-2xl font-bold ${main}`}>Bildirishnomalar</h1>
       </motion.div>
 
@@ -154,7 +154,7 @@ export default function NotificationsPage() {
       <motion.button
         initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
         onClick={save}
-        className="w-full h-13 py-3.5 rounded-2xl bg-[#FFD100] text-black font-bold text-sm hover:bg-[#E6BC00] transition-all shadow-[0_4px_20px_rgba(255,209,0,0.25)] active:scale-[0.98]"
+        className="w-full h-13 py-3.5 rounded-2xl bg-[#C8F135] text-black font-bold text-sm hover:bg-[#b3d92f] transition-all shadow-[0_4px_20px_rgba(200,241,53,0.25)] active:scale-[0.98]"
       >
         Saqlash
       </motion.button>

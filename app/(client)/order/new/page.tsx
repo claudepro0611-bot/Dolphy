@@ -13,7 +13,7 @@ const MapOrderClient = dynamic(() => import("@/components/MapOrderClient"), {
   loading: () => (
     <div className="w-full h-full bg-gray-900 flex items-center justify-center">
       <div className="flex flex-col items-center gap-3">
-        <div className="w-10 h-10 border-2 border-[#FFD100]/30 border-t-[#FFD100] rounded-full animate-spin" />
+        <div className="w-10 h-10 border-2 border-[#C8F135]/30 border-t-[#C8F135] rounded-full animate-spin" />
         <p className="text-white/40 text-sm">Xarita yuklanmoqda...</p>
       </div>
     </div>
@@ -193,7 +193,7 @@ export default function NewOrderPage() {
 
       {/* Mobile toggle */}
       <button onClick={() => setPanelOpen(p => !p)}
-        className="absolute bottom-4 right-4 z-[1100] w-12 h-12 bg-[#FFD100] rounded-2xl shadow-lg flex items-center justify-center md:hidden">
+        className="absolute bottom-4 right-4 z-[1100] w-12 h-12 bg-[#C8F135] rounded-2xl shadow-lg flex items-center justify-center md:hidden">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
           <path d={panelOpen ? "M4 12l6-6 6 6" : "M4 8l6 6 6-6"} stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
@@ -273,23 +273,23 @@ export default function NewOrderPage() {
               <button key={t.id} onClick={() => setTruck(t.id as Truck)}
                 className={`flex items-center gap-3 p-3 rounded-xl border transition-all ${
                   truck === t.id
-                    ? "border-[#FFD100]/50 bg-[#FFD100]/8"
+                    ? "border-[#C8F135]/50 bg-[#C8F135]/8"
                     : "border-white/8 bg-white/[0.03] hover:bg-white/6 hover:border-white/15"
                 }`}>
-                <span className={`flex-shrink-0 ${truck === t.id ? "text-[#FFD100]" : "text-white/30"}`}>
+                <span className={`flex-shrink-0 ${truck === t.id ? "text-[#C8F135]" : "text-white/30"}`}>
                   {TRUCK_ICONS[t.id]}
                 </span>
                 <div className="flex-1 text-left">
-                  <p className={`text-sm font-bold ${truck === t.id ? "text-[#FFD100]" : "text-white"}`}>{t.name}</p>
+                  <p className={`text-sm font-bold ${truck === t.id ? "text-[#C8F135]" : "text-white"}`}>{t.name}</p>
                   <p className="text-white/30 text-xs">{t.cap}</p>
                 </div>
                 {km && (
-                  <span className={`text-sm font-bold ${truck === t.id ? "text-[#FFD100]" : "text-white/40"}`}>
+                  <span className={`text-sm font-bold ${truck === t.id ? "text-[#C8F135]" : "text-white/40"}`}>
                     {Math.round(t.base + km * t.perKm).toLocaleString()}
                   </span>
                 )}
                 {truck === t.id && (
-                  <div className="w-4 h-4 rounded-full bg-[#FFD100] flex items-center justify-center flex-shrink-0">
+                  <div className="w-4 h-4 rounded-full bg-[#C8F135] flex items-center justify-center flex-shrink-0">
                     <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
                       <path d="M1.5 4l2 2 3-3" stroke="black" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
@@ -332,7 +332,7 @@ export default function NewOrderPage() {
             <div>
               <p className="text-white/30 text-xs font-bold uppercase tracking-widest mb-1">Taxminiy narx</p>
               {price ? (
-                <p className="text-[#FFD100] font-black text-3xl leading-none">
+                <p className="text-[#C8F135] font-black text-3xl leading-none">
                   {price.toLocaleString()}
                   <span className="text-base font-semibold text-white/40 ml-1.5">so'm</span>
                 </p>
@@ -351,7 +351,7 @@ export default function NewOrderPage() {
           <button onClick={submit} disabled={!canSubmit}
             className={`w-full py-3.5 rounded-xl font-bold text-sm transition-all ${
               canSubmit
-                ? "bg-[#FFD100] text-black hover:bg-[#E6BC00] shadow-[0_4px_20px_rgba(255,209,0,0.3)] active:scale-[0.98]"
+                ? "bg-[#C8F135] text-black hover:bg-[#b3d92f] shadow-[0_4px_20px_rgba(200,241,53,0.3)] active:scale-[0.98]"
                 : "bg-white/8 text-white/25 cursor-not-allowed"
             }`}>
             {loading ? (

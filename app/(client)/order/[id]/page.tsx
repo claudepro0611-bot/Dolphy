@@ -11,7 +11,7 @@ const TrackingMapClient = dynamic(() => import("@/components/TrackingMapClient")
   loading: () => (
     <div className="w-full h-full flex items-center justify-center dark:bg-[#0a0a0a] bg-gray-100 rounded-2xl">
       <div className="flex flex-col items-center gap-3">
-        <div className="w-8 h-8 border-2 border-[#FFD100]/30 border-t-[#FFD100] rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-[#C8F135]/30 border-t-[#C8F135] rounded-full animate-spin" />
         <p className="dark:text-white/30 text-gray-400 text-xs">Xarita yuklanmoqda...</p>
       </div>
     </div>
@@ -88,7 +88,7 @@ export default function OrderTrackingPage() {
       </div>
       <h2 className={`text-2xl font-bold ${main} mb-2`}>{tr("cancelled")}</h2>
       <p className={`${muted} text-sm mb-8`}>Haydovchiga xabar yuborildi.</p>
-      <Link href="/order/new" className="bg-[#FFD100] text-black font-bold px-8 py-3 rounded-xl hover:bg-[#E6BC00] transition-all">
+      <Link href="/order/new" className="bg-[#C8F135] text-black font-bold px-8 py-3 rounded-xl hover:bg-[#b3d92f] transition-all">
         {tr("newOrder")} →
       </Link>
     </div>
@@ -99,7 +99,7 @@ export default function OrderTrackingPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <p className="text-[#FFD100] text-xs font-bold tracking-[3px] uppercase mb-1">Zakaz kuzatish</p>
+          <p className="text-[#C8F135] text-xs font-bold tracking-[3px] uppercase mb-1">Zakaz kuzatish</p>
           <h1 className={`text-3xl font-bold ${main}`}>{MOCK.id}</h1>
         </div>
         <div className="flex items-center gap-3">
@@ -131,12 +131,12 @@ export default function OrderTrackingPage() {
 
             {/* ETA overlay */}
             {idx < 3 && (
-              <div className="absolute bottom-4 right-4 z-[1000] flex items-center gap-2 bg-black/75 backdrop-blur-sm border border-[#FFD100]/35 px-4 py-2 rounded-full pointer-events-none">
+              <div className="absolute bottom-4 right-4 z-[1000] flex items-center gap-2 bg-black/75 backdrop-blur-sm border border-[#C8F135]/35 px-4 py-2 rounded-full pointer-events-none">
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                  <circle cx="6" cy="6" r="5" stroke="#FFD100" strokeWidth="1.2"/>
-                  <path d="M6 3v3L8 7.5" stroke="#FFD100" strokeWidth="1.2" strokeLinecap="round"/>
+                  <circle cx="6" cy="6" r="5" stroke="#C8F135" strokeWidth="1.2"/>
+                  <path d="M6 3v3L8 7.5" stroke="#C8F135" strokeWidth="1.2" strokeLinecap="round"/>
                 </svg>
-                <span className="text-[#FFD100] text-sm font-bold">~{eta} {tr("min")}</span>
+                <span className="text-[#C8F135] text-sm font-bold">~{eta} {tr("min")}</span>
               </div>
             )}
 
@@ -169,14 +169,14 @@ export default function OrderTrackingPage() {
           <div className={`${card} p-6`}>
             <div className="flex items-center justify-between mb-5">
               <h2 className={`${main} font-bold`}>Holat</h2>
-              <span className="text-[#FFD100] text-sm font-semibold">{cur.label}</span>
+              <span className="text-[#C8F135] text-sm font-semibold">{cur.label}</span>
             </div>
             <div className="flex items-center">
               {STATUSES.map((s, i) => (
                 <div key={s.key} className="flex items-center flex-1 last:flex-none">
                   <div className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 transition-all duration-500 ${
-                    i < idx  ? "bg-[#FFD100] text-black" :
-                    i === idx ? "bg-[#FFD100] text-black ring-4 ring-[#FFD100]/20" :
+                    i < idx  ? "bg-[#C8F135] text-black" :
+                    i === idx ? "bg-[#C8F135] text-black ring-4 ring-[#C8F135]/20" :
                     "dark:bg-white/8 bg-gray-200 dark:text-white/25 text-gray-400"
                   }`}>
                     {i < idx ? (
@@ -187,7 +187,7 @@ export default function OrderTrackingPage() {
                   </div>
                   {i < 3 && (
                     <div className="flex-1 h-1 mx-1.5 rounded-full overflow-hidden dark:bg-white/8 bg-gray-200">
-                      <div className={`h-full rounded-full transition-all duration-700 ${i < idx ? "w-full bg-[#FFD100]" : "w-0"}`} />
+                      <div className={`h-full rounded-full transition-all duration-700 ${i < idx ? "w-full bg-[#C8F135]" : "w-0"}`} />
                     </div>
                   )}
                 </div>
@@ -195,7 +195,7 @@ export default function OrderTrackingPage() {
             </div>
             <div className="flex justify-between mt-3">
               {STATUSES.map((s, i) => (
-                <span key={s.key} className={`text-xs ${i <= idx ? "text-[#FFD100] font-semibold" : `${muted}`}`}>{s.label}</span>
+                <span key={s.key} className={`text-xs ${i <= idx ? "text-[#C8F135] font-semibold" : `${muted}`}`}>{s.label}</span>
               ))}
             </div>
           </div>
@@ -208,18 +208,18 @@ export default function OrderTrackingPage() {
             <div className={`${card} p-5`}>
               <p className={`${muted} text-xs font-bold uppercase tracking-widest mb-4`}>Haydovchi</p>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-xl bg-[#FFD100]/10 border border-[#FFD100]/20 flex items-center justify-center text-2xl flex-shrink-0">🧑</div>
+                <div className="w-12 h-12 rounded-xl bg-[#C8F135]/10 border border-[#C8F135]/20 flex items-center justify-center text-2xl flex-shrink-0">🧑</div>
                 <div>
                   <p className={`${main} font-bold text-sm`}>{MOCK.driver.name}</p>
                   <p className={`${muted} text-xs`}>{MOCK.driver.car}</p>
                   <div className="flex items-center gap-1 mt-0.5">
-                    <span className="text-[#FFD100] text-xs">★ {MOCK.driver.rating}</span>
+                    <span className="text-[#C8F135] text-xs">★ {MOCK.driver.rating}</span>
                     <span className={`${muted} text-xs`}>· {MOCK.driver.trips} zakaz</span>
                   </div>
                 </div>
               </div>
               <a href={`tel:${MOCK.driver.phone}`}
-                className="flex items-center justify-center gap-2 w-full h-10 bg-[#FFD100] text-black font-bold text-sm rounded-xl hover:bg-[#E6BC00] transition-all">
+                className="flex items-center justify-center gap-2 w-full h-10 bg-[#C8F135] text-black font-bold text-sm rounded-xl hover:bg-[#b3d92f] transition-all">
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                   <path d="M14 11.5c0 .3-.1.6-.2.9-.1.3-.3.5-.6.7-.5.4-1 .6-1.6.6-.4 0-.9-.1-1.4-.3-.5-.2-1-.5-1.5-.9-.5-.4-1-.8-1.4-1.3-.4-.5-.8-1-.9-1.5-.2-.5-.3-1-.3-1.4 0-.5.1-1 .5-1.5.3-.5.7-.8 1.2-.9h.3c.2 0 .3.1.4.2l1.4 2c.1.1.1.2.1.3 0 .1-.1.3-.2.4l-.5.5c-.1.1-.1.1-.1.2s.1.3.2.4c.3.5.7 1 1.1 1.4.4.4.9.8 1.4 1.1.1.1.3.2.4.2.1 0 .2-.1.3-.2l.5-.5c.1-.1.3-.2.5-.2h.1l2 1.4c.1.1.2.3.2.4Z" stroke="black" strokeWidth="1.2" fill="none"/>
                 </svg>
@@ -254,7 +254,7 @@ export default function OrderTrackingPage() {
               <span className={`${muted} text-xs font-bold uppercase tracking-widest`}>Narx</span>
               <span className={`${muted} text-xs`}>{MOCK.truck}</span>
             </div>
-            <p className="text-[#FFD100] font-bold text-3xl">{MOCK.price.toLocaleString()}</p>
+            <p className="text-[#C8F135] font-bold text-3xl">{MOCK.price.toLocaleString()}</p>
             <p className={`${muted} text-xs mt-0.5`}>{tr("som")} · yetkazib bergandan keyin</p>
           </div>
 
@@ -283,7 +283,7 @@ export default function OrderTrackingPage() {
 
           {idx === 3 && (
             <Link href="/order/new"
-              className="flex items-center justify-center w-full h-12 bg-[#FFD100] text-black font-bold rounded-xl hover:bg-[#E6BC00] transition-all">
+              className="flex items-center justify-center w-full h-12 bg-[#C8F135] text-black font-bold rounded-xl hover:bg-[#b3d92f] transition-all">
               {tr("newOrder")} →
             </Link>
           )}

@@ -40,7 +40,7 @@ export default function LoginPage() {
       <div className="space-y-3 mb-4">
         {/* Email */}
         <div className={`flex items-center border rounded-2xl h-14 transition-colors ${
-          error ? "border-red-500/60 bg-red-500/5" : "border-white/15 bg-white/5 focus-within:border-[#FFD100]/60"
+          error ? "border-red-500/60 bg-red-500/5" : "border-white/15 bg-white/5 focus-within:border-[#C8F135]/60"
         }`}>
           <input
             type="email"
@@ -55,7 +55,7 @@ export default function LoginPage() {
 
         {/* Parol */}
         <div className={`flex items-center border rounded-2xl h-14 transition-colors ${
-          error ? "border-red-500/60 bg-red-500/5" : "border-white/15 bg-white/5 focus-within:border-[#FFD100]/60"
+          error ? "border-red-500/60 bg-red-500/5" : "border-white/15 bg-white/5 focus-within:border-[#C8F135]/60"
         }`}>
           <input
             type="password"
@@ -78,7 +78,7 @@ export default function LoginPage() {
         disabled={!isValid || loading}
         className={`w-full h-14 rounded-2xl font-bold text-base transition-all mb-6 ${
           isValid && !loading
-            ? "bg-[#FFD100] text-black hover:bg-[#E6BC00] hover:scale-[1.01] shadow-[0_0_30px_rgba(255,209,0,0.2)]"
+            ? "bg-[#C8F135] text-black hover:bg-[#b3d92f] hover:scale-[1.01] shadow-[0_0_30px_rgba(200,241,53,0.2)]"
             : "bg-white/8 text-white/25 cursor-not-allowed"
         }`}
       >
@@ -97,7 +97,7 @@ export default function LoginPage() {
       {/* Register link */}
       <p className="text-center text-white/35 text-sm">
         Hisob yo&apos;qmi?{" "}
-        <Link href="/signup" className="text-[#FFD100] font-semibold hover:underline">
+        <Link href="/signup" className="text-[#C8F135] font-semibold hover:underline">
           Ro&apos;yxatdan o&apos;tish
         </Link>
       </p>

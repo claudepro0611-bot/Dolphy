@@ -20,7 +20,7 @@ const ALL_ORDERS = [
 const STATUS_CFG: Record<string, { label: string; color: string; bg: string }> = {
   delivered: { label: "Yetkazildi", color: "#22C55E", bg: "#22C55E18" },
   cancelled: { label: "Bekor",      color: "#EF4444", bg: "#EF444418" },
-  active:    { label: "Faol",       color: "#F5C518", bg: "#F5C51818" },
+  active:    { label: "Faol",       color: "#C8F135", bg: "#C8F13518" },
 };
 
 const FILTERS: { key: Filter; label: string }[] = [
@@ -56,7 +56,7 @@ export default function TgHistoryPage() {
           <button key={f.key} onClick={() => setFilter(f.key)}
             className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${
               filter === f.key
-                ? "bg-[#F5C518] text-black shadow-[0_2px_8px_rgba(245,197,24,0.3)]"
+                ? "bg-[#C8F135] text-black shadow-[0_2px_8px_rgba(200,241,53,0.3)]"
                 : "text-gray-500 dark:text-white/35 hover:text-gray-700 dark:hover:text-white/60"
             }`}>
             {f.label}
@@ -71,7 +71,7 @@ export default function TgHistoryPage() {
           { label: "Sarflangan", value: `${(totalSpent / 1000).toFixed(0)}K` },
         ].map(s => (
           <div key={s.label} className="bg-gray-100 dark:bg-white/[0.04] border border-gray-200 dark:border-white/8 rounded-2xl p-4 text-center">
-            <p className="text-[#F5C518] font-bold text-2xl">{s.value}</p>
+            <p className="text-[#C8F135] font-bold text-2xl">{s.value}</p>
             <p className="text-gray-500 dark:text-white/35 text-xs mt-1">{s.label}</p>
           </div>
         ))}
@@ -124,7 +124,7 @@ export default function TgHistoryPage() {
 
                   {/* Narx */}
                   <div className="text-right flex-shrink-0">
-                    <p className="text-[#F5C518] font-bold text-sm">{o.price.toLocaleString()}</p>
+                    <p className="text-[#C8F135] font-bold text-sm">{o.price.toLocaleString()}</p>
                     <span className="text-[10px] font-bold" style={{ color: s.color }}>{s.label}</span>
                   </div>
                 </Link>

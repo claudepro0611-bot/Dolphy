@@ -121,8 +121,8 @@ export default function RegisterPage() {
               className="w-full max-w-sm bg-white dark:bg-[#111] rounded-2xl p-6 shadow-2xl border border-gray-100 dark:border-white/10"
             >
               {/* Icon */}
-              <div className="w-12 h-12 rounded-2xl bg-[#F5C518]/15 flex items-center justify-center mb-4">
-                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" className="text-[#F5C518]">
+              <div className="w-12 h-12 rounded-2xl bg-[#C8F135]/15 flex items-center justify-center mb-4">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" className="text-[#C8F135]">
                   <rect x="3" y="2" width="16" height="18" rx="2" stroke="currentColor" strokeWidth="1.5"/>
                   <path d="M7 8h8M7 12h5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
                 </svg>
@@ -136,7 +136,7 @@ export default function RegisterPage() {
               </p>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-5">
                 Siz{' '}
-                <span className="font-semibold text-[#F5C518]">
+                <span className="font-semibold text-[#C8F135]">
                   {STEP_LABELS[savedStep] ?? `${savedStep}-qadam`}
                 </span>
                 gacha to&apos;ldirgan edingiz.
@@ -147,7 +147,7 @@ export default function RegisterPage() {
                 <button
                   onClick={handleResume}
                   className="w-full py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2"
-                  style={{ background: '#F5C518', color: '#000' }}
+                  style={{ background: '#C8F135', color: '#000' }}
                 >
                   <ArrowRight size={16} />
                   Davom etish
@@ -176,7 +176,7 @@ export default function RegisterPage() {
 
           {/* Logo + Sarlavha */}
           <div className="text-center">
-            <div className="w-14 h-14 rounded-2xl bg-[#F5C518] flex items-center justify-center text-black font-black text-2xl mx-auto mb-5">
+            <div className="w-14 h-14 rounded-2xl bg-[#C8F135] flex items-center justify-center text-black font-black text-2xl mx-auto mb-5">
               Y
             </div>
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white leading-snug">
@@ -190,7 +190,7 @@ export default function RegisterPage() {
           {/* Telefon input */}
           <div className={`
             flex items-center border-2 rounded-2xl h-14 transition-all duration-200
-            ${raw.length > 0 ? 'border-[#F5C518]' : 'border-gray-200 dark:border-gray-700'}
+            ${raw.length > 0 ? 'border-[#C8F135]' : 'border-gray-200 dark:border-gray-700'}
             bg-gray-50 dark:bg-white/5
           `}>
             <div className="flex items-center gap-2 pl-4 pr-3 border-r border-gray-200 dark:border-gray-700 h-full">
@@ -207,7 +207,7 @@ export default function RegisterPage() {
               className="flex-1 bg-transparent px-3 text-gray-900 dark:text-white font-semibold text-base placeholder:text-gray-300 dark:placeholder:text-gray-600 outline-none"
             />
             {raw.length === 9 && (
-              <div className="w-6 h-6 rounded-full bg-[#F5C518] flex items-center justify-center mr-3 flex-shrink-0">
+              <div className="w-6 h-6 rounded-full bg-[#C8F135] flex items-center justify-center mr-3 flex-shrink-0">
                 <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
                   <path d="M1 4l2.5 2.5L9 1" stroke="#000" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
@@ -221,7 +221,7 @@ export default function RegisterPage() {
               <input type="checkbox" checked={agreed} onChange={e => setAgreed(e.target.checked)} className="sr-only" />
               <div className={`
                 w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all duration-200
-                ${agreed ? 'bg-[#F5C518] border-[#F5C518]' : 'border-gray-300 dark:border-gray-600 group-hover:border-[#F5C518]/60'}
+                ${agreed ? 'bg-[#C8F135] border-[#C8F135]' : 'border-gray-300 dark:border-gray-600 group-hover:border-[#C8F135]/60'}
               `}>
                 {agreed && (
                   <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
@@ -231,9 +231,9 @@ export default function RegisterPage() {
               </div>
             </div>
             <span className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-              <Link href="#" className="text-[#F5C518] font-semibold hover:underline">Foydalanuvchi shartnomasiga</Link>
+              <Link href="#" className="text-[#C8F135] font-semibold hover:underline">Foydalanuvchi shartnomasiga</Link>
               {' '}va{' '}
-              <Link href="#" className="text-[#F5C518] font-semibold hover:underline">maxfiylik siyosatiga</Link>
+              <Link href="#" className="text-[#C8F135] font-semibold hover:underline">maxfiylik siyosatiga</Link>
               {' '}roziman
             </span>
           </label>
@@ -244,7 +244,7 @@ export default function RegisterPage() {
             disabled={!isValid || loading}
             className="w-full h-14 rounded-2xl font-bold text-base transition-all duration-200 flex items-center justify-center gap-2"
             style={{
-              background: !isValid || loading ? 'rgb(229 231 235)' : '#F5C518',
+              background: !isValid || loading ? 'rgb(229 231 235)' : '#C8F135',
               color:      !isValid || loading ? undefined : '#000000',
               cursor:     !isValid || loading ? 'not-allowed' : 'pointer',
             }}
@@ -258,7 +258,7 @@ export default function RegisterPage() {
 
           <p className="text-center text-xs text-gray-400 dark:text-gray-600">
             Allaqachon ro&apos;yxatdan o&apos;tganmisiz?{' '}
-            <Link href="/login" className="text-[#F5C518] font-semibold hover:underline">Kirish</Link>
+            <Link href="/login" className="text-[#C8F135] font-semibold hover:underline">Kirish</Link>
           </p>
         </div>
       </motion.div>

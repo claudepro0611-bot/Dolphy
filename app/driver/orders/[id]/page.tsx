@@ -12,7 +12,7 @@ const TrackingMapClient = dynamic(() => import("@/components/TrackingMapClient")
   ssr: false,
   loading: () => (
     <div className="w-full h-full flex items-center justify-center dark:bg-[#111] bg-gray-100">
-      <div className="w-7 h-7 border-2 border-[#FFD100]/25 border-t-[#FFD100] rounded-full animate-spin" />
+      <div className="w-7 h-7 border-2 border-[#C8F135]/25 border-t-[#C8F135] rounded-full animate-spin" />
     </div>
   ),
 });
@@ -140,14 +140,14 @@ function DriverOrderContent() {
   // ── Loading / Not found ───────────────────────────────────────────────
   if (loading) return (
     <div className="flex items-center justify-center min-h-[60vh]">
-      <div className="w-10 h-10 border-2 border-[#FFD100]/20 border-t-[#FFD100] rounded-full animate-spin" />
+      <div className="w-10 h-10 border-2 border-[#C8F135]/20 border-t-[#C8F135] rounded-full animate-spin" />
     </div>
   );
 
   if (!order) return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4 text-center">
       <p className={`${main} font-bold text-lg`}>Zakaz topilmadi</p>
-      <Link href="/driver/dashboard" className="text-[#FFD100] text-sm font-semibold hover:underline">
+      <Link href="/driver/dashboard" className="text-[#C8F135] text-sm font-semibold hover:underline">
         ← Dashboard ga qaytish
       </Link>
     </div>
@@ -166,7 +166,7 @@ function DriverOrderContent() {
         <p className={`${muted} text-sm mt-1`}>Mijoz tomonidan bekor qilindi</p>
       </div>
       <Link href="/driver/dashboard"
-        className="bg-[#FFD100] text-black font-bold px-8 py-3 rounded-xl hover:bg-[#E6BC00] transition-all">
+        className="bg-[#C8F135] text-black font-bold px-8 py-3 rounded-xl hover:bg-[#b3d92f] transition-all">
         Yangi zakazlar →
       </Link>
     </motion.div>
@@ -181,7 +181,7 @@ function DriverOrderContent() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-[#FFD100] text-xs font-bold tracking-[3px] uppercase">Aktiv zakaz</p>
+            <p className="text-[#C8F135] text-xs font-bold tracking-[3px] uppercase">Aktiv zakaz</p>
             <h1 className={`${main} font-bold text-2xl mt-0.5`}>#{orderId.slice(0, 8).toUpperCase()}</h1>
           </div>
           <div className="flex items-center gap-3">
@@ -234,16 +234,16 @@ function DriverOrderContent() {
         <div className={`${card} p-5`}>
           <div className="flex items-center justify-between mb-4">
             <h3 className={`${main} font-bold`}>Holat</h3>
-            <span className="text-[#FFD100] text-sm font-semibold">{curStep?.label}</span>
+            <span className="text-[#C8F135] text-sm font-semibold">{curStep?.label}</span>
           </div>
           <div className="flex items-center">
             {STATUS_FLOW.map((s, i, arr) => (
               <div key={s.key} className="flex items-center flex-1 last:flex-none">
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 transition-all duration-500 ${
                   STATUS_FLOW.findIndex(x => x.key === order.status) > i
-                    ? "bg-[#FFD100] text-black"
+                    ? "bg-[#C8F135] text-black"
                     : STATUS_FLOW.findIndex(x => x.key === order.status) === i
-                    ? "bg-[#FFD100] text-black ring-4 ring-[#FFD100]/20"
+                    ? "bg-[#C8F135] text-black ring-4 ring-[#C8F135]/20"
                     : "dark:bg-white/8 bg-gray-200 dark:text-white/25 text-gray-400"
                 }`}>
                   {STATUS_FLOW.findIndex(x => x.key === order.status) > i ? (
@@ -255,7 +255,7 @@ function DriverOrderContent() {
                 {i < arr.length - 1 && (
                   <div className="flex-1 h-1 mx-1 rounded-full overflow-hidden dark:bg-white/8 bg-gray-200">
                     <div className={`h-full rounded-full transition-all duration-700 ${
-                      STATUS_FLOW.findIndex(x => x.key === order.status) > i ? "w-full bg-[#FFD100]" : "w-0"
+                      STATUS_FLOW.findIndex(x => x.key === order.status) > i ? "w-full bg-[#C8F135]" : "w-0"
                     }`} />
                   </div>
                 )}
@@ -266,7 +266,7 @@ function DriverOrderContent() {
             {STATUS_FLOW.map((s, i) => (
               <span key={s.key} className={`text-[10px] ${
                 STATUS_FLOW.findIndex(x => x.key === order.status) >= i
-                  ? "text-[#FFD100] font-semibold" : muted
+                  ? "text-[#C8F135] font-semibold" : muted
               }`}>{s.label.replace(" ✅", "")}</span>
             ))}
           </div>
@@ -282,7 +282,7 @@ function DriverOrderContent() {
             whileTap={{ scale: 0.97 }}
             onClick={() => updateStatus(curStep.next!)}
             disabled={updating}
-            className="w-full py-4 rounded-2xl bg-[#FFD100] text-black font-bold text-sm hover:bg-[#E6BC00] transition-all disabled:opacity-60 disabled:cursor-not-allowed shadow-[0_4px_20px_rgba(255,209,0,0.25)]"
+            className="w-full py-4 rounded-2xl bg-[#C8F135] text-black font-bold text-sm hover:bg-[#b3d92f] transition-all disabled:opacity-60 disabled:cursor-not-allowed shadow-[0_4px_20px_rgba(200,241,53,0.25)]"
           >
             {updating ? (
               <span className="flex items-center justify-center gap-2">
@@ -302,7 +302,7 @@ function DriverOrderContent() {
               <p className="text-green-500 dark:text-green-400 font-bold text-sm">✅ Muvaffaqiyatli yetkazildi!</p>
             </div>
             <Link href="/driver/dashboard"
-              className="flex items-center justify-center w-full py-3.5 rounded-2xl bg-[#FFD100] text-black font-bold text-sm hover:bg-[#E6BC00] transition-all">
+              className="flex items-center justify-center w-full py-3.5 rounded-2xl bg-[#C8F135] text-black font-bold text-sm hover:bg-[#b3d92f] transition-all">
               + Yangi zakaz qidirish
             </Link>
           </motion.div>
@@ -341,7 +341,7 @@ function DriverOrderContent() {
             <div key={row.label}
               className={`flex items-center justify-between px-5 py-3.5 ${i < arr.length - 1 ? "border-b dark:border-white/8 border-gray-200" : ""}`}>
               <p className={`${muted} text-sm`}>{row.label}</p>
-              <p className={`text-sm font-bold capitalize ${'accent' in row && row.accent ? "text-[#FFD100]" : main}`}>
+              <p className={`text-sm font-bold capitalize ${'accent' in row && row.accent ? "text-[#C8F135]" : main}`}>
                 {row.value}
               </p>
             </div>
@@ -361,7 +361,7 @@ export default function DriverOrderPage() {
   return (
     <Suspense fallback={
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="w-10 h-10 border-2 border-[#FFD100]/20 border-t-[#FFD100] rounded-full animate-spin" />
+        <div className="w-10 h-10 border-2 border-[#C8F135]/20 border-t-[#C8F135] rounded-full animate-spin" />
       </div>
     }>
       <DriverOrderContent />

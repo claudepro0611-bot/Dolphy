@@ -43,14 +43,14 @@ function CardPreview({ number, expiry, holder, isDark }: {
     >
       {/* Sariq aksent doiralar */}
       <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full opacity-15"
-           style={{ background: 'radial-gradient(circle, #F5C518 0%, transparent 70%)' }} />
+           style={{ background: 'radial-gradient(circle, #C8F135 0%, transparent 70%)' }} />
       <div className="absolute -bottom-6 -left-6 w-28 h-28 rounded-full opacity-10"
-           style={{ background: 'radial-gradient(circle, #F5C518 0%, transparent 70%)' }} />
+           style={{ background: 'radial-gradient(circle, #C8F135 0%, transparent 70%)' }} />
 
       {/* Chip + Network */}
       <div className="flex justify-between items-start mb-5">
-        <div className="w-10 h-7 rounded-md border border-[#F5C518]/40 bg-[#F5C518]/20 flex items-center justify-center">
-          <div className="w-6 h-4 rounded-sm" style={{ background: 'linear-gradient(90deg, #F5C518 50%, #E6B800 50%)' }} />
+        <div className="w-10 h-7 rounded-md border border-[#C8F135]/40 bg-[#C8F135]/20 flex items-center justify-center">
+          <div className="w-6 h-4 rounded-sm" style={{ background: 'linear-gradient(90deg, #C8F135 50%, #b3d92f 50%)' }} />
         </div>
         {network && (
           <span className="text-xs font-black tracking-[3px] text-white/70">{networkLabel[network]}</span>
@@ -141,7 +141,7 @@ export default function BankCardPage() {
     'placeholder:text-gray-300 dark:placeholder:text-gray-600',
     err
       ? 'border-red-400 focus:border-red-400'
-      : 'border-gray-200 dark:border-gray-700 focus:border-[#F5C518]',
+      : 'border-gray-200 dark:border-gray-700 focus:border-[#C8F135]',
   ].join(' ')
 
   return (

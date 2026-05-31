@@ -33,8 +33,8 @@ export function ProgressBar() {
                 <div
                   className={[
                     'w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300',
-                    done    ? 'bg-[#F5C518]'                                                   : '',
-                    current ? 'border-2 border-[#F5C518] bg-transparent animate-pulse'         : '',
+                    done    ? 'bg-[#C8F135]'                                                   : '',
+                    current ? 'border-2 border-[#C8F135] bg-transparent animate-pulse'         : '',
                     future  ? 'border-2 border-gray-300 dark:border-gray-600 bg-transparent'   : '',
                   ].join(' ')}
                 >
@@ -42,7 +42,7 @@ export function ProgressBar() {
                     size={17}
                     className={[
                       done    ? 'text-black'                              : '',
-                      current ? 'text-[#F5C518]'                          : '',
+                      current ? 'text-[#C8F135]'                          : '',
                       future  ? 'text-gray-400 dark:text-gray-500'        : '',
                     ].join(' ')}
                   />
@@ -52,8 +52,8 @@ export function ProgressBar() {
                 <span
                   className={[
                     'hidden md:block text-[10px] font-semibold tracking-wide text-center',
-                    done    ? 'text-[#F5C518]'                            : '',
-                    current ? 'text-[#F5C518]'                            : '',
+                    done    ? 'text-[#C8F135]'                            : '',
+                    current ? 'text-[#C8F135]'                            : '',
                     future  ? 'text-gray-400 dark:text-gray-500'          : '',
                   ].join(' ')}
                 >
@@ -65,7 +65,7 @@ export function ProgressBar() {
               {!isLast && (
                 <div className="flex-1 h-[2px] mx-1 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
                   <div
-                    className="h-full bg-[#F5C518] transition-all duration-500"
+                    className="h-full bg-[#C8F135] transition-all duration-500"
                     style={{ width: done ? '100%' : current ? '50%' : '0%' }}
                   />
                 </div>

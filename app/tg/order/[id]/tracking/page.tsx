@@ -12,7 +12,7 @@ const TrackingMapClient = dynamic(() => import("@/components/TrackingMapClient")
   ssr: false,
   loading: () => (
     <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-[#111]">
-      <div className="w-7 h-7 border-2 border-[#F5C518]/25 border-t-[#F5C518] rounded-full animate-spin" />
+      <div className="w-7 h-7 border-2 border-[#C8F135]/25 border-t-[#C8F135] rounded-full animate-spin" />
     </div>
   ),
 });
@@ -70,15 +70,15 @@ function SearchingView({ orderId, onCancel }: { orderId: string; onCancel: () =>
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-0 rounded-full border-[3px] border-[#F5C518]/15 border-t-[#F5C518]"
+          className="absolute inset-0 rounded-full border-[3px] border-[#C8F135]/15 border-t-[#C8F135]"
         />
         <motion.div
           animate={{ rotate: -360 }}
           transition={{ duration: 2.6, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-3 rounded-full border-2 border-[#F5C518]/10 border-b-[#F5C518]/35"
+          className="absolute inset-3 rounded-full border-2 border-[#C8F135]/10 border-b-[#C8F135]/35"
         />
         <div className="absolute inset-0 flex items-center justify-center">
-          <svg width="30" height="24" viewBox="0 0 36 28" fill="none" className="text-[#F5C518]">
+          <svg width="30" height="24" viewBox="0 0 36 28" fill="none" className="text-[#C8F135]">
             <rect x="1" y="3" width="22" height="17" rx="2.5" stroke="currentColor" strokeWidth="1.8"/>
             <path d="M23 8.5h7.5l4 8V22H23V8.5z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
             <circle cx="7"  cy="24.5" r="2.5" stroke="currentColor" strokeWidth="1.5"/>
@@ -95,7 +95,7 @@ function SearchingView({ orderId, onCancel }: { orderId: string; onCancel: () =>
             <motion.div key={i}
               animate={{ opacity: [0.2, 1, 0.2], scale: [0.85, 1, 0.85] }}
               transition={{ duration: 1.3, repeat: Infinity, delay: i * 0.22 }}
-              className="w-2 h-2 rounded-full bg-[#F5C518]"
+              className="w-2 h-2 rounded-full bg-[#C8F135]"
             />
           ))}
         </div>
@@ -139,7 +139,7 @@ function TrackingView({
 
     if (isDelivered) {
       tg.MainButton.setText("Yangi zakaz");
-      tg.MainButton.setParams({ color: "#F5C518", text_color: "#000000" });
+      tg.MainButton.setParams({ color: "#C8F135", text_color: "#000000" });
       tg.MainButton.show();
       const h = () => router.push("/tg/order/new");
       tg.MainButton.onClick(h);
@@ -148,7 +148,7 @@ function TrackingView({
 
     if (driver?.phone) {
       tg.MainButton.setText("Haydovchiga qo'ng'iroq");
-      tg.MainButton.setParams({ color: "#F5C518", text_color: "#000000" });
+      tg.MainButton.setParams({ color: "#C8F135", text_color: "#000000" });
       tg.MainButton.show();
       const h = () => { window.location.href = `tel:${driver.phone}`; };
       tg.MainButton.onClick(h);
@@ -219,7 +219,7 @@ function TrackingView({
           <div className="flex items-center justify-between mb-1">
             <p className="text-xs font-bold text-gray-500 dark:text-white/35 uppercase tracking-widest">Holat</p>
             {!isDelivered && (
-              <span className="text-[#F5C518] text-xs font-bold">
+              <span className="text-[#C8F135] text-xs font-bold">
                 {STATUSES[idx]?.label ?? "Kutilmoqda"}
               </span>
             )}
@@ -231,7 +231,7 @@ function TrackingView({
               <div key={s.key} className="flex items-center gap-3">
                 <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
                   done   ? "bg-green-500/15 border border-green-500/20" :
-                  active ? "bg-[#F5C518]/15 border border-[#F5C518]/20" :
+                  active ? "bg-[#C8F135]/15 border border-[#C8F135]/20" :
                            "bg-gray-200 dark:bg-white/5 border border-gray-300 dark:border-white/8"
                 }`}>
                   {done ? (
@@ -239,14 +239,14 @@ function TrackingView({
                       <path d="M1 4.5l2.5 2.5L9 1" stroke="#22C55E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   ) : active ? (
-                    <div className="w-2 h-2 rounded-full bg-[#F5C518] animate-pulse" />
+                    <div className="w-2 h-2 rounded-full bg-[#C8F135] animate-pulse" />
                   ) : (
                     <div className="w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-white/15" />
                   )}
                 </div>
                 <span className={`text-sm font-medium ${
                   done   ? "text-green-500 dark:text-green-400" :
-                  active ? "text-[#F5C518]" :
+                  active ? "text-[#C8F135]" :
                            "text-gray-400 dark:text-white/25"
                 }`}>{s.label}</span>
               </div>
@@ -276,9 +276,9 @@ function TrackingView({
                   {driver.rating && (
                     <div className="flex items-center gap-1">
                       <svg width="10" height="10" viewBox="0 0 11 11" fill="none">
-                        <path d="M5.5 1l1.2 2.5 2.7.4-2 1.9.5 2.7-2.4-1.3L3.1 8.5l.5-2.7-2-1.9 2.7-.4z" fill="#F5C518"/>
+                        <path d="M5.5 1l1.2 2.5 2.7.4-2 1.9.5 2.7-2.4-1.3L3.1 8.5l.5-2.7-2-1.9 2.7-.4z" fill="#C8F135"/>
                       </svg>
-                      <span className="text-[#F5C518] text-xs font-bold">{driver.rating}</span>
+                      <span className="text-[#C8F135] text-xs font-bold">{driver.rating}</span>
                     </div>
                   )}
                   {driver.trips_count && (
@@ -290,9 +290,9 @@ function TrackingView({
               {/* Qo'ng'iroq */}
               {driver.phone && (
                 <a href={`tel:${driver.phone}`}
-                  className="w-10 h-10 rounded-xl bg-[#F5C518]/10 border border-[#F5C518]/20 flex items-center justify-center flex-shrink-0 active:scale-95 transition-transform">
+                  className="w-10 h-10 rounded-xl bg-[#C8F135]/10 border border-[#C8F135]/20 flex items-center justify-center flex-shrink-0 active:scale-95 transition-transform">
                   <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
-                    <path d="M11 10.5l-1.5 1.5c-1.5-.5-3-2-3.5-3.5L7.5 7 4.5 3.5 2.5 5c.5 4 4.5 8 8.5 8.5l1.5-2L11 10.5z" stroke="#F5C518" strokeWidth="1.4" strokeLinejoin="round"/>
+                    <path d="M11 10.5l-1.5 1.5c-1.5-.5-3-2-3.5-3.5L7.5 7 4.5 3.5 2.5 5c.5 4 4.5 8 8.5 8.5l1.5-2L11 10.5z" stroke="#C8F135" strokeWidth="1.4" strokeLinejoin="round"/>
                   </svg>
                 </a>
               )}
@@ -311,7 +311,7 @@ function TrackingView({
             <div key={row.label}
               className={`flex items-start justify-between px-4 py-3 ${i < arr.length - 1 ? "border-b border-gray-200 dark:border-white/8" : ""}`}>
               <p className="text-gray-500 dark:text-white/40 text-sm flex-shrink-0 mr-3">{row.label}</p>
-              <p className={`text-sm font-semibold text-right ${row.accent ? "text-[#F5C518]" : ""}`}>
+              <p className={`text-sm font-semibold text-right ${row.accent ? "text-[#C8F135]" : ""}`}>
                 {row.value}
               </p>
             </div>
@@ -323,7 +323,7 @@ function TrackingView({
           <motion.button
             variants={fade}
             onClick={() => router.push("/tg/order/new")}
-            className="w-full py-4 rounded-2xl bg-[#F5C518] text-black font-bold text-sm active:scale-[0.98] transition-all">
+            className="w-full py-4 rounded-2xl bg-[#C8F135] text-black font-bold text-sm active:scale-[0.98] transition-all">
             + Yangi zakaz
           </motion.button>
         )}
@@ -429,7 +429,7 @@ function TgTrackingContent() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="w-8 h-8 rounded-full border-2 border-[#F5C518]/20 border-t-[#F5C518] animate-spin" />
+        <div className="w-8 h-8 rounded-full border-2 border-[#C8F135]/20 border-t-[#C8F135] animate-spin" />
       </div>
     );
   }
@@ -439,7 +439,7 @@ function TgTrackingContent() {
       <div className="min-h-screen flex flex-col items-center justify-center gap-4 px-6 text-center">
         <p className="text-lg font-bold">Zakaz topilmadi</p>
         <button onClick={() => router.push("/tg/order/new")}
-          className="px-6 py-3 bg-[#F5C518] text-black font-bold rounded-2xl text-sm">
+          className="px-6 py-3 bg-[#C8F135] text-black font-bold rounded-2xl text-sm">
           Yangi zakaz
         </button>
       </div>
@@ -459,7 +459,7 @@ function TgTrackingContent() {
           <p className="text-gray-500 dark:text-white/40 text-sm mt-1">Haydovchiga xabar yuborildi</p>
         </div>
         <button onClick={() => router.push("/tg/order/new")}
-          className="px-8 py-3.5 bg-[#F5C518] text-black font-bold rounded-2xl text-sm active:scale-[0.97]">
+          className="px-8 py-3.5 bg-[#C8F135] text-black font-bold rounded-2xl text-sm active:scale-[0.97]">
           Yangi zakaz →
         </button>
       </div>
@@ -485,7 +485,7 @@ export default function TgOrderTrackingDynamicPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center">
-        <div className="w-8 h-8 rounded-full border-2 border-[#F5C518]/20 border-t-[#F5C518] animate-spin" />
+        <div className="w-8 h-8 rounded-full border-2 border-[#C8F135]/20 border-t-[#C8F135] animate-spin" />
       </div>
     }>
       <TgTrackingContent />

@@ -49,7 +49,7 @@ export default function SignupPage() {
       <div className="space-y-3 mb-4">
         {fields.map(f => (
           <div key={f.id} className={`flex items-center border rounded-2xl h-14 transition-colors ${
-            error ? "border-red-500/60 bg-red-500/5" : "border-white/15 bg-white/5 focus-within:border-[#FFD100]/60"
+            error ? "border-red-500/60 bg-red-500/5" : "border-white/15 bg-white/5 focus-within:border-[#C8F135]/60"
           }`}>
             <input
               type={f.type}
@@ -70,7 +70,7 @@ export default function SignupPage() {
         disabled={!isValid || loading}
         className={`w-full h-14 rounded-2xl font-bold text-base transition-all mb-6 ${
           isValid && !loading
-            ? "bg-[#FFD100] text-black hover:bg-[#E6BC00] hover:scale-[1.01] shadow-[0_0_30px_rgba(255,209,0,0.2)]"
+            ? "bg-[#C8F135] text-black hover:bg-[#b3d92f] hover:scale-[1.01] shadow-[0_0_30px_rgba(200,241,53,0.2)]"
             : "bg-white/8 text-white/25 cursor-not-allowed"
         }`}
       >
@@ -88,7 +88,7 @@ export default function SignupPage() {
 
       <p className="text-center text-white/35 text-sm">
         Hisob bormi?{" "}
-        <Link href="/login" className="text-[#FFD100] font-semibold hover:underline">
+        <Link href="/login" className="text-[#C8F135] font-semibold hover:underline">
           Kirish
         </Link>
       </p>

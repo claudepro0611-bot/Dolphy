@@ -65,7 +65,7 @@ function Row({ label, value, accent }: { label: string; value: React.ReactNode; 
   return (
     <div className="flex items-start justify-between gap-4 py-3 border-b dark:border-white/8 border-gray-100 last:border-0">
       <span className={`text-sm flex-shrink-0 ${muted}`}>{label}</span>
-      <span className={`text-sm font-semibold text-right ${accent ? "text-[#F5C518]" : main}`}>{value}</span>
+      <span className={`text-sm font-semibold text-right ${accent ? "text-[#C8F135]" : main}`}>{value}</span>
     </div>
   );
 }
@@ -136,7 +136,7 @@ function TrackingContent() {
     <div className="max-w-lg">
       <div className={`${card} p-8 text-center`}>
         <p className={`${muted} text-sm mb-4`}>{error ?? "Buyurtma topilmadi"}</p>
-        <Link href="/orders" className={`text-sm font-semibold ${main} hover:text-[#F5C518] transition-colors`}>
+        <Link href="/orders" className={`text-sm font-semibold ${main} hover:text-[#C8F135] transition-colors`}>
           ← Buyurtmalarga qaytish
         </Link>
       </div>
@@ -226,7 +226,7 @@ function TrackingContent() {
       {/* Done — yangi zakaz */}
       {isDone && (
         <Link href="/order/new"
-          className="flex items-center justify-center w-full h-11 bg-[#F5C518] text-black font-bold text-sm rounded-xl hover:bg-[#e0b315] transition-colors">
+          className="flex items-center justify-center w-full h-11 bg-[#C8F135] text-black font-bold text-sm rounded-xl hover:bg-[#e0b315] transition-colors">
           + Yangi buyurtma
         </Link>
       )}

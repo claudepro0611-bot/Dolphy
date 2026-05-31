@@ -100,7 +100,7 @@ export default function SettingsPage() {
       className="max-w-lg mx-auto space-y-6">
 
       <motion.div variants={fade}>
-        <p className="text-[#FFD100] text-xs font-bold tracking-[3px] uppercase mb-1">Sozlamalar</p>
+        <p className="text-[#C8F135] text-xs font-bold tracking-[3px] uppercase mb-1">Sozlamalar</p>
         <h1 className={`text-2xl font-bold ${main}`}>Sozlamalar</h1>
       </motion.div>
 
@@ -183,7 +183,7 @@ export default function SettingsPage() {
             </div>
             <button
               onClick={() => setTheme(isDark ? "light" : "dark")}
-              className={`relative w-11 h-6 rounded-full transition-all duration-300 ${isDark ? "bg-[#FFD100]" : "bg-gray-300 dark:bg-white/20"}`}
+              className={`relative w-11 h-6 rounded-full transition-all duration-300 ${isDark ? "bg-[#C8F135]" : "bg-gray-300 dark:bg-white/20"}`}
             >
               <div className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-all duration-300 ${isDark ? "left-5" : "left-0.5"}`} />
             </button>
@@ -200,7 +200,7 @@ export default function SettingsPage() {
                 <button key={l.code} onClick={() => setLang(l.code as Lang)}
                   className={`py-2.5 px-3 rounded-xl border-2 text-xs font-bold transition-all ${
                     lang === l.code
-                      ? "border-[#FFD100] bg-[#FFD100]/8 text-[#FFD100]"
+                      ? "border-[#C8F135] bg-[#C8F135]/8 text-[#C8F135]"
                       : `dark:border-white/10 border-gray-200 ${muted} hover:dark:border-white/20 hover:border-gray-300`
                   }`}>
                   {l.code.toUpperCase()}

@@ -141,7 +141,7 @@ function CustomTooltip({ active, payload, label }: {
   return (
     <div className="bg-[#1a1a1a] border border-white/10 rounded-xl px-3 py-2 shadow-xl">
       <p className="text-white/50 text-[10px] mb-0.5">{label}</p>
-      <p className="text-[#FFD100] font-bold text-sm">{fmtFull(payload[0].value)}</p>
+      <p className="text-[#C8F135] font-bold text-sm">{fmtFull(payload[0].value)}</p>
     </div>
   );
 }
@@ -191,7 +191,7 @@ function WithdrawModal({ balance, onClose }: { balance: number; onClose: () => v
                 <div>
                   <h3 className="dark:text-white text-gray-900 font-bold text-base">Yechib olish</h3>
                   <p className="dark:text-white/40 text-gray-500 text-xs mt-0.5">
-                    Mavjud: <span className="text-[#FFD100] font-bold">{fmtFull(balance)}</span>
+                    Mavjud: <span className="text-[#C8F135] font-bold">{fmtFull(balance)}</span>
                   </p>
                 </div>
                 <button onClick={onClose}
@@ -208,8 +208,8 @@ function WithdrawModal({ balance, onClose }: { balance: number; onClose: () => v
                   <button key={q} onClick={() => { setAmount(q.toLocaleString("uz-UZ")); setError(""); }}
                     className={`py-2 rounded-xl text-xs font-bold border transition-all ${
                       num === q
-                        ? "border-[#FFD100] bg-[#FFD100]/10 text-[#FFD100]"
-                        : "dark:border-white/10 border-gray-200 dark:text-white/50 text-gray-500 hover:border-[#FFD100]/40 hover:text-[#FFD100]"
+                        ? "border-[#C8F135] bg-[#C8F135]/10 text-[#C8F135]"
+                        : "dark:border-white/10 border-gray-200 dark:text-white/50 text-gray-500 hover:border-[#C8F135]/40 hover:text-[#C8F135]"
                     }`}>
                     {fmt(q)}
                   </button>
@@ -218,7 +218,7 @@ function WithdrawModal({ balance, onClose }: { balance: number; onClose: () => v
 
               {/* Input */}
               <div className={`flex items-center h-13 rounded-xl border-2 mb-1 px-4 transition-all ${
-                error ? "border-red-400" : num > 0 && isValid ? "border-[#FFD100]" : "dark:border-white/15 border-gray-200 dark:bg-white/5 bg-gray-50"
+                error ? "border-red-400" : num > 0 && isValid ? "border-[#C8F135]" : "dark:border-white/15 border-gray-200 dark:bg-white/5 bg-gray-50"
               }`}>
                 <input
                   type="text" inputMode="numeric"
@@ -238,7 +238,7 @@ function WithdrawModal({ balance, onClose }: { balance: number; onClose: () => v
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${Math.min((num / balance) * 100, 100)}%` }}
-                    className="h-full bg-[#FFD100] rounded-full"
+                    className="h-full bg-[#C8F135] rounded-full"
                   />
                 </div>
               )}
@@ -246,7 +246,7 @@ function WithdrawModal({ balance, onClose }: { balance: number; onClose: () => v
               <button onClick={submit} disabled={loading}
                 className={`w-full py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
                   isValid && !loading
-                    ? "bg-[#FFD100] text-black hover:bg-[#E6BC00] shadow-[0_4px_20px_rgba(255,209,0,0.2)] active:scale-[0.98]"
+                    ? "bg-[#C8F135] text-black hover:bg-[#b3d92f] shadow-[0_4px_20px_rgba(200,241,53,0.2)] active:scale-[0.98]"
                     : "dark:bg-white/8 bg-gray-100 dark:text-white/25 text-gray-400 cursor-not-allowed"
                 }`}>
                 {loading ? (
@@ -286,7 +286,7 @@ export default function EarningsPage() {
 
   const STATS = [
     { label: "Buyurtmalar", value: data.orders.toString(), unit: "ta",   icon: StatIcons.orders,   accent: "#4F8EF7" },
-    { label: "Daromad",     value: fmt(data.amount),       unit: "so'm", icon: StatIcons.income,   accent: "#FFD100" },
+    { label: "Daromad",     value: fmt(data.amount),       unit: "so'm", icon: StatIcons.income,   accent: "#C8F135" },
     { label: "O'rtacha",    value: fmt(data.avg),          unit: "so'm", icon: StatIcons.avg,      accent: "#A78BFA" },
     { label: "Masofa",      value: data.distance.toString(), unit: "km", icon: StatIcons.distance, accent: "#22C55E" },
   ];
@@ -311,7 +311,7 @@ export default function EarningsPage() {
           style={{ background: "linear-gradient(135deg, #141400 0%, #2a2400 60%, #161400 100%)" }}
         >
           <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full opacity-20 pointer-events-none"
-            style={{ background: "radial-gradient(circle, #FFD100 0%, transparent 70%)" }} />
+            style={{ background: "radial-gradient(circle, #C8F135 0%, transparent 70%)" }} />
 
           <div className="relative z-10">
             <p className="text-white/40 text-xs font-bold uppercase tracking-[2px] mb-3">Umumiy balans</p>
@@ -324,7 +324,7 @@ export default function EarningsPage() {
 
           <div className="relative z-10 mt-4">
             <button onClick={() => setShowWithdraw(true)}
-              className="flex items-center gap-2 bg-[#FFD100] text-black font-bold text-xs px-4 py-2 rounded-xl hover:bg-[#E6BC00] transition-all active:scale-95 shadow-[0_4px_16px_rgba(255,209,0,0.25)]">
+              className="flex items-center gap-2 bg-[#C8F135] text-black font-bold text-xs px-4 py-2 rounded-xl hover:bg-[#b3d92f] transition-all active:scale-95 shadow-[0_4px_16px_rgba(200,241,53,0.25)]">
               <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
                 <path d="M7 2v8M4 7l3 3 3-3M2 11h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
@@ -369,7 +369,7 @@ export default function EarningsPage() {
           <button key={f} onClick={() => setFilter(f)}
             className={`px-5 py-1.5 rounded-lg text-sm font-bold transition-all ${
               filter === f
-                ? "bg-[#FFD100] text-black shadow-[0_2px_8px_rgba(255,209,0,0.25)]"
+                ? "bg-[#C8F135] text-black shadow-[0_2px_8px_rgba(200,241,53,0.25)]"
                 : "dark:text-white/40 text-gray-500 hover:dark:text-white/70 hover:text-gray-700"
             }`}>
             {f}
@@ -387,7 +387,7 @@ export default function EarningsPage() {
         >
           <div className="flex items-center justify-between mb-5">
             <p className="dark:text-white text-gray-900 font-semibold text-sm">Daromad grafigi</p>
-            <span className="text-[#FFD100] text-xs font-bold dark:bg-[#FFD100]/10 bg-amber-50 px-2.5 py-1 rounded-lg border dark:border-[#FFD100]/15 border-amber-100">
+            <span className="text-[#C8F135] text-xs font-bold dark:bg-[#C8F135]/10 bg-amber-50 px-2.5 py-1 rounded-lg border dark:border-[#C8F135]/15 border-amber-100">
               {filter}
             </span>
           </div>
@@ -404,12 +404,12 @@ export default function EarningsPage() {
                 tickFormatter={v => v >= 1_000_000 ? `${(v/1_000_000).toFixed(1)}M` : v >= 1_000 ? `${v/1_000}K` : String(v)}
                 axisLine={false} tickLine={false}
               />
-              <Tooltip content={<CustomTooltip />} cursor={{ stroke: "rgba(255,209,0,0.15)", strokeWidth: 1 }} />
+              <Tooltip content={<CustomTooltip />} cursor={{ stroke: "rgba(200,241,53,0.15)", strokeWidth: 1 }} />
               <Line
                 type="monotone" dataKey="amount"
-                stroke="#FFD100" strokeWidth={2.5}
-                dot={{ fill: "#FFD100", r: 3, strokeWidth: 0 }}
-                activeDot={{ fill: "#FFD100", r: 5, stroke: "rgba(255,209,0,0.3)", strokeWidth: 4 }}
+                stroke="#C8F135" strokeWidth={2.5}
+                dot={{ fill: "#C8F135", r: 3, strokeWidth: 0 }}
+                activeDot={{ fill: "#C8F135", r: 5, stroke: "rgba(200,241,53,0.3)", strokeWidth: 4 }}
               />
             </LineChart>
           </ResponsiveContainer>
@@ -439,12 +439,12 @@ export default function EarningsPage() {
                   {/* Status dot */}
                   <div className={`w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 ${
                     tx.status === "paid"
-                      ? "bg-[#FFD100]/10 border dark:border-[#FFD100]/15 border-amber-100"
+                      ? "bg-[#C8F135]/10 border dark:border-[#C8F135]/15 border-amber-100"
                       : "dark:bg-white/5 bg-gray-50 dark:border-white/8 border-gray-100"
                   } border`}>
                     {tx.status === "paid" ? (
                       <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                        <path d="M2 6.5l3 3 6-6" stroke="#FFD100" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M2 6.5l3 3 6-6" stroke="#C8F135" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     ) : (
                       <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
@@ -465,7 +465,7 @@ export default function EarningsPage() {
                   {/* Amount */}
                   <div className="text-right flex-shrink-0">
                     <p className={`font-bold text-sm tabular-nums ${
-                      tx.status === "paid" ? "text-[#FFD100]" : "dark:text-white/30 text-gray-400"
+                      tx.status === "paid" ? "text-[#C8F135]" : "dark:text-white/30 text-gray-400"
                     }`}>
                       +{tx.amount.toLocaleString("uz-UZ")}
                     </p>

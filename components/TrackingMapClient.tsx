@@ -55,11 +55,11 @@ export default function TrackingMapClient({ from, to, driverPos }: Props) {
           // Dashed grey background
           L.polyline(pts, { color: "#ffffff", weight: 5, opacity: 0.08 }).addTo(map);
           // Yellow route
-          L.polyline(pts, { color: "#FFD100", weight: 4, opacity: 0.9 }).addTo(map);
+          L.polyline(pts, { color: "#C8F135", weight: 4, opacity: 0.9 }).addTo(map);
           map.fitBounds(L.latLngBounds(pts), { padding: [50, 50] });
         }
       } catch {
-        L.polyline([from, to], { color: "#FFD100", weight: 3, dashArray: "8 6", opacity: 0.7 }).addTo(map);
+        L.polyline([from, to], { color: "#C8F135", weight: 3, dashArray: "8 6", opacity: 0.7 }).addTo(map);
       }
 
       // From dot
@@ -79,7 +79,7 @@ export default function TrackingMapClient({ from, to, driverPos }: Props) {
 
       // Driver truck
       const driverIcon = L.divIcon({
-        html: `<div style="width:46px;height:46px;background:#FFD100;border:3px solid white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 20px rgba(255,209,0,0.55)">🚐</div>`,
+        html: `<div style="width:46px;height:46px;background:#C8F135;border:3px solid white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 20px rgba(200,241,53,0.55)">🚐</div>`,
         className: "",
         iconSize: [46, 46],
         iconAnchor: [23, 23],

@@ -11,7 +11,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       <div className="w-full max-w-sm">
         <div className="flex items-center justify-between mb-10">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-xl bg-[#FFD100] flex items-center justify-center text-black font-black text-sm">Y</div>
+            <div className="w-9 h-9 rounded-xl bg-[#C8F135] flex items-center justify-center text-black font-black text-sm">Y</div>
             <span className="font-bold text-lg text-white">Yotoq</span>
             <span className="text-white/30 text-sm">Logistics</span>
           </div>
@@ -22,7 +22,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
                 onClick={() => setLang(l.code as Lang)}
                 className={`text-xs px-2.5 py-1.5 rounded-lg font-bold transition-all ${
                   lang === l.code
-                    ? "bg-[#FFD100] text-black"
+                    ? "bg-[#C8F135] text-black"
                     : "text-white/30 hover:text-white"
                 }`}
               >

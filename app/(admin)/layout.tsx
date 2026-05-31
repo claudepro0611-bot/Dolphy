@@ -41,7 +41,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Logo */}
         <div className="px-5 h-16 flex items-center gap-2.5
           dark:border-b dark:border-white/8 border-b border-gray-100">
-          <div className="w-8 h-8 rounded-xl bg-[#FFD100] flex items-center justify-center text-black font-black text-sm">Y</div>
+          <div className="w-8 h-8 rounded-xl bg-[#C8F135] flex items-center justify-center text-black font-black text-sm">Y</div>
           <div>
             <p className="font-bold text-sm dark:text-white text-gray-900 leading-none">Yotoq</p>
             <p className="text-[10px] dark:text-white/30 text-gray-400 mt-0.5">Admin panel</p>
@@ -56,10 +56,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <Link key={item.href} href={item.href}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all ${
                   active
-                    ? "bg-[#FFD100]/15 text-[#FFD100] dark:text-[#FFD100]"
+                    ? "bg-[#C8F135]/15 text-[#C8F135] dark:text-[#C8F135]"
                     : "dark:text-white/40 text-gray-500 hover:dark:text-white hover:text-gray-900 hover:dark:bg-white/5 hover:bg-gray-50"
                 }`}>
-                <span className={active ? "text-[#FFD100]" : "dark:text-white/25 text-gray-400"}>
+                <span className={active ? "text-[#C8F135]" : "dark:text-white/25 text-gray-400"}>
                   {item.icon}
                 </span>
                 {item.label}
@@ -78,7 +78,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 title={l.label}
                 className={`flex-1 text-xs py-1.5 rounded-lg font-bold transition-all ${
                   lang === l.code
-                    ? "bg-[#FFD100] text-black"
+                    ? "bg-[#C8F135] text-black"
                     : "dark:text-white/30 text-gray-400 hover:dark:text-white hover:text-gray-700 dark:hover:bg-white/5 hover:bg-gray-100"
                 }`}>
                 {l.code.toUpperCase()}
@@ -137,7 +137,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               dark:border dark:border-white/10 border border-gray-200
               dark:bg-white/[0.03] bg-gray-50
               px-3 py-1.5 rounded-full">
-              <div className="w-5 h-5 rounded-full bg-[#FFD100] flex items-center justify-center text-black font-black text-[10px]">A</div>
+              <div className="w-5 h-5 rounded-full bg-[#C8F135] flex items-center justify-center text-black font-black text-[10px]">A</div>
               <span className="dark:text-white/60 text-gray-600 text-xs font-semibold">Admin</span>
             </div>
           </div>

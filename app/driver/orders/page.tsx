@@ -56,7 +56,7 @@ export default function DriverOrdersPage() {
 
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <svg className="animate-spin w-7 h-7 text-[#FFD100]" viewBox="0 0 24 24" fill="none">
+          <svg className="animate-spin w-7 h-7 text-[#C8F135]" viewBox="0 0 24 24" fill="none">
             <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" strokeDasharray="30 70"/>
           </svg>
         </div>
@@ -67,7 +67,7 @@ export default function DriverOrdersPage() {
           <p className={`${muted} text-sm font-semibold`}>Hozircha zakaz yo&apos;q</p>
           <p className={`${muted} text-xs mt-1 mb-4`}>Qabul qilgan zakazlar shu yerda ko&apos;rinadi</p>
           <Link href="/driver/dashboard"
-            className="bg-[#FFD100] text-black font-bold text-sm px-6 py-2.5 rounded-xl hover:bg-[#E6BC00] transition-all">
+            className="bg-[#C8F135] text-black font-bold text-sm px-6 py-2.5 rounded-xl hover:bg-[#b3d92f] transition-all">
             Yangi zakazlar →
           </Link>
         </div>
@@ -113,7 +113,7 @@ export default function DriverOrdersPage() {
                       </div>
                     </div>
                     <div className="text-right flex-shrink-0">
-                      <p className="text-[#FFD100] font-bold text-base">{order.price.toLocaleString()}</p>
+                      <p className="text-[#C8F135] font-bold text-base">{order.price.toLocaleString()}</p>
                       <p className={`${muted} text-xs`}>so&apos;m</p>
                     </div>
                   </div>

@@ -51,27 +51,27 @@ export default function ProfilePage() {
 
       {/* Sarlavha */}
       <motion.div variants={fade} className="mb-2">
-        <p className="text-[#FFD100] text-xs font-bold tracking-[3px] uppercase mb-1">{tr("profile")}</p>
+        <p className="text-[#C8F135] text-xs font-bold tracking-[3px] uppercase mb-1">{tr("profile")}</p>
         <h1 className={`text-2xl font-bold ${main}`}>{tr("profile")}</h1>
       </motion.div>
 
       {/* Avatar kartasi */}
       <motion.div variants={fade} className={`${card} p-6`}>
         <div className="flex items-center gap-4 mb-5">
-          <div className="w-16 h-16 rounded-2xl bg-[#FFD100] flex items-center justify-center text-black font-black text-2xl flex-shrink-0">
+          <div className="w-16 h-16 rounded-2xl bg-[#C8F135] flex items-center justify-center text-black font-black text-2xl flex-shrink-0">
             {name.charAt(0).toUpperCase()}
           </div>
           <div className="flex-1 min-w-0">
             {editing ? (
               <input type="text" value={name} onChange={e => setName(e.target.value)} autoFocus
-                className={`w-full dark:bg-white/8 bg-gray-100 border border-[#FFD100]/50 rounded-xl px-3 py-2 ${main} font-bold text-sm outline-none mb-1`} />
+                className={`w-full dark:bg-white/8 bg-gray-100 border border-[#C8F135]/50 rounded-xl px-3 py-2 ${main} font-bold text-sm outline-none mb-1`} />
             ) : (
               <p className={`${main} font-bold text-lg`}>{name}</p>
             )}
             <p className={`${muted} text-sm`}>{MOCK_USER.phone}</p>
           </div>
           {editing ? (
-            <button onClick={save} className="bg-[#FFD100] text-black font-bold text-xs px-4 py-2 rounded-xl hover:bg-[#E6BC00] transition-all flex-shrink-0">
+            <button onClick={save} className="bg-[#C8F135] text-black font-bold text-xs px-4 py-2 rounded-xl hover:bg-[#b3d92f] transition-all flex-shrink-0">
               {tr("save")}
             </button>
           ) : (
@@ -112,7 +112,7 @@ export default function ProfilePage() {
           { label: "Reyting",    value: MOCK_USER.rating },
         ].map(s => (
           <div key={s.label} className={`${card} p-4 text-center`}>
-            <div className="text-2xl font-bold text-[#FFD100]">{s.value}</div>
+            <div className="text-2xl font-bold text-[#C8F135]">{s.value}</div>
             <div className={`${muted} text-xs mt-0.5`}>{s.label}</div>
           </div>
         ))}

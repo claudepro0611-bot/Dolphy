@@ -56,12 +56,12 @@ function CardVisual({ card, small }: { card: Partial<Card> & { number: string };
       <div className="absolute -top-8 -right-8 w-36 h-36 rounded-full opacity-15"
         style={{ background: `radial-gradient(circle, ${netColor} 0%, transparent 70%)` }} />
       <div className="absolute -bottom-5 -left-5 w-24 h-24 rounded-full opacity-10"
-        style={{ background: `radial-gradient(circle, #F5C518 0%, transparent 70%)` }} />
+        style={{ background: `radial-gradient(circle, #C8F135 0%, transparent 70%)` }} />
 
       {/* Chip + Network */}
       <div className="flex justify-between items-start mb-4">
-        <div className="w-9 h-6 rounded-md border border-[#F5C518]/40 bg-[#F5C518]/20 flex items-center justify-center">
-          <div className="w-6 h-3.5 rounded-sm" style={{ background: "linear-gradient(90deg,#F5C518 50%,#E6B800 50%)" }} />
+        <div className="w-9 h-6 rounded-md border border-[#C8F135]/40 bg-[#C8F135]/20 flex items-center justify-center">
+          <div className="w-6 h-3.5 rounded-sm" style={{ background: "linear-gradient(90deg,#C8F135 50%,#b3d92f 50%)" }} />
         </div>
         <span className="text-[10px] font-black tracking-[3px] text-white/70">{network}</span>
       </div>
@@ -88,7 +88,7 @@ function CardVisual({ card, small }: { card: Partial<Card> & { number: string };
       {/* Primary badge */}
       {card.primary && (
         <div className="absolute top-3 right-3">
-          <span className="bg-[#FFD100] text-black text-[9px] font-black px-2 py-0.5 rounded-full">Asosiy</span>
+          <span className="bg-[#C8F135] text-black text-[9px] font-black px-2 py-0.5 rounded-full">Asosiy</span>
         </div>
       )}
     </div>
@@ -137,7 +137,7 @@ function AddCardModal({ onClose, onAdd }: { onClose: () => void; onAdd: (c: Card
     "w-full h-12 px-4 rounded-xl text-sm font-medium outline-none transition-all border-2",
     "dark:bg-white/5 bg-gray-50 dark:text-white text-gray-900",
     "placeholder:dark:text-white/20 placeholder:text-gray-300",
-    err ? "border-red-400" : "dark:border-white/15 border-gray-200 focus:border-[#FFD100]",
+    err ? "border-red-400" : "dark:border-white/15 border-gray-200 focus:border-[#C8F135]",
   ].join(" ");
 
   return (
@@ -189,7 +189,7 @@ function AddCardModal({ onClose, onAdd }: { onClose: () => void; onAdd: (c: Card
             disabled={!isValid || loading}
             className={`w-full h-13 py-3.5 rounded-2xl font-bold text-sm transition-all flex items-center justify-center gap-2 ${
               isValid && !loading
-                ? "bg-[#FFD100] text-black hover:bg-[#E6BC00] shadow-[0_4px_20px_rgba(255,209,0,0.2)]"
+                ? "bg-[#C8F135] text-black hover:bg-[#b3d92f] shadow-[0_4px_20px_rgba(200,241,53,0.2)]"
                 : "dark:bg-white/8 bg-gray-100 dark:text-white/25 text-gray-400 cursor-not-allowed"
             }`}
           >
@@ -270,7 +270,7 @@ export default function CardsPage() {
 
       {/* Sarlavha */}
       <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}>
-        <p className="text-[#FFD100] text-xs font-bold tracking-[3px] uppercase mb-1">To'lov</p>
+        <p className="text-[#C8F135] text-xs font-bold tracking-[3px] uppercase mb-1">To'lov</p>
         <h1 className={`text-2xl font-bold ${main}`}>Kartalarim</h1>
       </motion.div>
 
@@ -289,12 +289,12 @@ export default function CardsPage() {
               <div className="flex gap-2 mt-2">
                 {!card.primary && (
                   <button onClick={() => setPrimary(card.id)}
-                    className={`flex-1 h-10 rounded-xl text-xs font-bold border-2 border-[#FFD100]/50 text-[#FFD100] hover:bg-[#FFD100]/10 transition-all`}>
+                    className={`flex-1 h-10 rounded-xl text-xs font-bold border-2 border-[#C8F135]/50 text-[#C8F135] hover:bg-[#C8F135]/10 transition-all`}>
                     Asosiy qilish
                   </button>
                 )}
                 {card.primary && (
-                  <div className="flex-1 h-10 rounded-xl text-xs font-bold flex items-center justify-center dark:bg-white/[0.03] bg-gray-50 text-[#FFD100] border dark:border-white/8 border-gray-200">
+                  <div className="flex-1 h-10 rounded-xl text-xs font-bold flex items-center justify-center dark:bg-white/[0.03] bg-gray-50 text-[#C8F135] border dark:border-white/8 border-gray-200">
                     ✓ Asosiy karta
                   </div>
                 )}
@@ -316,7 +316,7 @@ export default function CardsPage() {
       <motion.button
         initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
         onClick={() => setShowModal(true)}
-        className="w-full h-13 py-3.5 rounded-2xl border-2 border-dashed border-[#FFD100]/40 text-[#FFD100] font-bold text-sm hover:border-[#FFD100]/70 hover:bg-[#FFD100]/5 transition-all flex items-center justify-center gap-2"
+        className="w-full h-13 py-3.5 rounded-2xl border-2 border-dashed border-[#C8F135]/40 text-[#C8F135] font-bold text-sm hover:border-[#C8F135]/70 hover:bg-[#C8F135]/5 transition-all flex items-center justify-center gap-2"
       >
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path d="M8 2v12M2 8h12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>

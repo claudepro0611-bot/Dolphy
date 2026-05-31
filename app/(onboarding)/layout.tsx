@@ -12,7 +12,7 @@ export default function OnboardingLayout({ children }: { children: React.ReactNo
         <div className="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-[#F5C518] flex items-center justify-center text-black font-black text-xs">
+            <div className="w-7 h-7 rounded-lg bg-[#C8F135] flex items-center justify-center text-black font-black text-xs">
               Y
             </div>
             <span className="font-bold text-sm tracking-tight dark:text-white text-gray-900">

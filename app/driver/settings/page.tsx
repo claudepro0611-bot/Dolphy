@@ -100,7 +100,7 @@ function Toggle({ enabled, onToggle }: { enabled: boolean; onToggle: () => void 
   return (
     <button onClick={onToggle}
       className={`relative w-11 h-6 rounded-full transition-all duration-300 flex-shrink-0 ${
-        enabled ? "bg-[#FFD100]" : "dark:bg-white/15 bg-gray-300"
+        enabled ? "bg-[#C8F135]" : "dark:bg-white/15 bg-gray-300"
       }`}>
       <motion.div
         animate={{ x: enabled ? 20 : 2 }}
@@ -266,7 +266,7 @@ export default function DriverSettingsPage() {
                 <button key={l.code} onClick={() => setLang(l.code as Lang)}
                   className={`py-2 px-3 rounded-xl border-2 text-xs font-bold transition-all ${
                     lang === l.code
-                      ? "border-[#FFD100] bg-[#FFD100]/8 text-[#FFD100]"
+                      ? "border-[#C8F135] bg-[#C8F135]/8 text-[#C8F135]"
                       : `dark:border-white/10 border-gray-200 ${muted} hover:dark:border-white/20 hover:border-gray-300`
                   }`}>
                   {l.code.toUpperCase()}

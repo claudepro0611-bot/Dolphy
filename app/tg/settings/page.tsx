@@ -34,7 +34,7 @@ function Arrow() {
 function Toggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
   return (
     <button onClick={onToggle}
-      className={`relative w-11 h-6 rounded-full transition-all duration-300 flex-shrink-0 ${on ? "bg-[#F5C518]" : "bg-gray-300 dark:bg-white/15"}`}>
+      className={`relative w-11 h-6 rounded-full transition-all duration-300 flex-shrink-0 ${on ? "bg-[#C8F135]" : "bg-gray-300 dark:bg-white/15"}`}>
       <motion.div
         animate={{ x: on ? 20 : 2 }}
         transition={{ type: "spring", stiffness: 500, damping: 30 }}
@@ -174,7 +174,7 @@ export default function TgSettingsPage() {
                 <button key={l.code} onClick={() => setLang(l.code as Lang)}
                   className={`py-2 rounded-xl border-2 text-xs font-bold transition-all ${
                     lang === l.code
-                      ? "border-[#F5C518] bg-[#F5C518]/8 text-[#F5C518]"
+                      ? "border-[#C8F135] bg-[#C8F135]/8 text-[#C8F135]"
                       : "border-gray-200 dark:border-white/10 text-gray-500 dark:text-white/35 hover:border-gray-300 dark:hover:border-white/20"
                   }`}>
                   {l.code.toUpperCase()}

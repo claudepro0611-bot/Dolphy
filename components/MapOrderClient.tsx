@@ -60,12 +60,12 @@ export default function MapOrderClient({
       const coords = data.routes?.[0]?.geometry?.coordinates;
       if (coords) {
         const latlngs = coords.map(([lng, lat]: number[]) => [lat, lng]);
-        routeLayerRef.current = L.polyline(latlngs, { color: "#FFD100", weight: 4, opacity: 0.9 }).addTo(map);
+        routeLayerRef.current = L.polyline(latlngs, { color: "#C8F135", weight: 4, opacity: 0.9 }).addTo(map);
         map.fitBounds(routeLayerRef.current.getBounds(), { padding: [80, 80] });
       }
     } catch {
       routeLayerRef.current = L.polyline([a, b], {
-        color: "#FFD100", weight: 3, opacity: 0.65, dashArray: "8 6"
+        color: "#C8F135", weight: 3, opacity: 0.65, dashArray: "8 6"
       }).addTo(map);
     }
   }, []);

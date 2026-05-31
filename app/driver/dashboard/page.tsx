@@ -130,7 +130,7 @@ export default function DriverDashboardPage() {
       {/* Ro'yxat */}
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <svg className="animate-spin w-7 h-7 text-[#FFD100]" viewBox="0 0 24 24" fill="none">
+          <svg className="animate-spin w-7 h-7 text-[#C8F135]" viewBox="0 0 24 24" fill="none">
             <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" strokeDasharray="30 70"/>
           </svg>
         </div>
@@ -171,7 +171,7 @@ export default function DriverDashboardPage() {
                     <p className="text-sm dark:text-white/40 text-gray-500 mt-2.5 truncate">{order.to_address}</p>
                   </div>
                   <div className="text-right flex-shrink-0">
-                    <p className="text-[#FFD100] font-bold text-base">{order.price.toLocaleString()}</p>
+                    <p className="text-[#C8F135] font-bold text-base">{order.price.toLocaleString()}</p>
                     <p className="dark:text-white/25 text-gray-400 text-xs mt-0.5">so&apos;m</p>
                   </div>
                 </div>
@@ -198,7 +198,7 @@ export default function DriverDashboardPage() {
                   <button
                     onClick={() => accept(order.id)}
                     disabled={actions[order.id]}
-                    className="flex-1 py-2.5 rounded-xl bg-[#FFD100] text-black text-sm font-bold hover:bg-[#E6BC00] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex-1 py-2.5 rounded-xl bg-[#C8F135] text-black text-sm font-bold hover:bg-[#b3d92f] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {actions[order.id] ? "..." : "✓ Qabul qilish"}
                   </button>

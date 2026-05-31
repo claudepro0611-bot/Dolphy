@@ -40,7 +40,7 @@ export default function TgOrderPage({ params }: { params: Promise<{ id: string }
     if (!tg) return;
     if (isActive) {
       tg.MainButton.setText("Haydovchiga qo'ng'iroq");
-      tg.MainButton.setParams({ color: "#F5C518", text_color: "#000000" });
+      tg.MainButton.setParams({ color: "#C8F135", text_color: "#000000" });
       tg.MainButton.show();
       const handler = () => setCalled(true);
       tg.MainButton.onClick(handler);
@@ -63,9 +63,9 @@ export default function TgOrderPage({ params }: { params: Promise<{ id: string }
           <h1 className="text-lg font-bold mt-0.5">{order.id}</h1>
         </div>
         {isActive && (
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#F5C518]/10 border border-[#F5C518]/20">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#F5C518] animate-pulse" />
-            <span className="text-[#F5C518] text-xs font-bold">Faol</span>
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#C8F135]/10 border border-[#C8F135]/20">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#C8F135] animate-pulse" />
+            <span className="text-[#C8F135] text-xs font-bold">Faol</span>
           </div>
         )}
       </motion.div>
@@ -80,7 +80,7 @@ export default function TgOrderPage({ params }: { params: Promise<{ id: string }
             <div key={s.key} className="flex items-center gap-3">
               <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
                 done   ? "bg-green-500/15 border border-green-500/20" :
-                active ? "bg-[#F5C518]/15 border border-[#F5C518]/20" :
+                active ? "bg-[#C8F135]/15 border border-[#C8F135]/20" :
                          "bg-gray-200 dark:bg-white/5 border border-gray-300 dark:border-white/8"
               }`}>
                 {done ? (
@@ -88,18 +88,18 @@ export default function TgOrderPage({ params }: { params: Promise<{ id: string }
                     <path d="M1 4.5l2.5 2.5L9 1" stroke="#22C55E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 ) : active ? (
-                  <div className="w-2 h-2 rounded-full bg-[#F5C518] animate-pulse" />
+                  <div className="w-2 h-2 rounded-full bg-[#C8F135] animate-pulse" />
                 ) : (
                   <div className="w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-white/15" />
                 )}
               </div>
               <span className={`text-sm font-medium ${
                 done    ? "text-green-500 dark:text-green-400" :
-                active  ? "text-[#F5C518]" :
+                active  ? "text-[#C8F135]" :
                           "text-gray-400 dark:text-white/25"
               }`}>{s.label}</span>
               {active && (
-                <span className="ml-auto text-[#F5C518] text-xs font-bold">{order.eta}</span>
+                <span className="ml-auto text-[#C8F135] text-xs font-bold">{order.eta}</span>
               )}
             </div>
           );
@@ -140,9 +140,9 @@ export default function TgOrderPage({ params }: { params: Promise<{ id: string }
             <div className="flex items-center gap-3 mt-1">
               <div className="flex items-center gap-1">
                 <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                  <path d="M5.5 1l1.2 2.5 2.7.4-2 1.9.5 2.7-2.4-1.3L3.1 8.5l.5-2.7-2-1.9 2.7-.4z" fill="#F5C518"/>
+                  <path d="M5.5 1l1.2 2.5 2.7.4-2 1.9.5 2.7-2.4-1.3L3.1 8.5l.5-2.7-2-1.9 2.7-.4z" fill="#C8F135"/>
                 </svg>
-                <span className="text-[#F5C518] text-xs font-bold">{order.driver.rating}</span>
+                <span className="text-[#C8F135] text-xs font-bold">{order.driver.rating}</span>
               </div>
               <span className="text-gray-400 dark:text-white/25 text-xs">{order.driver.trips} ta safar</span>
             </div>
@@ -161,7 +161,7 @@ export default function TgOrderPage({ params }: { params: Promise<{ id: string }
           <div key={row.label}
             className={`flex items-center justify-between px-4 py-3.5 ${i < arr.length - 1 ? "border-b border-gray-200 dark:border-white/8" : ""}`}>
             <p className="text-gray-500 dark:text-white/40 text-sm">{row.label}</p>
-            <p className={`text-sm font-bold ${row.accent ? "text-[#F5C518]" : ""}`}>{row.value}</p>
+            <p className={`text-sm font-bold ${row.accent ? "text-[#C8F135]" : ""}`}>{row.value}</p>
           </div>
         ))}
       </motion.div>

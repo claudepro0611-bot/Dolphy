@@ -106,7 +106,7 @@ function PhotoCard({
   if (state === 'loading') return (
     <div
       style={{ gridRow: pos.row, gridColumn: pos.col }}
-      className="relative rounded-2xl border-2 border-[#F5C518]/40 bg-[#F5C518]/5 aspect-square flex flex-col items-center justify-center gap-2 p-3"
+      className="relative rounded-2xl border-2 border-[#C8F135]/40 bg-[#C8F135]/5 aspect-square flex flex-col items-center justify-center gap-2 p-3"
     >
       {preview && (
         // eslint-disable-next-line @next/next/no-img-element
@@ -116,7 +116,7 @@ function PhotoCard({
       <div className="relative z-10 w-full px-2">
         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 overflow-hidden">
           <div
-            className="h-full bg-[#F5C518] rounded-full transition-all duration-100"
+            className="h-full bg-[#C8F135] rounded-full transition-all duration-100"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -134,7 +134,7 @@ function PhotoCard({
         rounded-2xl border-2 border-dashed aspect-square flex flex-col items-center justify-center gap-1.5
         cursor-pointer transition-all duration-200 p-2
         border-gray-200 dark:border-gray-700
-        hover:border-[#F5C518] hover:bg-[#F5C518]/5
+        hover:border-[#C8F135] hover:bg-[#C8F135]/5
         group
       "
     >
@@ -145,10 +145,10 @@ function PhotoCard({
         className="hidden"
         onChange={e => { const f = e.target.files?.[0]; if (f) handleFile(f) }}
       />
-      <div className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center group-hover:bg-[#F5C518]/15 transition-colors">
-        <Camera size={16} className="text-gray-400 group-hover:text-[#F5C518] transition-colors" />
+      <div className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center group-hover:bg-[#C8F135]/15 transition-colors">
+        <Camera size={16} className="text-gray-400 group-hover:text-[#C8F135] transition-colors" />
       </div>
-      <span className="text-xs font-bold text-gray-500 dark:text-gray-400 group-hover:text-[#F5C518] transition-colors">
+      <span className="text-xs font-bold text-gray-500 dark:text-gray-400 group-hover:text-[#C8F135] transition-colors">
         {slot.label}
       </span>
       <span className="text-[10px] text-gray-400 text-center leading-tight">{slot.hint}</span>
@@ -197,7 +197,7 @@ export default function VehiclePhotosPage() {
       <div className="flex items-center gap-2">
         <div className="flex-1 h-1.5 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
           <div
-            className="h-full bg-[#F5C518] rounded-full transition-all duration-500"
+            className="h-full bg-[#C8F135] rounded-full transition-all duration-500"
             style={{ width: `${(uploaded / 5) * 100}%` }}
           />
         </div>

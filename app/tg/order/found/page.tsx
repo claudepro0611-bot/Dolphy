@@ -26,7 +26,7 @@ export default function TgOrderFoundPage() {
   useEffect(() => {
     if (!tg) return;
     tg.MainButton.setText("Kuzatish");
-    tg.MainButton.setParams({ color: "#F5C518", text_color: "#000000" });
+    tg.MainButton.setParams({ color: "#C8F135", text_color: "#000000" });
     tg.MainButton.show();
     tg.MainButton.enable();
     const handler = () => router.push("/tg/order/tracking");
@@ -58,7 +58,7 @@ export default function TgOrderFoundPage() {
           <h1 className="text-xl font-bold">Haydovchi topildi!</h1>
           <p className="text-gray-500 dark:text-white/40 text-sm mt-1">
             Kelish vaqti:{" "}
-            <span className="text-[#F5C518] font-bold">{DRIVER.eta}</span>
+            <span className="text-[#C8F135] font-bold">{DRIVER.eta}</span>
           </p>
         </div>
       </motion.div>
@@ -81,9 +81,9 @@ export default function TgOrderFoundPage() {
             <div className="flex items-center gap-3 mt-1">
               <div className="flex items-center gap-1">
                 <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                  <path d="M5.5 1l1.2 2.5 2.7.4-2 1.9.5 2.7-2.4-1.3L3.1 8.5l.5-2.7-2-1.9 2.7-.4z" fill="#F5C518"/>
+                  <path d="M5.5 1l1.2 2.5 2.7.4-2 1.9.5 2.7-2.4-1.3L3.1 8.5l.5-2.7-2-1.9 2.7-.4z" fill="#C8F135"/>
                 </svg>
-                <span className="text-[#F5C518] text-xs font-bold">{DRIVER.rating}</span>
+                <span className="text-[#C8F135] text-xs font-bold">{DRIVER.rating}</span>
               </div>
               <span className="text-gray-400 dark:text-white/25 text-xs">{DRIVER.trips} ta safar</span>
             </div>
@@ -91,9 +91,9 @@ export default function TgOrderFoundPage() {
 
           {/* Qo'ng'iroq */}
           <a href={`tel:${DRIVER.phone}`}
-            className="w-10 h-10 rounded-xl bg-[#F5C518]/10 border border-[#F5C518]/20 flex items-center justify-center flex-shrink-0 active:scale-95 transition-transform">
+            className="w-10 h-10 rounded-xl bg-[#C8F135]/10 border border-[#C8F135]/20 flex items-center justify-center flex-shrink-0 active:scale-95 transition-transform">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M11 10.5l-1.5 1.5c-1.5-.5-3-2-3.5-3.5L7.5 7 4.5 3.5 2.5 5c.5 4 4.5 8 8.5 8.5l1.5-2L11 10.5z" stroke="#F5C518" strokeWidth="1.4" strokeLinejoin="round"/>
+              <path d="M11 10.5l-1.5 1.5c-1.5-.5-3-2-3.5-3.5L7.5 7 4.5 3.5 2.5 5c.5 4 4.5 8 8.5 8.5l1.5-2L11 10.5z" stroke="#C8F135" strokeWidth="1.4" strokeLinejoin="round"/>
             </svg>
           </a>
         </div>

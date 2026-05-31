@@ -106,7 +106,7 @@ export default function OtpPage() {
         Orqaga
       </Link>
 
-      <div className="inline-flex items-center gap-2 border border-[#FFD100]/25 bg-[#FFD100]/5 text-[#FFD100] text-xs font-bold px-3 py-1.5 rounded-full mb-6">
+      <div className="inline-flex items-center gap-2 border border-[#C8F135]/25 bg-[#C8F135]/5 text-[#C8F135] text-xs font-bold px-3 py-1.5 rounded-full mb-6">
         {tr("codeSent")}
       </div>
 
@@ -131,8 +131,8 @@ export default function OtpPage() {
               error
                 ? "border-red-500/60 bg-red-500/5 text-red-400"
                 : c
-                ? "border-[#FFD100] bg-[#FFD100]/8 text-[#FFD100]"
-                : "border-white/15 bg-white/5 text-white focus:border-[#FFD100]/60"
+                ? "border-[#C8F135] bg-[#C8F135]/8 text-[#C8F135]"
+                : "border-white/15 bg-white/5 text-white focus:border-[#C8F135]/60"
             }`}
           />
         ))}
@@ -143,7 +143,7 @@ export default function OtpPage() {
       {/* Progress */}
       <div className="h-0.5 bg-white/8 rounded-full mb-5 overflow-hidden">
         <div
-          className="h-full bg-[#FFD100] rounded-full transition-all duration-300"
+          className="h-full bg-[#C8F135] rounded-full transition-all duration-300"
           style={{ width: `${(filled / LEN) * 100}%` }}
         />
       </div>
@@ -154,7 +154,7 @@ export default function OtpPage() {
         disabled={filled < LEN || loading}
         className={`w-full h-12 rounded-2xl font-bold text-sm transition-all mb-4 ${
           filled === LEN && !loading
-            ? "bg-[#FFD100] text-black hover:bg-[#E6BC00] shadow-[0_0_30px_rgba(255,209,0,0.2)]"
+            ? "bg-[#C8F135] text-black hover:bg-[#b3d92f] shadow-[0_0_30px_rgba(200,241,53,0.2)]"
             : "bg-white/8 text-white/25 cursor-not-allowed"
         }`}
       >
@@ -175,7 +175,7 @@ export default function OtpPage() {
         {resendSec > 0 ? (
           <span className="text-white/40">{resendSec}s kutib turing</span>
         ) : (
-          <button onClick={resend} className="text-[#FFD100] font-semibold hover:underline">
+          <button onClick={resend} className="text-[#C8F135] font-semibold hover:underline">
             {tr("resend")}
           </button>
         )}

@@ -92,7 +92,7 @@ export default function DocumentsPage() {
       <div className="flex items-center gap-2">
         <div className="flex-1 h-1.5 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
           <div
-            className="h-full bg-[#F5C518] rounded-full transition-all duration-500"
+            className="h-full bg-[#C8F135] rounded-full transition-all duration-500"
             style={{ width: `${(uploaded / 6) * 100}%` }}
           />
         </div>

@@ -61,15 +61,15 @@ function SearchingContent() {
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1.4, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-0 rounded-full border-[3px] border-[#F5C518]/15 border-t-[#F5C518]"
+          className="absolute inset-0 rounded-full border-[3px] border-[#C8F135]/15 border-t-[#C8F135]"
         />
         <motion.div
           animate={{ rotate: -360 }}
           transition={{ duration: 2.4, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-3 rounded-full border-[2px] border-[#F5C518]/10 border-b-[#F5C518]/40"
+          className="absolute inset-3 rounded-full border-[2px] border-[#C8F135]/10 border-b-[#C8F135]/40"
         />
         <div className="absolute inset-0 flex items-center justify-center">
-          <svg width="30" height="24" viewBox="0 0 30 24" fill="none" className="text-[#F5C518]">
+          <svg width="30" height="24" viewBox="0 0 30 24" fill="none" className="text-[#C8F135]">
             <rect x="1" y="3" width="18" height="15" rx="2" stroke="currentColor" strokeWidth="1.6"/>
             <path d="M19 7h6.5l3.5 7v6h-10V7z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"/>
             <circle cx="6" cy="21" r="2.2" stroke="currentColor" strokeWidth="1.4"/>
@@ -86,7 +86,7 @@ function SearchingContent() {
             <motion.div key={i}
               animate={{ opacity: [0.2, 1, 0.2], scale: [0.8, 1, 0.8] }}
               transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.25 }}
-              className="w-2 h-2 rounded-full bg-[#F5C518]"
+              className="w-2 h-2 rounded-full bg-[#C8F135]"
             />
           ))}
         </div>
@@ -109,7 +109,7 @@ export default function TgOrderSearchingPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center">
-        <div className="w-8 h-8 rounded-full border-2 border-[#F5C518]/20 border-t-[#F5C518] animate-spin" />
+        <div className="w-8 h-8 rounded-full border-2 border-[#C8F135]/20 border-t-[#C8F135] animate-spin" />
       </div>
     }>
       <SearchingContent />

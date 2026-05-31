@@ -93,13 +93,13 @@ export function DocumentUploader({
       className="
         border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer
         border-gray-200 dark:border-gray-700
-        hover:border-[#F5C518] hover:bg-[#F5C518]/5
+        hover:border-[#C8F135] hover:bg-[#C8F135]/5
         transition-all duration-200 group
       "
     >
       <input ref={inputRef} type="file" accept={accept} onChange={handleChange} className="hidden" />
-      <div className="w-12 h-12 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center mx-auto mb-3 group-hover:bg-[#F5C518]/15 transition-colors">
-        <Upload size={22} className="text-gray-400 group-hover:text-[#F5C518] transition-colors" />
+      <div className="w-12 h-12 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center mx-auto mb-3 group-hover:bg-[#C8F135]/15 transition-colors">
+        <Upload size={22} className="text-gray-400 group-hover:text-[#C8F135] transition-colors" />
       </div>
       <p className="font-semibold text-sm text-gray-800 dark:text-gray-200 mb-1">{title}</p>
       {description && <p className="text-xs text-gray-400 mb-2">{description}</p>}
@@ -111,7 +111,7 @@ export function DocumentUploader({
 
   // ---- Loading ----
   if (state === 'loading') return (
-    <div className="border-2 border-[#F5C518]/40 rounded-2xl p-6 bg-[#F5C518]/5">
+    <div className="border-2 border-[#C8F135]/40 rounded-2xl p-6 bg-[#C8F135]/5">
       {preview && (
         <div className="relative w-full h-36 rounded-xl overflow-hidden mb-4">
           <Image src={preview} alt="preview" fill className="object-cover" />
@@ -121,7 +121,7 @@ export function DocumentUploader({
       <p className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-3">{title}</p>
       <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 overflow-hidden">
         <div
-          className="h-full bg-[#F5C518] rounded-full transition-all duration-100"
+          className="h-full bg-[#C8F135] rounded-full transition-all duration-100"
           style={{ width: `${progress}%` }}
         />
       </div>

@@ -72,7 +72,7 @@ function Empty() {
       <p className="dark:text-white/50 text-gray-500 font-semibold text-sm">Hozircha buyurtma yo'q</p>
       <p className="dark:text-white/25 text-gray-400 text-xs mt-1.5 mb-6">Birinchi buyurtmangizni bering</p>
       <Link href="/order/new"
-        className="inline-block bg-[#F5C518] text-black font-bold text-sm px-6 py-2.5 rounded-xl hover:bg-[#e0b315] transition-colors">
+        className="inline-block bg-[#C8F135] text-black font-bold text-sm px-6 py-2.5 rounded-xl hover:bg-[#e0b315] transition-colors">
         Buyurtma berish →
       </Link>
     </div>
@@ -122,7 +122,7 @@ export default function OrdersPage() {
           <p className={`${muted} text-sm mt-0.5`}>Barcha buyurtmalar tarixi</p>
         </div>
         <Link href="/order/new"
-          className="bg-[#F5C518] text-black font-bold text-sm px-5 py-2.5 rounded-xl hover:bg-[#e0b315] transition-colors">
+          className="bg-[#C8F135] text-black font-bold text-sm px-5 py-2.5 rounded-xl hover:bg-[#e0b315] transition-colors">
           + Yangi buyurtma
         </Link>
       </div>
@@ -188,7 +188,7 @@ export default function OrdersPage() {
                 {/* Kuzatish tugmasi */}
                 {isActive ? (
                   <Link href={`/order/${o.id}/tracking`}
-                    className="flex-shrink-0 text-xs font-bold text-[#F5C518] border border-[#F5C518]/30 px-3 py-1.5 rounded-lg hover:bg-[#F5C518]/8 transition-colors whitespace-nowrap">
+                    className="flex-shrink-0 text-xs font-bold text-[#C8F135] border border-[#C8F135]/30 px-3 py-1.5 rounded-lg hover:bg-[#C8F135]/8 transition-colors whitespace-nowrap">
                     Kuzatish →
                   </Link>
                 ) : (

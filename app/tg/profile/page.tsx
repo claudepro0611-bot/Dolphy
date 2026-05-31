@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { useTelegram } from "@/hooks/useTelegram";
 
 const fade    = { hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0 } };
@@ -17,6 +18,12 @@ const MOCK_USER = {
 
 export default function TgProfilePage() {
   const { firstName } = useTelegram();
+  const router = useRouter();
+
+  function handleLogout() {
+    localStorage.removeItem("tg_role");
+    router.replace("/tg");
+  }
 
   const STATS = [
     { label: "Buyurtma",   value: MOCK_USER.orders },
@@ -105,6 +112,16 @@ export default function TgProfilePage() {
             </div>
           </div>
         ))}
+      </motion.div>
+
+      {/* Chiqish */}
+      <motion.div variants={fade}>
+        <button
+          onClick={handleLogout}
+          style={{ width: "100%", padding: "14px", background: "#1E1E1E", color: "#ff4444", fontWeight: 600, borderRadius: "12px", border: "0.5px solid #ff4444", marginTop: "16px" }}
+        >
+          Chiqish
+        </button>
       </motion.div>
 
     </motion.div>

@@ -1,6 +1,5 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
-import { createPortal } from 'react-dom'
 
 interface Suggestion {
   title: string
@@ -187,46 +186,43 @@ export function AddressInput({ placeholder, value, onChange, onSelect, pinColor 
         </div>
       )}
 
-      {/* Dropdown — Portal orqali document.body ga render */}
-      {open && suggestions.length > 0 && typeof window !== 'undefined' &&
-        createPortal(
-          <div style={{ ...dropdownStyle, background: '#1a1a1a', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 8px 24px rgba(0,0,0,0.5)', overflow: 'hidden' }}>
-            {suggestions.map((s, i) => (
-              <button
-                key={i}
-                type="button"
-                onMouseDown={() => {
-                  const fullAddress = s.title + (s.subtitle ? ', ' + s.subtitle : '')
-                  onSelect(fullAddress, s.lat, s.lng)
-                  onChange(fullAddress)
-                  setSuggestions([])
-                  setOpen(false)
-                  setSelected(true)
-                }}
-                style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', width: '100%', textAlign: 'left', padding: '10px 14px', background: 'none', border: 'none', borderBottom: i < suggestions.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none', cursor: 'pointer', color: '#fff' }}
-                onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.05)')}
-                onMouseLeave={e => (e.currentTarget.style.background = 'none')}
-              >
-                <svg style={{ width: 12, height: 12, marginTop: 2, flexShrink: 0, color: 'rgba(255,255,255,0.25)' }} viewBox="0 0 12 16" fill="currentColor">
-                  <path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 11 5 11s5-7.25 5-11C11 2.24 8.76 0 6 0zm0 7.5A2.5 2.5 0 1 1 6 2.5a2.5 2.5 0 0 1 0 5z"/>
-                </svg>
-                <div style={{ minWidth: 0 }}>
-                  <p style={{ fontSize: 13, fontWeight: 500, margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.title}</p>
-                  {s.subtitle && (
-                    <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', margin: '2px 0 0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.subtitle}</p>
-                  )}
-                </div>
-              </button>
-            ))}
-            {process.env.NODE_ENV === 'development' && source && (
-              <div style={{ padding: '6px 14px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-                <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.2)', margin: 0 }}>via {source}</p>
+      {/* Dropdown — position: fixed, viewport-ga nisbatan */}
+      {open && suggestions.length > 0 && (
+        <div style={{ ...dropdownStyle, background: '#1a1a1a', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 8px 24px rgba(0,0,0,0.5)', overflow: 'hidden' }}>
+          {suggestions.map((s, i) => (
+            <button
+              key={i}
+              type="button"
+              onMouseDown={() => {
+                const fullAddress = s.title + (s.subtitle ? ', ' + s.subtitle : '')
+                onSelect(fullAddress, s.lat, s.lng)
+                onChange(fullAddress)
+                setSuggestions([])
+                setOpen(false)
+                setSelected(true)
+              }}
+              style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', width: '100%', textAlign: 'left', padding: '10px 14px', background: 'none', border: 'none', borderBottom: i < suggestions.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none', cursor: 'pointer', color: '#fff' }}
+              onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.05)')}
+              onMouseLeave={e => (e.currentTarget.style.background = 'none')}
+            >
+              <svg style={{ width: 12, height: 12, marginTop: 2, flexShrink: 0, color: 'rgba(255,255,255,0.25)' }} viewBox="0 0 12 16" fill="currentColor">
+                <path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 11 5 11s5-7.25 5-11C11 2.24 8.76 0 6 0zm0 7.5A2.5 2.5 0 1 1 6 2.5a2.5 2.5 0 0 1 0 5z"/>
+              </svg>
+              <div style={{ minWidth: 0 }}>
+                <p style={{ fontSize: 13, fontWeight: 500, margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.title}</p>
+                {s.subtitle && (
+                  <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', margin: '2px 0 0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.subtitle}</p>
+                )}
               </div>
-            )}
-          </div>,
-          document.body
-        )
-      }
+            </button>
+          ))}
+          {process.env.NODE_ENV === 'development' && source && (
+            <div style={{ padding: '6px 14px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+              <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.2)', margin: 0 }}>via {source}</p>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   )
 }

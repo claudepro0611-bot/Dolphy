@@ -169,7 +169,7 @@ export default function NewOrderPage() {
   }
 
   return (
-    <div className="relative w-full h-[calc(100vh-64px)] overflow-hidden bg-gray-900">
+    <div className="relative w-full h-[calc(100vh-64px)] bg-gray-900">
 
       {/* Full-screen map */}
       <div className="absolute inset-0">
@@ -200,7 +200,7 @@ export default function NewOrderPage() {
       </button>
 
       {/* Floating panel */}
-      <div className={`absolute left-4 top-4 bottom-4 z-[1000] w-[340px] flex flex-col gap-3 overflow-y-auto overflow-x-visible transition-transform duration-300 scrollbar-none ${panelOpen ? "translate-x-0" : "-translate-x-[360px]"}`}>
+      <div className={`absolute top-4 bottom-4 z-[1000] w-[340px] flex flex-col gap-3 overflow-y-auto scrollbar-none transition-[left] duration-300 ${panelOpen ? "left-4" : "left-[-360px]"}`}>
 
         {/* --- Marshrut (search inputs) --- */}
         <div className="bg-black/85 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl">

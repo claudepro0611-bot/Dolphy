@@ -155,7 +155,7 @@ export default function PendingApprovalPage() {
                   <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed max-w-xs">
                     Arizangiz{' '}
                     <span className="font-bold text-green-500">tasdiqlandi</span>.
-                    Siz endi Yotoq haydovchisi sifatida ishlashni boshlashingiz mumkin.
+                    Siz endi Dolphy haydovchisi sifatida ishlashni boshlashingiz mumkin.
                   </p>
                 </motion.div>
               ) : (
@@ -274,7 +274,7 @@ export default function PendingApprovalPage() {
                     <ArrowRight size={16} />
                   </button>
                   <Link
-                    href="https://t.me/yotoq_support"
+                    href="https://t.me/dolphy_support"
                     className="w-full py-3.5 rounded-2xl font-semibold text-sm flex items-center justify-center gap-2 border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:border-gray-300 dark:hover:border-white/20 transition-colors"
                   >
                     <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M10.5 9.5l-1.5 1.5c-1.5-.5-3-2-3.5-3.5L7 6l-3-3.5L2 4c.5 4 4.5 8 8.5 8.5l1.5-2-1.5-1z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"/></svg>
@@ -298,7 +298,7 @@ export default function PendingApprovalPage() {
                     Ilovani yuklab oling
                   </button>
                   <Link
-                    href="https://t.me/yotoq_support"
+                    href="https://t.me/dolphy_support"
                     className="w-full py-3.5 rounded-2xl font-semibold text-sm flex items-center justify-center gap-2 border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:border-gray-300 dark:hover:border-white/20 transition-colors"
                   >
                     <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M10.5 9.5l-1.5 1.5c-1.5-.5-3-2-3.5-3.5L7 6l-3-3.5L2 4c.5 4 4.5 8 8.5 8.5l1.5-2-1.5-1z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"/></svg>

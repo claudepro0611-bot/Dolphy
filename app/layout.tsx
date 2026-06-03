@@ -6,7 +6,7 @@ import { Providers } from "@/components/Providers";
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
 
 export const metadata: Metadata = {
-  title: "Yotoq Logistics — Tez va ishonchli yetkazib berish",
+  title: "Dolphy — Toshkent bo'ylab yuk tashish",
   description: "Toshkent bo'ylab yuk tashish platformasi. Gazelle, o'rta yuk mashinasi, Kamaz. Click va Payme orqali to'lov.",
 };
 

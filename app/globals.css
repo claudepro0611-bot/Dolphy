@@ -25,7 +25,7 @@
     font-weight: 600;
     box-shadow: 0 4px 14px 0 rgba(200, 241, 53, 0.3);
     transition: all 0.2s;
-    border-radius: 0.75rem;
+    border-radius: 12px;
     padding: 0.75rem 1.5rem;
     cursor: pointer;
   }
@@ -36,21 +36,33 @@
   .btn-primary:active { background-color: var(--primary-dark); }
   .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
 
+  .btn-dark {
+    background-color: var(--accent-dark);
+    color: var(--card);
+    font-weight: 600;
+    transition: all 0.2s;
+    border-radius: 14px;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+  }
+  .btn-dark:hover { opacity: 0.85; }
+  .btn-dark:disabled { opacity: 0.4; cursor: not-allowed; }
+
   .btn-secondary {
     background-color: var(--secondary);
     color: var(--secondary-foreground);
     font-weight: 500;
     transition: all 0.2s;
-    border-radius: 0.75rem;
+    border-radius: 14px;
     padding: 0.75rem 1.5rem;
     cursor: pointer;
   }
-  .btn-secondary:hover { background-color: color-mix(in oklab, var(--secondary) 80%, transparent); }
+  .btn-secondary:hover { opacity: 0.85; }
 
   .input-field {
-    background-color: var(--background);
+    background-color: var(--input);
     border: 1px solid var(--border);
-    border-radius: 0.75rem;
+    border-radius: 12px;
     padding: 0.75rem 1rem;
     color: var(--foreground);
     transition: all 0.2s;
@@ -66,14 +78,18 @@
   .card {
     background-color: var(--card);
     border: 1px solid var(--border);
-    border-radius: 1rem;
-    padding: 1.5rem;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: var(--shadow);
   }
 }
 
 @theme inline {
   --font-heading: var(--font-sans);
   --font-sans: var(--font-sans);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-accent-dark: var(--accent-dark);
   --color-primary-hover: var(--primary-hover);
   --color-primary-dark: var(--primary-dark);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -116,48 +132,56 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* ── Light mode (default) ── */
 :root {
-  --background: #0A0A0A;
-  --foreground: #FFFFFF;
-  --card: #141414;
-  --card-foreground: #FFFFFF;
-  --popover: #141414;
-  --popover-foreground: #FFFFFF;
+  --background: #F5F5F5;
+  --foreground: #0A0A0A;
+  --card: #FFFFFF;
+  --card-foreground: #0A0A0A;
+  --surface: #FFFFFF;
+  --surface-2: #F0F0F0;
+  --popover: #FFFFFF;
+  --popover-foreground: #0A0A0A;
   --primary: #C8F135;
   --primary-hover: #b3d92f;
   --primary-dark: #9bbf28;
   --primary-foreground: #0A0A0A;
-  --secondary: #1E1E1E;
-  --secondary-foreground: #FFFFFF;
-  --muted: #1E1E1E;
-  --muted-foreground: #888888;
-  --accent: #1E1E1E;
-  --accent-foreground: #FFFFFF;
+  --secondary: #F0F0F0;
+  --secondary-foreground: #0A0A0A;
+  --muted: #F0F0F0;
+  --muted-foreground: #6B6B6B;
+  --accent: #F0F0F0;
+  --accent-foreground: #0A0A0A;
+  --accent-dark: #0A0A0A;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #2A2A2A;
-  --input: #1E1E1E;
+  --border: #E5E5E5;
+  --input: #F0F0F0;
   --ring: #C8F135;
+  --shadow: 0 2px 12px rgba(0,0,0,0.06);
   --chart-1: #C8F135;
-  --chart-2: #888888;
-  --chart-3: #444444;
-  --chart-4: #2A2A2A;
-  --chart-5: #1E1E1E;
+  --chart-2: #6B6B6B;
+  --chart-3: #E5E5E5;
+  --chart-4: #F0F0F0;
+  --chart-5: #F5F5F5;
   --radius: 1rem;
-  --sidebar: #141414;
-  --sidebar-foreground: #FFFFFF;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #0A0A0A;
   --sidebar-primary: #C8F135;
   --sidebar-primary-foreground: #0A0A0A;
-  --sidebar-accent: #1E1E1E;
-  --sidebar-accent-foreground: #FFFFFF;
-  --sidebar-border: #2A2A2A;
+  --sidebar-accent: #F0F0F0;
+  --sidebar-accent-foreground: #0A0A0A;
+  --sidebar-border: #E5E5E5;
   --sidebar-ring: #C8F135;
 }
 
+/* ── Dark mode ── */
 .dark {
   --background: #0A0A0A;
   --foreground: #FFFFFF;
   --card: #141414;
   --card-foreground: #FFFFFF;
+  --surface: #141414;
+  --surface-2: #1E1E1E;
   --popover: #141414;
   --popover-foreground: #FFFFFF;
   --primary: #C8F135;
@@ -170,10 +194,12 @@
   --muted-foreground: #888888;
   --accent: #1E1E1E;
   --accent-foreground: #FFFFFF;
+  --accent-dark: #FFFFFF;
   --destructive: oklch(0.704 0.191 22.216);
   --border: #2A2A2A;
   --input: #1E1E1E;
   --ring: #C8F135;
+  --shadow: 0 2px 12px rgba(0,0,0,0.4);
   --chart-1: #C8F135;
   --chart-2: #888888;
   --chart-3: #444444;

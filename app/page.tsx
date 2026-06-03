@@ -29,9 +29,8 @@ export default function LandingPage() {
       <nav className="sticky top-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-[#C8F135] flex items-center justify-center text-black font-black text-sm">Y</div>
-            <span className="font-bold text-lg tracking-tight text-foreground dark:text-white">Yotoq</span>
-            <span className="text-white/30 text-sm ml-1">Logistics</span>
+            <div className="w-8 h-8 rounded-lg bg-[#C8F135] flex items-center justify-center text-black font-black text-sm">D</div>
+            <span className="font-bold text-lg tracking-tight text-foreground dark:text-white">Dolphy</span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm text-white/60">
             <a href="#how"    className="hover:text-white transition-colors">Qanday ishlaydi</a>
@@ -184,14 +183,14 @@ export default function LandingPage() {
       <footer className="border-t border-white/8 py-8">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-white/25 text-sm">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-md bg-[#C8F135] flex items-center justify-center text-black font-black text-xs">Y</div>
-            <span className="text-white/40">Yotoq Logistics</span>
+            <div className="w-6 h-6 rounded-md bg-[#C8F135] flex items-center justify-center text-black font-black text-xs">D</div>
+            <span className="text-white/40">Dolphy</span>
           </div>
-          <span>© 2025 Yotoq. Toshkent, O&apos;zbekiston</span>
+          <span>© 2025 Dolphy. Toshkent, O&apos;zbekiston</span>
           <div className="flex gap-6">
             <a href="#" className="hover:text-white/60 transition-colors">Shartlar</a>
             <a href="#" className="hover:text-white/60 transition-colors">Maxfiylik</a>
-            <a href="https://t.me/yotoq_bot" className="hover:text-white/60 transition-colors">Telegram</a>
+            <a href="https://t.me/dolphy_bot" className="hover:text-white/60 transition-colors">Telegram</a>
           </div>
         </div>
       </footer>

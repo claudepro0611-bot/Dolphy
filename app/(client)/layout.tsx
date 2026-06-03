@@ -22,13 +22,13 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   const isDark = theme === "dark";
 
   return (
-    <div className="min-h-screen dark:bg-black bg-white transition-colors">
-      <nav className="sticky top-0 z-50 border-b dark:border-white/8 border-gray-200 dark:bg-black/95 bg-white/95 backdrop-blur-md transition-colors">
+    <div className="min-h-screen bg-background transition-colors">
+      <nav className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-md transition-colors">
         <div className="max-w-6xl mx-auto px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-xl bg-[#C8F135] flex items-center justify-center text-black font-black text-sm">Y</div>
-              <span className="font-bold dark:text-white text-gray-900">Yotoq</span>
+              <div className="w-8 h-8 rounded-xl bg-[#C8F135] flex items-center justify-center text-black font-black text-sm">D</div>
+              <span className="font-bold text-foreground">Dolphy</span>
             </div>
             <div className="flex items-center gap-0.5">
               {NAV_KEYS.map(item => {
@@ -37,8 +37,8 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
                   <Link key={item.href} href={item.href}
                     className={`px-3 py-2 rounded-xl text-sm font-semibold transition-all ${
                       active
-                        ? "dark:bg-white/8 bg-gray-100 dark:text-white text-gray-900"
-                        : "dark:text-white/40 text-gray-500 hover:dark:text-white hover:text-gray-900 hover:dark:bg-white/5 hover:bg-gray-50"
+                        ? "bg-muted text-foreground"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
                     }`}>
                     {tr(item.key)}
                   </Link>
@@ -51,7 +51,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
             {mounted && (
               <button
                 onClick={() => setTheme(isDark ? "light" : "dark")}
-                className="w-9 h-9 rounded-xl dark:bg-white/5 bg-gray-100 dark:border-white/10 border border-gray-200 flex items-center justify-center dark:text-white/50 text-gray-500 hover:dark:text-white hover:text-gray-900 transition-all"
+                className="w-9 h-9 rounded-xl bg-muted border border-border flex items-center justify-center text-muted-foreground hover:text-foreground transition-all"
                 title={isDark ? "Kunduzgi rejim" : "Qorong'u rejim"}
               >
                 {isDark ? (

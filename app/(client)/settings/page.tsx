@@ -220,7 +220,7 @@ export default function SettingsPage() {
       </motion.div>
 
       <motion.div variants={fade} className={`${muted} text-xs text-center pb-4`}>
-        Yotoq Logistics v1.0.0
+        Dolphy v1.0.0
       </motion.div>
 
     </motion.div>

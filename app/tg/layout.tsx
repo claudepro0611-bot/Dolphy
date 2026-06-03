@@ -91,7 +91,6 @@ const DRIVER_NAV = [
   },
 ];
 
-// Root pages where back button should be hidden
 const ROOT_PATHS = ["/tg", "/tg/client", "/tg/driver"];
 
 export default function TgLayout({ children }: { children: React.ReactNode }) {
@@ -130,37 +129,33 @@ export default function TgLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <TgThemeCtx.Provider value={{ isDark, setIsDark }}>
-      <div className={`flex flex-col min-h-screen w-full ${
-        isDark ? "tg-dark dark bg-[#0A0A0A] text-white" : "bg-[#f5f5f5] text-gray-900"
-      }`}>
+      <div className={`flex flex-col min-h-screen w-full bg-background text-foreground ${isDark ? "tg-dark dark" : ""}`}>
 
         {/* Header */}
-        {!isFullScreen && <header className="sticky top-0 z-40 h-14 flex items-center justify-between px-4
-          bg-white/95 tg-dark:bg-[#0A0A0A]/95 backdrop-blur-md
-          border-b border-gray-200 tg-dark:border-white/8">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-xl bg-[#C8F135] flex items-center justify-center text-black font-black text-xs">Y</div>
-            <span className="font-bold text-sm tracking-tight">Yotoq</span>
-            <span className="text-gray-400 tg-dark:text-white/25 text-xs font-medium">Mini App</span>
-          </div>
-          {role && (
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-              style={{ background: role === "driver" ? "#C8F135" : "#4F8EF720", color: role === "driver" ? "#000" : "#4F8EF7" }}>
-              {role === "driver" ? "Haydovchi" : "Mijoz"}
-            </span>
-          )}
-        </header>}
+        {!isFullScreen && (
+          <header className="sticky top-0 z-40 h-14 flex items-center justify-between px-4 bg-card/95 backdrop-blur-md border-b border-border">
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-xl bg-[#C8F135] flex items-center justify-center text-black font-black text-xs">D</div>
+              <span className="font-bold text-sm tracking-tight text-foreground">Dolphy</span>
+              <span className="text-muted-foreground text-xs font-medium">Mini App</span>
+            </div>
+            {role && (
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                style={{ background: role === "driver" ? "#C8F135" : "#4F8EF720", color: role === "driver" ? "#000" : "#4F8EF7" }}>
+                {role === "driver" ? "Haydovchi" : "Mijoz"}
+              </span>
+            )}
+          </header>
+        )}
 
         {/* Content */}
         <main className={`flex-1 overflow-y-auto ${isRolePage || isFullScreen ? "" : "pb-20"}`}>
           {children}
         </main>
 
-        {/* Bottom nav — role va fullscreen sahifasida ko'rsatma */}
+        {/* Bottom nav */}
         {!isRolePage && !isFullScreen && (
-          <nav className="fixed bottom-0 left-0 w-full z-50
-            bg-white/95 tg-dark:bg-[#0A0A0A]/95 backdrop-blur-md
-            border-t border-gray-200 tg-dark:border-white/8">
+          <nav className="fixed bottom-0 left-0 w-full z-50 bg-card/95 backdrop-blur-md border-t border-border">
             <div className="flex items-center justify-around h-16 px-2">
               {nav.map(item => {
                 const rootPaths = ["/tg/client", "/tg/driver"];
@@ -168,7 +163,7 @@ export default function TgLayout({ children }: { children: React.ReactNode }) {
                 return (
                   <Link key={item.href} href={item.href}
                     className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl transition-all ${
-                      active ? "text-[#C8F135]" : "text-gray-400 tg-dark:text-white/30"
+                      active ? "text-[#C8F135]" : "text-muted-foreground"
                     }`}>
                     {item.icon}
                     <span className={`text-[9px] font-bold leading-none ${active ? "text-[#C8F135]" : ""}`}>

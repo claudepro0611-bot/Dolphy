@@ -279,7 +279,7 @@ export default function DriverSettingsPage() {
 
       {/* Versiya */}
       <motion.div variants={fade}>
-        <p className={`text-xs ${muted} text-center`}>Yotoq Haydovchi v1.0.0</p>
+        <p className={`text-xs ${muted} text-center`}>Dolphy Haydovchi v1.0.0</p>
       </motion.div>
 
     </motion.div>

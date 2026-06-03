@@ -7,13 +7,12 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
   const { lang, setLang } = useLang();
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="flex items-center justify-between mb-10">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-xl bg-[#C8F135] flex items-center justify-center text-black font-black text-sm">Y</div>
-            <span className="font-bold text-lg text-white">Yotoq</span>
-            <span className="text-white/30 text-sm">Logistics</span>
+            <div className="w-9 h-9 rounded-xl bg-[#C8F135] flex items-center justify-center text-black font-black text-sm">D</div>
+            <span className="font-bold text-lg text-white">Dolphy</span>
           </div>
           <div className="flex gap-1">
             {LANGS.map(l => (

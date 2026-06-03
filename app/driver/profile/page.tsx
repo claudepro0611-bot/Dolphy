@@ -36,7 +36,7 @@ const MENU = [
       </svg>
     ),
     label: 'Yordam',
-    href:  'https://t.me/yotoq_support',
+    href:  'https://t.me/dolphy_support',
   },
 ]
 

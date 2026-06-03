@@ -6,6 +6,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        surface: 'var(--surface)',
+        'surface-2': 'var(--surface-2)',
+        'accent-dark': 'var(--accent-dark)',
         primary: {
           DEFAULT: '#C8F135',
           hover: '#b3d92f',

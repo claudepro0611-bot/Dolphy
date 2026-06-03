@@ -92,6 +92,31 @@ function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+function SurfaceCard({
+  children,
+  className,
+  padding = true,
+}: {
+  children: React.ReactNode
+  className?: string
+  padding?: boolean
+}) {
+  return (
+    <div
+      style={{
+        background: 'var(--surface)',
+        borderRadius: '16px',
+        padding: padding ? '20px' : undefined,
+        boxShadow: 'var(--shadow)',
+        border: '1px solid var(--border)',
+      }}
+      className={className}
+    >
+      {children}
+    </div>
+  )
+}
+
 export {
   Card,
   CardHeader,
@@ -100,4 +125,5 @@ export {
   CardAction,
   CardDescription,
   CardContent,
+  SurfaceCard,
 }

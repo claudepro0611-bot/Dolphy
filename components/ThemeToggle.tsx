@@ -17,8 +17,7 @@ export function ThemeToggle() {
   }
   return (
     <button onClick={toggle}
-      className="p-2.5 rounded-xl bg-[hsl(var(--surface-2))] border border-[hsl(var(--border))]
-                 hover:border-primary hover:bg-primary/10 transition-all duration-200">
+      className="p-2.5 rounded-xl bg-[var(--surface-2)] border border-[var(--border)] hover:border-primary hover:bg-primary/10 transition-all duration-200">
       <AnimatePresence mode="wait">
         <motion.div key={theme}
           initial={{ rotate: -90, opacity: 0 }}

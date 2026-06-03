@@ -194,7 +194,7 @@ export default function TgSettingsPage() {
       </motion.div>
 
       <motion.div variants={fade} className="text-gray-400 dark:text-white/35 text-[10px] text-center pb-2">
-        Yotoq Mini App v1.0.0
+        Dolphy Mini App v1.0.0
       </motion.div>
     </motion.div>
   );

@@ -11,16 +11,18 @@ function adminClient() {
 
 export async function POST(req: NextRequest) {
   try {
-    const { orderId } = await req.json();
+    const { orderId, driverId } = await req.json();
     if (!orderId) return NextResponse.json({ error: "orderId kerak" }, { status: 400 });
+    if (!driverId) return NextResponse.json({ error: "driverId kerak" }, { status: 400 });
 
     const db = adminClient();
 
     const { data, error } = await db
       .from("orders")
-      .update({ status: "accepted" })
+      .update({ status: "accepted", driver_id: driverId })
       .eq("id", orderId)
       .eq("status", "pending")
+      .is("driver_id", null)
       .select("id");
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });

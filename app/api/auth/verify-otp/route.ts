@@ -22,7 +22,12 @@ function getRole(phone: string): "admin" | "client" {
 }
 
 export async function POST(req: NextRequest) {
-  const { phone, otp } = await req.json();
+  let phone: string, otp: string;
+  try {
+    ({ phone, otp } = await req.json());
+  } catch {
+    return NextResponse.json({ error: "Noto'g'ri so'rov" }, { status: 400 });
+  }
 
   if (!phone || !otp) {
     return NextResponse.json({ error: "Majburiy maydonlar" }, { status: 400 });
@@ -31,8 +36,8 @@ export async function POST(req: NextRequest) {
   const isDev = process.env.NODE_ENV === "development";
 
   if (isDev) {
-    if (!/^\d{4}$/.test(otp)) {
-      return NextResponse.json({ error: "Kod 4 xonali bo'lishi kerak" }, { status: 400 });
+    if (!/^\d{6}$/.test(otp)) {
+      return NextResponse.json({ error: "Kod 6 xonali bo'lishi kerak" }, { status: 400 });
     }
   } else {
     const record = otpStore.get(phone);

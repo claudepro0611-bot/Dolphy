@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { jwtVerify } from "jose";
+
+const JWT_SECRET = new TextEncoder().encode(
+  process.env.JWT_SECRET ?? "yotoq-dev-secret-change-in-production"
+);
 
 const DEFAULTS = [
   { id: "gazelle", name: "Gazelle", cap: "1.5 t", base: 25000, perKm: 1500 },
@@ -44,6 +49,18 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  // Admin auth tekshiruvi
+  const token = req.cookies.get("token")?.value;
+  if (!token) return NextResponse.json({ error: "Kirish talab etiladi" }, { status: 401 });
+  try {
+    const { payload } = await jwtVerify(token, JWT_SECRET);
+    if (payload.role !== "admin") {
+      return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 403 });
+    }
+  } catch {
+    return NextResponse.json({ error: "Token yaroqsiz" }, { status: 401 });
+  }
+
   try {
     const { pricing } = await req.json();
     if (!Array.isArray(pricing)) return NextResponse.json({ error: "pricing array kerak" }, { status: 400 });

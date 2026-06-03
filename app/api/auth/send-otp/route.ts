@@ -9,7 +9,12 @@ if (!g._otpStore)  g._otpStore  = new Map();
 if (!g._rateLimit) g._rateLimit = new Map();
 
 export async function POST(req: NextRequest) {
-  const { phone } = await req.json();
+  let phone: string;
+  try {
+    ({ phone } = await req.json());
+  } catch {
+    return NextResponse.json({ error: "Noto'g'ri so'rov" }, { status: 400 });
+  }
 
   if (!phone || !/^\+998\d{9}$/.test(phone)) {
     return NextResponse.json({ error: "Telefon raqam noto'g'ri" }, { status: 400 });
@@ -24,7 +29,7 @@ export async function POST(req: NextRequest) {
   g._rateLimit!.set(phone, [...history, now]);
 
   // OTP yaratish (production'da SMS yuboriladi)
-  const otp = Math.floor(1000 + Math.random() * 9000).toString();
+  const otp = Math.floor(100000 + Math.random() * 900000).toString();
   g._otpStore!.set(phone, { otp, expires: now + 5 * 60_000, attempts: 0 });
 
   // Development: consolega chiqarish

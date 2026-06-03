@@ -18,16 +18,6 @@ const CLIENT_NAV = [
     ),
   },
   {
-    href: "/tg/order/new",
-    label: "Buyurtma",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <rect x="3" y="4" width="14" height="13" rx="2" stroke="currentColor" strokeWidth="1.5"/>
-        <path d="M10 8v6M7 11h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-      </svg>
-    ),
-  },
-  {
     href: "/tg/history",
     label: "Tarix",
     icon: (
@@ -134,7 +124,8 @@ export default function TgLayout({ children }: { children: React.ReactNode }) {
     }
   }, [tg, path]);
 
-  const isRolePage = path === "/tg";
+  const isRolePage   = path === "/tg";
+  const isFullScreen = path === "/tg/client";
   const nav = role === "driver" ? DRIVER_NAV : CLIENT_NAV;
 
   return (
@@ -144,7 +135,7 @@ export default function TgLayout({ children }: { children: React.ReactNode }) {
       }`}>
 
         {/* Header */}
-        <header className="sticky top-0 z-40 h-14 flex items-center justify-between px-4
+        {!isFullScreen && <header className="sticky top-0 z-40 h-14 flex items-center justify-between px-4
           bg-white/95 tg-dark:bg-[#0A0A0A]/95 backdrop-blur-md
           border-b border-gray-200 tg-dark:border-white/8">
           <div className="flex items-center gap-2">
@@ -158,15 +149,15 @@ export default function TgLayout({ children }: { children: React.ReactNode }) {
               {role === "driver" ? "Haydovchi" : "Mijoz"}
             </span>
           )}
-        </header>
+        </header>}
 
         {/* Content */}
-        <main className={`flex-1 overflow-y-auto ${isRolePage ? "" : "pb-20"}`}>
+        <main className={`flex-1 overflow-y-auto ${isRolePage || isFullScreen ? "" : "pb-20"}`}>
           {children}
         </main>
 
-        {/* Bottom nav — role sahifasida ko'rsatma */}
-        {!isRolePage && (
+        {/* Bottom nav — role va fullscreen sahifasida ko'rsatma */}
+        {!isRolePage && !isFullScreen && (
           <nav className="fixed bottom-0 left-0 w-full z-50
             bg-white/95 tg-dark:bg-[#0A0A0A]/95 backdrop-blur-md
             border-t border-gray-200 tg-dark:border-white/8">

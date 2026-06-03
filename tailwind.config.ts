@@ -10,10 +10,10 @@ const config: Config = {
         'surface-2': 'var(--surface-2)',
         'accent-dark': 'var(--accent-dark)',
         primary: {
-          DEFAULT: '#C8F135',
-          hover: '#b3d92f',
-          dark: '#9bbf28',
-          foreground: '#0A0A0A',
+          DEFAULT: '#0A0A0A',
+          hover: '#1a1a1a',
+          dark: '#000000',
+          foreground: '#FFFFFF',
         },
       },
       boxShadow: {
